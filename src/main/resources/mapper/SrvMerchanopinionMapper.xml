@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvMerchanopinionDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.SrvMerchanopinion" id="srvMerchanopinionMap">
+        <result property="id" column="id"/>
+        <result property="restaurantId" column="restaurant_id"/>
+        <result property="content" column="content"/>
+        <result property="commentTime" column="comment_time"/>
+        <result property="name" column="name"/>
+        <result property="status" column="status"/>
+        <result property="phone" column="phone"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.SrvMerchanopinion">
+		select * from srv_merchant_opinion where id = #{value}
+	</select>
+
+	<select id="getList" resultType="xin.cymall.entity.SrvMerchanopinion">
+		select * from srv_merchant_opinion t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_merchant_opinion t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="restaurantId != null and restaurantId != ''"> and t.restaurant_id = #{restaurantId} </if>
+    		<if test="restaurantIdVague != null and restaurantIdVague != ''"> and t.restaurant_id like concat('%',#{restaurantIdVague},'%') </if>
+            <if test="content != null and content != ''"> and t.content = #{content} </if>
+    		<if test="contentVague != null and contentVague != ''"> and t.content like concat('%',#{contentVague},'%') </if>
+            <if test="commentTime != null and commentTime != ''"> and t.comment_time = #{commentTime} </if>
+    		<if test="commentTimeVague != null and commentTimeVague != ''"> and t.comment_time like concat('%',#{commentTimeVague},'%') </if>
+            <if test="name != null and name != ''"> and t.name = #{name} </if>
+    		<if test="nameVague != null and nameVague != ''"> and t.name like concat('%',#{nameVague},'%') </if>
+            <if test="status != null and status != ''"> and t.status = #{status} </if>
+    		<if test="statusVague != null and statusVague != ''"> and t.status like concat('%',#{statusVague},'%') </if>
+            <if test="phone != null and phone != ''"> and t.phone = #{phone} </if>
+    		<if test="phoneVague != null and phoneVague != ''"> and t.phone like concat('%',#{phoneVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.SrvMerchanopinion">
+		insert into srv_merchant_opinion
+		(
+			`id`, 
+			`restaurant_id`, 
+			`content`, 
+			`comment_time`, 
+			`name`, 
+			`status`, 
+			`phone`
+		)
+		values
+		(
+			#{id}, 
+			#{restaurantId}, 
+			#{content}, 
+			#{commentTime}, 
+			#{name}, 
+			#{status}, 
+			#{phone}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.SrvMerchanopinion">
+		update srv_merchant_opinion 
+		<set>
+			<if test="restaurantId != null">`restaurant_id` = #{restaurantId}, </if>
+			<if test="content != null">`content` = #{content}, </if>
+			<if test="commentTime != null">`comment_time` = #{commentTime}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="phone != null">`phone` = #{phone}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_merchant_opinion where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_merchant_opinion where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
