@@ -1,5 +1,8 @@
 package xin.cymall.common.utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by chenyi on 2016/12/6.
  */
@@ -49,4 +52,26 @@ public class UUID {
         return (int)((Math.random()*9+1)*Integer.parseInt(max));
 
     }
+
+    public static String generateId(){
+        java.util.UUID uuid = java.util.UUID.randomUUID();
+        String id = replaceSpecialStr(uuid.toString());
+        return id;
+    }
+
+    /**
+     * 去除-  (特殊符号)
+     */
+    private static String replaceSpecialStr(String str) {
+        String repl = "";
+        if (str != null) {
+            Pattern pattern = Pattern.compile("-");
+            Matcher m = pattern.matcher(str);
+            repl = m.replaceAll("");
+        }
+        return repl;
+    }
+
+
+
 }

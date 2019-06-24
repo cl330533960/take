@@ -52,4 +52,8 @@ public class R extends HashMap<String, Object> {
 		super.put(key, value);
 		return this;
 	}
+
+	public static void main(String[] args) {
+		System.out.println("呵呵");
+	}
 }

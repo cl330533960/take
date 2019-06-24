@@ -3,6 +3,7 @@
  * email   :  228112142@qq.com
  * 上传控件
  */
+
 (function ($) {
     /* 入口函数 */
     $.fn.uploadTool = function () {
@@ -100,7 +101,7 @@
         },
         /**渲染上传控件(上传单个文件) by chenyi 2017/8/22*/
         renderSingle: function ($grid, cyProps) {
-            var _url = cyProps.url || "/getData/uploadFile/";
+            var _url = cyProps.url || "/getData/uploadFile";
             var _uploadId = $t.getUUID(32, 16);
             var _btnName = cyProps.btnName || "上传图片";
             var _name = cyProps.name || "";
@@ -108,13 +109,14 @@
             var _size = cyProps.size || 1000;
             var _type = cyProps.type || "img";
             var _exts = cyProps.exts || "";
+            var _verify = cyProps.verify || "";
             $grid.html(['<button type="button" class="layui-btn" id="' + _uploadId + '">',
                 ' <i class="fa fa-cloud-upload">&nbsp;</i>' + _btnName,
                 '</button>',
                 '<div class="layui-upload-list">',
                 '<div class="file-div">',
                 '<img class="layui-upload-img" id="' + _uploadId + '_img"  src="/statics/img/noImg.png">',
-                '<input type="hidden" id="' + _uploadId + '_val" name="' + _name + ' ">',
+                '<input type="hidden" id="' + _uploadId + '_val"  name="' + _name + '" >',
                 '<div class="file-delete" ><span class="delete-one"> ',
                 '<i class="fa fa-undo"></i>',
                 '<i class="fa fa-repeat"></i>',
@@ -122,7 +124,10 @@
                 '</div>',
                 ' </div>'].join(""));
             if (_value != "") {
-                $("#" + _uploadId + "_img").attr("src", _value);
+                $grid.val(_value);
+                $("#" + _uploadId + "_img").attr("src", "/getData/showImage?imagePath="+_value);
+                $("#" + _uploadId + "_val").val(_value);
+
             }
             layui.use('upload', function () {
                 var upload = layui.upload;
@@ -132,13 +137,14 @@
                     , size: _size //限制文件大小，单位 KB
                     , accept: _type //接受的文件类型
                     , exts: _exts //只允许上传压缩文件
-                    , url: _url           //上传接口
+                    , url: _url   //上传接口
                     , done: function (res) {
                         //上传完毕回调
                         if (res.code === 0) {
-                            $("#" + _uploadId + "_img").attr("src", res.url);
+                            $("#" + _uploadId + "_img").attr("src", "/getData/showImage?imagePath="+res.url);
                             $("#" + _uploadId + "_val").val(res.url);
-                            Msg.success(res.url);
+                            $grid.val(res.url);
+                            Msg.success("上传成功");
                         } else {
                             Msg.error(res.msg);
                         }

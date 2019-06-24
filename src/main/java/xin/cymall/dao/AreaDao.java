@@ -20,4 +20,6 @@ public interface AreaDao extends BaseDao<Area> {
     int getCount(Map<String, Object> params);
 
     List<Area> findByParentId(String pId);
+
+    String getAreaInfo(String [] area);
 }

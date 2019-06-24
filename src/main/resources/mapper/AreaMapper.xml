@@ -33,6 +33,7 @@
 		select t.*
 		from t_area t
 		where 1=1
+		and t.area_level  &lt;= 3
 		<if test="parentAreaId != null and parentAreaId.trim() != ''">
 			and t.parent_area_id like concat('%',#{parentAreaId},'%')
 		</if>
@@ -157,5 +158,12 @@
 			#{areaId}
 		</foreach>
 	</delete>
+
+	<select id="getAreaInfo"  resultType="java.lang.String">
+		select group_concat(area_name) as areainfo from t_area where area_id in
+		<foreach collection="array" item="item" index="index"  open="(" close=")" separator=",">
+			${item}
+		</foreach>
+	</select>
 
 </mapper>

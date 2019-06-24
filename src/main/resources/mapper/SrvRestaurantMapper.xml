@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvRestaurantDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.SrvRestaurant" id="srvRestaurantMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="chainCode" column="chain_code"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="area" column="area"/>
+        <result property="addr" column="addr"/>
+        <result property="healthLevel" column="health_level"/>
+        <result property="contact" column="contact"/>
+        <result property="phone" column="phone"/>
+        <result property="landline" column="landline"/>
+        <result property="inTime" column="in_time"/>
+        <result property="logoPath" column="logo_path"/>
+        <result property="busLicense" column="bus_license"/>
+        <result property="hygieneLicensePath" column="hygiene_license_path"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="loginName" column="login_name"/>
+        <result property="password" column="password"/>
+        <result property="balance" column="balance"/>
+        <result property="autoReceipt" column="auto_receipt"/>
+        <result property="packFee" column="pack_fee"/>
+        <result property="busHourStart" column="bus_hour_start"/>
+        <result property="busHourEnd" column="bus_hour_end"/>
+        <result property="isAllDay" column="is_all_day"/>
+        <result property="lng" column="lng"/>
+        <result property="lat" column="lat"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.SrvRestaurant">
+		select * from srv_restaurant where id = #{value}
+	</select>
+
+	<select id="getList" resultType="xin.cymall.entity.SrvRestaurant">
+		select * from srv_restaurant t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_restaurant t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="name != null and name != ''"> and t.name = #{name} </if>
+    		<if test="nameVague != null and nameVague != ''"> and t.name like concat('%',#{nameVague},'%') </if>
+            <if test="chainCode != null and chainCode != ''"> and t.chain_code = #{chainCode} </if>
+    		<if test="chainCodeVague != null and chainCodeVague != ''"> and t.chain_code like concat('%',#{chainCodeVague},'%') </if>
+            <if test="province != null and province != ''"> and t.province = #{province} </if>
+    		<if test="provinceVague != null and provinceVague != ''"> and t.province like concat('%',#{provinceVague},'%') </if>
+            <if test="city != null and city != ''"> and t.city = #{city} </if>
+    		<if test="cityVague != null and cityVague != ''"> and t.city like concat('%',#{cityVague},'%') </if>
+            <if test="area != null and area != ''"> and t.area = #{area} </if>
+    		<if test="areaVague != null and areaVague != ''"> and t.area like concat('%',#{areaVague},'%') </if>
+            <if test="addr != null and addr != ''"> and t.addr = #{addr} </if>
+    		<if test="addrVague != null and addrVague != ''"> and t.addr like concat('%',#{addrVague},'%') </if>
+            <if test="healthLevel != null and healthLevel != ''"> and t.health_level = #{healthLevel} </if>
+    		<if test="healthLevelVague != null and healthLevelVague != ''"> and t.health_level like concat('%',#{healthLevelVague},'%') </if>
+            <if test="contact != null and contact != ''"> and t.contact = #{contact} </if>
+    		<if test="contactVague != null and contactVague != ''"> and t.contact like concat('%',#{contactVague},'%') </if>
+            <if test="phone != null and phone != ''"> and t.phone = #{phone} </if>
+    		<if test="phoneVague != null and phoneVague != ''"> and t.phone like concat('%',#{phoneVague},'%') </if>
+            <if test="landline != null and landline != ''"> and t.landline = #{landline} </if>
+    		<if test="landlineVague != null and landlineVague != ''"> and t.landline like concat('%',#{landlineVague},'%') </if>
+            <if test="inTime != null and inTime != ''"> and t.in_time = #{inTime} </if>
+    		<if test="inTimeVague != null and inTimeVague != ''"> and t.in_time like concat('%',#{inTimeVague},'%') </if>
+            <if test="logoPath != null and logoPath != ''"> and t.logo_path = #{logoPath} </if>
+    		<if test="logoPathVague != null and logoPathVague != ''"> and t.logo_path like concat('%',#{logoPathVague},'%') </if>
+            <if test="busLicense != null and busLicense != ''"> and t.bus_license = #{busLicense} </if>
+    		<if test="busLicenseVague != null and busLicenseVague != ''"> and t.bus_license like concat('%',#{busLicenseVague},'%') </if>
+            <if test="hygieneLicensePath != null and hygieneLicensePath != ''"> and t.hygiene_license_path = #{hygieneLicensePath} </if>
+    		<if test="hygieneLicensePathVague != null and hygieneLicensePathVague != ''"> and t.hygiene_license_path like concat('%',#{hygieneLicensePathVague},'%') </if>
+            <if test="status != null and status != ''"> and t.status = #{status} </if>
+    		<if test="statusVague != null and statusVague != ''"> and t.status like concat('%',#{statusVague},'%') </if>
+            <if test="remark != null and remark != ''"> and t.remark = #{remark} </if>
+    		<if test="remarkVague != null and remarkVague != ''"> and t.remark like concat('%',#{remarkVague},'%') </if>
+            <if test="loginName != null and loginName != ''"> and t.login_name = #{loginName} </if>
+    		<if test="loginNameVague != null and loginNameVague != ''"> and t.login_name like concat('%',#{loginNameVague},'%') </if>
+            <if test="password != null and password != ''"> and t.password = #{password} </if>
+    		<if test="passwordVague != null and passwordVague != ''"> and t.password like concat('%',#{passwordVague},'%') </if>
+            <if test="balance != null and balance != ''"> and t.balance = #{balance} </if>
+    		<if test="balanceVague != null and balanceVague != ''"> and t.balance like concat('%',#{balanceVague},'%') </if>
+            <if test="autoReceipt != null and autoReceipt != ''"> and t.auto_receipt = #{autoReceipt} </if>
+    		<if test="autoReceiptVague != null and autoReceiptVague != ''"> and t.auto_receipt like concat('%',#{autoReceiptVague},'%') </if>
+            <if test="packFee != null and packFee != ''"> and t.pack_fee = #{packFee} </if>
+    		<if test="packFeeVague != null and packFeeVague != ''"> and t.pack_fee like concat('%',#{packFeeVague},'%') </if>
+            <if test="busHourStart != null and busHourStart != ''"> and t.bus_hour_start = #{busHourStart} </if>
+    		<if test="busHourStartVague != null and busHourStartVague != ''"> and t.bus_hour_start like concat('%',#{busHourStartVague},'%') </if>
+            <if test="busHourEnd != null and busHourEnd != ''"> and t.bus_hour_end = #{busHourEnd} </if>
+    		<if test="busHourEndVague != null and busHourEndVague != ''"> and t.bus_hour_end like concat('%',#{busHourEndVague},'%') </if>
+            <if test="isAllDay != null and isAllDay != ''"> and t.is_all_day = #{isAllDay} </if>
+    		<if test="isAllDayVague != null and isAllDayVague != ''"> and t.is_all_day like concat('%',#{isAllDayVague},'%') </if>
+            <if test="lng != null and lng != ''"> and t.lng = #{lng} </if>
+    		<if test="lngVague != null and lngVague != ''"> and t.lng like concat('%',#{lngVague},'%') </if>
+            <if test="lat != null and lat != ''"> and t.lat = #{lat} </if>
+    		<if test="latVague != null and latVague != ''"> and t.lat like concat('%',#{latVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.SrvRestaurant">
+		insert into srv_restaurant
+		(
+			`id`, 
+			`name`, 
+			`chain_code`, 
+			`province`, 
+			`city`, 
+			`area`, 
+			`addr`, 
+			`health_level`, 
+			`contact`, 
+			`phone`, 
+			`landline`, 
+			`in_time`, 
+			`logo_path`, 
+			`bus_license`, 
+			`hygiene_license_path`, 
+			`status`, 
+			`remark`, 
+			`login_name`, 
+			`password`, 
+			`balance`, 
+			`auto_receipt`, 
+			`pack_fee`, 
+			`bus_hour_start`, 
+			`bus_hour_end`, 
+			`is_all_day`, 
+			`lng`, 
+			`lat`
+		)
+		values
+		(
+			#{id}, 
+			#{name}, 
+			#{chainCode}, 
+			#{province}, 
+			#{city}, 
+			#{area}, 
+			#{addr}, 
+			#{healthLevel}, 
+			#{contact}, 
+			#{phone}, 
+			#{landline}, 
+			#{inTime}, 
+			#{logoPath}, 
+			#{busLicense}, 
+			#{hygieneLicensePath}, 
+			#{status}, 
+			#{remark}, 
+			#{loginName}, 
+			#{password}, 
+			#{balance}, 
+			#{autoReceipt}, 
+			#{packFee}, 
+			#{busHourStart}, 
+			#{busHourEnd}, 
+			#{isAllDay}, 
+			#{lng}, 
+			#{lat}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.SrvRestaurant">
+		update srv_restaurant 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="chainCode != null">`chain_code` = #{chainCode}, </if>
+			<if test="province != null">`province` = #{province}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="area != null">`area` = #{area}, </if>
+			<if test="addr != null">`addr` = #{addr}, </if>
+			<if test="healthLevel != null">`health_level` = #{healthLevel}, </if>
+			<if test="contact != null">`contact` = #{contact}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="landline != null">`landline` = #{landline}, </if>
+			<if test="inTime != null">`in_time` = #{inTime}, </if>
+			<if test="logoPath != null">`logo_path` = #{logoPath}, </if>
+			<if test="busLicense != null">`bus_license` = #{busLicense}, </if>
+			<if test="hygieneLicensePath != null">`hygiene_license_path` = #{hygieneLicensePath}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="loginName != null">`login_name` = #{loginName}, </if>
+			<if test="password != null">`password` = #{password}, </if>
+			<if test="balance != null">`balance` = #{balance}, </if>
+			<if test="autoReceipt != null">`auto_receipt` = #{autoReceipt}, </if>
+			<if test="packFee != null">`pack_fee` = #{packFee}, </if>
+			<if test="busHourStart != null">`bus_hour_start` = #{busHourStart}, </if>
+			<if test="busHourEnd != null">`bus_hour_end` = #{busHourEnd}, </if>
+			<if test="isAllDay != null">`is_all_day` = #{isAllDay}, </if>
+			<if test="lng != null">`lng` = #{lng}, </if>
+			<if test="lat != null">`lat` = #{lat}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_restaurant where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_restaurant where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

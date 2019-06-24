@@ -50,7 +50,6 @@
         },
         /**渲染下拉框数据 by chenyi 2017/6/21*/
         renderData: function (R, $grid, cyProps) {
-
             var _grid = $grid;
             //获取下拉控件的name
             var _name = cyProps.name;
@@ -97,7 +96,7 @@
                         //获取所有下级数据
                         var LowerData = selectTool.getDataByUrl(cyProps.url+"/"+ _values[j]);
                         var curr_data=LowerData.data;
-                        if(curr_data){
+                        if(curr_data && curr_data.length > 0){
                             var _div = '<div id="div_' + _values[j] + '" class="layui-input-inline" ></div>';
                             $(_grid).parent().append(_div);
                             var _select = '<select id="select_' + _values[j] + '" name="'+cyProps.name+'" lay-search lay-filter="link" ></select>';
@@ -132,7 +131,6 @@
                     if (parentId != "") {
                         //获取所有下级地区
                         var R = selectTool.getDataByUrl(cyProps.url+"/"+ parentId);
-
                         if (R.data&&R.data.length > 0) {
                             var _div = '<div id="div_' + data.value + '" class="layui-input-inline" ></div>';
                             $(_grid).after(_div);

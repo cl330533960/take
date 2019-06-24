@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xin.cymall.common.enumresource.StateEnum;
 import xin.cymall.common.exception.MyException;
+import xin.cymall.common.ftp.FTPInfoVo;
+import xin.cymall.common.ftp.FTPProper;
 import xin.cymall.common.utils.*;
 import xin.cymall.entity.Commpara;
 import xin.cymall.entity.File;
@@ -15,7 +17,11 @@ import xin.cymall.service.CommparaService;
 import xin.cymall.service.FileService;
 import xin.cymall.service.SysOssService;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -33,6 +39,8 @@ public class GetDataController {
     private FileService fileService;
     @Autowired
     private SysOssService ossService;
+    @Autowired
+    private FTPProper ftpProper;
 
     /**
      * @param
@@ -140,11 +148,11 @@ public class GetDataController {
         String fileName = file.getOriginalFilename();
         String _extName = fileName.substring(fileName.indexOf("."), fileName.length());//获取扩展名
 
-        if (file.getSize() > 1 * 1024 * 1024) {
-            throw new MyException("图片不能大于1M");
+        if (file.getSize() > 5 * 1024 * 1024) {
+            throw new MyException("图片不能大于5M");
         }
         //上传文件
-        String url = uploadImage(file.getOriginalFilename(), file.getInputStream());
+        String url = uploadImage(file);
         //String url = "/statics/img/timg.jpg";
         return R.ok().put("url", url);
     }
@@ -218,6 +226,52 @@ public class GetDataController {
     public R deleteByRelationId(@PathVariable("relationId") String relationId) throws Exception {
         fileService.deleteByRelationId(relationId);
         return R.ok();
+    }
+
+    /**
+     *
+     * 功能描述: 上传到项目下
+     *
+     * @param:
+     * @return:
+     * @auther:
+     * @date: 2019/6/23 13:59
+     */
+    public String uploadImage(MultipartFile file){
+        FTPInfoVo ftpInfoVo = ftpProper.getFTPInfo();
+        ftpInfoVo.setFtpPath("/img/");
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        ftpInfoVo.setFileName(fileName);
+        boolean flag =FtpUtil.uploadFile(ftpInfoVo, file);
+        if(flag){
+            return ftpInfoVo.getFtpPath()+fileName;
+        }else{
+            throw new MyException("上传失败");
+        }
+    }
+
+    @RequestMapping("/showImage")
+    public void showImage(HttpServletResponse response,@RequestParam String imagePath) throws IOException {
+        FTPInfoVo ftpInfoVo = ftpProper.getFTPInfo();
+        String path = imagePath.substring(0, imagePath.lastIndexOf("/")+1);
+        String name = imagePath.substring(imagePath.lastIndexOf("/")+1);
+        ftpInfoVo.setFtpPath(path);
+        ftpInfoVo.setFileName(name);
+        InputStream inputStream = FtpUtil.getInputStreamFromFtp(ftpInfoVo);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = inputStream.read(buffer)) != -1 ) {
+            baos.write(buffer, 0, len);
+        }
+        baos.flush();
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("image/jpeg;charset=UTF-8");
+        response.setContentLength(baos.size());
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.write(baos.toByteArray());
+        outputStream.flush();
+        outputStream.close();
     }
 
 
