@@ -58,7 +58,7 @@ public class SrvUserCommentServiceImpl implements SrvUserCommentService {
     public void updateState(String[] ids,String stateValue) {
         for (String id:ids){
 			SrvUserComment srvUserComment=get(id);
-			srvUserComment.setState(stateValue);
+			srvUserComment.setStatus(stateValue);
             update(srvUserComment);
         }
     }

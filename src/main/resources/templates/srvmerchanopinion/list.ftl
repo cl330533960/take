@@ -38,11 +38,11 @@
         <button class="layui-btn" onclick="editPage('srvMerchanopinionTable','/srvmerchanopinion/edit')">
             <i class="fa fa-pencil-square-o">&nbsp;</i>修改
         </button>
-         <button class="layui-btn layui-btn-green" onclick="updateState('批量启用','srvMerchanopinionTable','/srvmerchanopinion/enable')">
-            <i class="fa fa-check-square-o">&nbsp;</i>启用
+         <button class="layui-btn layui-btn-green" onclick="updateState('批量通过','srvMerchanopinionTable','/srvmerchanopinion/enable')">
+            <i class="fa fa-check-square-o">&nbsp;</i>通过
         </button>
-        <button class="layui-btn  layui-btn-danger" onclick="updateState('批量禁用','srvMerchanopinionTable','/srvmerchanopinion/limit')">
-            <i class="fa fa-expeditedssl">&nbsp;</i>禁用
+        <button class="layui-btn  layui-btn-danger" onclick="updateState('批量拒绝','srvMerchanopinionTable','/srvmerchanopinion/limit')">
+            <i class="fa fa-expeditedssl">&nbsp;</i>拒绝
         </button>
         </@shiro.hasPermission>
         <@shiro.hasPermission name="srvmerchanopinion:delete">
@@ -73,7 +73,7 @@
 			            			
 		          <th width="10%" param="{name:'name'}">名称</th>
 			            			
-		          <th width="10%" param="{name:'status'}">状态</th>
+		          <th width="10%" param="{name:'status',codeName:'ispassStatus'}">状态</th>
 			            			
 		          <th width="10%" param="{name:'phone'}">电话号码</th>
 			                        <!--isPrimary：渲染列-->

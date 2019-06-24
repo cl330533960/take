@@ -38,11 +38,11 @@
         <button class="layui-btn" onclick="editPage('srvUserCommentTable','/srvusercomment/edit')">
             <i class="fa fa-pencil-square-o">&nbsp;</i>修改
         </button>
-         <button class="layui-btn layui-btn-green" onclick="updateState('批量启用','srvUserCommentTable','/srvusercomment/enable')">
-            <i class="fa fa-check-square-o">&nbsp;</i>启用
+         <button class="layui-btn layui-btn-green" onclick="updateState('批量通过','srvUserCommentTable','/srvusercomment/enable')">
+            <i class="fa fa-check-square-o">&nbsp;</i>通过
         </button>
-        <button class="layui-btn  layui-btn-danger" onclick="updateState('批量禁用','srvUserCommentTable','/srvusercomment/limit')">
-            <i class="fa fa-expeditedssl">&nbsp;</i>禁用
+        <button class="layui-btn  layui-btn-danger" onclick="updateState('批量拒绝','srvUserCommentTable','/srvusercomment/limit')">
+            <i class="fa fa-expeditedssl">&nbsp;</i>拒绝
         </button>
         </@shiro.hasPermission>
         <@shiro.hasPermission name="srvusercomment:delete">
@@ -65,17 +65,17 @@
             <th width="10%" param="{name:'id',isPrimary:'true',hide:'true'}"></th>
             
 		                			
-		          <th width="10%" param="{name:'userId'}"></th>
+		          <th width="10%" param="{name:'userId'}">用户ID</th>
 			            			
-		          <th width="10%" param="{name:'content'}"></th>
+		          <th width="10%" param="{name:'content'}">评价内容</th>
 			            			
-		          <th width="10%" param="{name:'commentTime'}"></th>
+		          <th width="10%" param="{name:'commentTime'}">创建时间</th>
 			            			
-		          <th width="10%" param="{name:'restaurantId'}"></th>
+		          <th width="10%" param="{name:'restaurantId'}">商家ID</th>
 			            			
-		          <th width="10%" param="{name:'status'}">0待审核 审核通过 审核拒绝</th>
+		          <th width="10%" param="{name:'status',codeName:'ispassStatus'}">状态</th>
 			                        <!--isPrimary：渲染列-->
-            <th width="10%" param="{name:'state',enumName:'StateEnum',render:'Render.customState'}">状态</th>
+            <#--<th width="10%" param="{name:'state',enumName:'StateEnum',render:'Render.customState'}">状态</th>-->
             <th width="10%" param="{operate:'true',buttons:'Render.state,Render.edit,Render.delete'}">操作</th>
         </tr>
         </thead>

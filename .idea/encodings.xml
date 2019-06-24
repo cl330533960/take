@@ -3,13 +3,27 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/common/utils/R.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/controller/SrvMerchanopinionController.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/controller/SrvRestaurantController.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/controller/SrvUserCommentController.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/dao/SrvMerchanopinionDao.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/dao/SrvRestaurantDao.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/dao/SrvUserCommentDao.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/entity/SrvMerchanopinion.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/entity/SrvRestaurant.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/entity/SrvUserComment.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/service/SrvMerchanopinionService.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/service/SrvRestaurantService.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/service/SrvUserCommentService.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/service/impl/SrvMerchanopinionServiceImpl.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/service/impl/SrvRestaurantServiceImpl.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/xin/cymall/service/impl/SrvUserCommentServiceImpl.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mapper/SrvMerchanopinionMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mapper/SrvRestaurantMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mapper/SrvUserCommentMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/srvmerchanopinion" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/templates/srvrestaurant" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/templates/srvusercomment" charset="GBK" />
     <file url="PROJECT" charset="GBK" />
   </component>
 </project>
