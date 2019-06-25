@@ -1,5 +1,7 @@
 package xin.cymall.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,6 +24,7 @@ public class SrvMerchanopinion implements Serializable {
 	/****/
 	private String content;
 	/****/
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	private Date commentTime;
 	/****/
 	private String name;

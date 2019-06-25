@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
-import xin.cymall.entity.SrvMerchanopinion;
-import xin.cymall.service.SrvMerchanopinionService;
+import xin.cymall.entity.SrvDiscounreserve;
+import xin.cymall.service.SrvDiscounreserveService;
 import xin.cymall.common.utils.PageUtils;
 import xin.cymall.common.utils.Query;
 import xin.cymall.common.utils.R;
@@ -23,22 +23,22 @@ import xin.cymall.common.utils.R;
  * 
  * @author chenyi
  * @email 228112142@qq.com
- * @date 2019-06-24 11:52:55
- * 商户【评价 chen
+ * @date 2019-06-25 17:24:03
+ * dazhe预定chen
  */
 @Controller
-@RequestMapping("srvmerchanopinion")
-public class SrvMerchanopinionController {
+@RequestMapping("srvdiscounreserve")
+public class SrvDiscounreserveController {
 	@Autowired
-	private SrvMerchanopinionService srvMerchanopinionService;
+	private SrvDiscounreserveService srvDiscounreserveService;
 	
     /**
      * 跳转到列表页
      */
     @RequestMapping("/list")
-    @RequiresPermissions("srvmerchanopinion:list")
+    @RequiresPermissions("srvdiscounreserve:list")
     public String list() {
-        return "srvmerchanopinion/list";
+        return "srvdiscounreserve/list";
     }
     
 	/**
@@ -46,15 +46,15 @@ public class SrvMerchanopinionController {
 	 */
     @ResponseBody
 	@RequestMapping("/listData")
-	@RequiresPermissions("srvmerchanopinion:list")
+	@RequiresPermissions("srvdiscounreserve:list")
 	public R listData(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
 
-		List<SrvMerchanopinion> srvMerchanopinionList = srvMerchanopinionService.getList(query);
-		int total = srvMerchanopinionService.getCount(query);
+		List<SrvDiscounreserve> srvDiscounreserveList = srvDiscounreserveService.getList(query);
+		int total = srvDiscounreserveService.getCount(query);
 		
-		PageUtils pageUtil = new PageUtils(srvMerchanopinionList, total, query.getLimit(), query.getPage());
+		PageUtils pageUtil = new PageUtils(srvDiscounreserveList, total, query.getLimit(), query.getPage());
 		
 		return R.ok().put("page", pageUtil);
 	}
@@ -63,20 +63,20 @@ public class SrvMerchanopinionController {
      * 跳转到新增页面
      **/
     @RequestMapping("/add")
-    @RequiresPermissions("srvmerchanopinion:save")
+    @RequiresPermissions("srvdiscounreserve:save")
     public String add(){
-        return "srvmerchanopinion/add";
+        return "srvdiscounreserve/add";
     }
 
     /**
      *   跳转到修改页面
      **/
     @RequestMapping("/edit/{id}")
-    @RequiresPermissions("srvmerchanopinion:update")
+    @RequiresPermissions("srvdiscounreserve:update")
     public String edit(Model model, @PathVariable("id") String id){
-		SrvMerchanopinion srvMerchanopinion = srvMerchanopinionService.get(id);
-        model.addAttribute("model",srvMerchanopinion);
-        return "srvmerchanopinion/edit";
+		SrvDiscounreserve srvDiscounreserve = srvDiscounreserveService.get(id);
+        model.addAttribute("model",srvDiscounreserve);
+        return "srvdiscounreserve/edit";
     }
 
 	/**
@@ -84,10 +84,10 @@ public class SrvMerchanopinionController {
 	 */
     @ResponseBody
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("srvmerchanopinion:info")
+    @RequiresPermissions("srvdiscounreserve:info")
     public R info(@PathVariable("id") String id){
-        SrvMerchanopinion srvMerchanopinion = srvMerchanopinionService.get(id);
-        return R.ok().put("srvMerchanopinion", srvMerchanopinion);
+        SrvDiscounreserve srvDiscounreserve = srvDiscounreserveService.get(id);
+        return R.ok().put("srvDiscounreserve", srvDiscounreserve);
     }
 
     /**
@@ -96,9 +96,9 @@ public class SrvMerchanopinionController {
     @ResponseBody
     @SysLog("保存")
 	@RequestMapping("/save")
-	@RequiresPermissions("srvmerchanopinion:save")
-	public R save(@RequestBody SrvMerchanopinion srvMerchanopinion){
-		srvMerchanopinionService.save(srvMerchanopinion);
+	@RequiresPermissions("srvdiscounreserve:save")
+	public R save(@RequestBody SrvDiscounreserve srvDiscounreserve){
+		srvDiscounreserveService.save(srvDiscounreserve);
 		
 		return R.ok();
 	}
@@ -109,9 +109,9 @@ public class SrvMerchanopinionController {
     @ResponseBody
     @SysLog("修改")
 	@RequestMapping("/update")
-	@RequiresPermissions("srvmerchanopinion:update")
-	public R update(@RequestBody SrvMerchanopinion srvMerchanopinion){
-		srvMerchanopinionService.update(srvMerchanopinion);
+	@RequiresPermissions("srvdiscounreserve:update")
+	public R update(@RequestBody SrvDiscounreserve srvDiscounreserve){
+		srvDiscounreserveService.update(srvDiscounreserve);
 		
 		return R.ok();
 	}
@@ -122,10 +122,10 @@ public class SrvMerchanopinionController {
     @ResponseBody
     @SysLog("启用")
     @RequestMapping("/enable")
-    @RequiresPermissions("srvmerchanopinion:update")
+    @RequiresPermissions("srvdiscounreserve:update")
     public R enable(@RequestBody String[] ids){
         String stateValue=StateEnum.ENABLE.getCode();
-		srvMerchanopinionService.updateState(ids,stateValue);
+		srvDiscounreserveService.updateState(ids,stateValue);
         return R.ok();
     }
     /**
@@ -134,10 +134,10 @@ public class SrvMerchanopinionController {
     @ResponseBody
     @SysLog("禁用")
     @RequestMapping("/limit")
-    @RequiresPermissions("srvmerchanopinion:update")
+    @RequiresPermissions("srvdiscounreserve:update")
     public R limit(@RequestBody String[] ids){
         String stateValue=StateEnum.LIMIT.getCode();
-		srvMerchanopinionService.updateState(ids,stateValue);
+		srvDiscounreserveService.updateState(ids,stateValue);
         return R.ok();
     }
 	
@@ -147,9 +147,9 @@ public class SrvMerchanopinionController {
     @ResponseBody
     @SysLog("删除")
 	@RequestMapping("/delete")
-	@RequiresPermissions("srvmerchanopinion:delete")
+	@RequiresPermissions("srvdiscounreserve:delete")
 	public R delete(@RequestBody String[] ids){
-		srvMerchanopinionService.deleteBatch(ids);
+		srvDiscounreserveService.deleteBatch(ids);
 		
 		return R.ok();
 	}
