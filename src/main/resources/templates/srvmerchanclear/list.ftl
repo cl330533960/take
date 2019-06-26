@@ -73,7 +73,7 @@
 			            			
 		          <th width="10%" param="{name:'optrName'}">操作人</th>
 			                        <!--isPrimary：渲染列-->
-            <th width="10%" param="{name:'state',enumName:'StateEnum',render:'Render.customState'}">状态</th>
+            <#--<th width="10%" param="{name:'state',enumName:'StateEnum',render:'Render.customState'}">状态</th>-->
             <th width="10%" param="{operate:'true',buttons:'Render.state,Render.edit,Render.delete'}">操作</th>
         </tr>
         </thead>

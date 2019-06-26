@@ -62,45 +62,45 @@
                 <input type="checkbox" lay-skin="primary" lay-filter="allChoose">
             </th>
             			            <!--isPrimary：是否是主键-->
-            <th width="10%" param="{name:'id',isPrimary:'true',hide:'true'}">主键ID</th>
+            <th width="5%" param="{name:'id',isPrimary:'true',hide:'true'}">主键ID</th>
             
 		                			
-		          <th width="10%" param="{name:'orderNo'}">订单号</th>
+		          <th width="5%" param="{name:'orderNo'}">订单号</th>
 			            			
-		          <th width="10%" param="{name:'userId'}">用户ID</th>
+		          <th width="5%" param="{name:'userId'}">用户ID</th>
 			            			
-		          <th width="10%" param="{name:'restaurantId'}">商户ID</th>
+		          <th width="5%" param="{name:'restaurantId'}">商户ID</th>
 			            			
-		          <th width="10%" param="{name:'userAddrId'}">用户地址ID</th>
+		          <th width="5%" param="{name:'userAddrId'}">用户地址ID</th>
 			            			
-		          <th width="10%" param="{name:'expressCompnay'}">快递公司</th>
+		          <th width="5%" param="{name:'expressCompnay'}">快递公司</th>
 			            			
-		          <th width="10%" param="{name:'expressNum'}">快递单号</th>
+		          <th width="5%" param="{name:'expressNum'}">快递单号</th>
 			            			
-		          <th width="10%" param="{name:'expressName'}">骑手名称</th>
+		          <th width="5%" param="{name:'expressName'}">骑手名称</th>
 			            			
-		          <th width="10%" param="{name:'expressPhone'}">骑手电话</th>
+		          <th width="5%" param="{name:'expressPhone'}">骑手电话</th>
 			            			
-		          <th width="10%" param="{name:'status'}">订单状态</th>
+		          <th width="5%" param="{name:'status'}">订单状态</th>
 			            			
-		          <th width="10%" param="{name:'orderTotal'}">总金额</th>
+		          <th width="5%" param="{name:'orderTotal'}">总金额</th>
 			            			
-		          <th width="10%" param="{name:'remark'}">评论</th>
+		          <th width="5%" param="{name:'remark'}">评论</th>
 			            			
-		          <th width="10%" param="{name:'orderType'}">外卖类型</th>
+		          <th width="5%" param="{name:'orderType'}">外卖类型</th>
 			            			
-		          <th width="10%" param="{name:'userPayFee'}">用户支付费用</th>
+		          <th width="5%" param="{name:'userPayFee'}">用户支付费用</th>
 			            			
-		          <th width="10%" param="{name:'wayFee'}">运费</th>
+		          <th width="5%" param="{name:'wayFee'}">运费</th>
 			            			
-		          <th width="10%" param="{name:'packFee'}">包装费</th>
+		          <th width="5%" param="{name:'packFee'}">包装费</th>
 			            			
-		          <th width="10%" param="{name:'couponId'}">优惠券ID</th>
+		          <th width="5%" param="{name:'couponId'}">优惠券ID</th>
 			            			
-		          <th width="10%" param="{name:'discount'}">折扣</th>
+		          <th width="5%" param="{name:'discount'}">折扣</th>
 			                        <!--isPrimary：渲染列-->
-            <th width="10%" param="{name:'state',enumName:'StateEnum',render:'Render.customState'}">状态</th>
-            <th width="10%" param="{operate:'true',buttons:'Render.state,Render.edit,Render.delete'}">操作</th>
+            <#--<th width="5%" param="{name:'state',enumName:'StateEnum',render:'Render.customState'}">状态</th>-->
+            <th width="5%" param="{operate:'true',buttons:'Render.state,Render.edit,Render.delete'}">操作</th>
         </tr>
         </thead>
     </table>
