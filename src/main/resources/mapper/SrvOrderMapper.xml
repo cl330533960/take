@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvOrderDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.SrvOrder" id="srvOrderMap">
+        <result property="id" column="id"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="userId" column="user_id"/>
+        <result property="restaurantId" column="restaurant_id"/>
+        <result property="userAddrId" column="user_addr_id"/>
+        <result property="expressCompnay" column="express_compnay"/>
+        <result property="expressNum" column="express_num"/>
+        <result property="expressName" column="express_name"/>
+        <result property="expressPhone" column="express_phone"/>
+        <result property="status" column="status"/>
+        <result property="orderTotal" column="order_total"/>
+        <result property="remark" column="remark"/>
+        <result property="orderType" column="order_type"/>
+        <result property="userPayFee" column="user_pay_fee"/>
+        <result property="wayFee" column="way_fee"/>
+        <result property="packFee" column="pack_fee"/>
+        <result property="couponId" column="coupon_id"/>
+        <result property="discount" column="discount"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.SrvOrder">
+		select * from srv_order where id = #{value}
+	</select>
+
+	<select id="getList" resultType="xin.cymall.entity.SrvOrder">
+		select * from srv_order t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_order t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="orderNo != null and orderNo != ''"> and t.order_no = #{orderNo} </if>
+    		<if test="orderNoVague != null and orderNoVague != ''"> and t.order_no like concat('%',#{orderNoVague},'%') </if>
+            <if test="userId != null and userId != ''"> and t.user_id = #{userId} </if>
+    		<if test="userIdVague != null and userIdVague != ''"> and t.user_id like concat('%',#{userIdVague},'%') </if>
+            <if test="restaurantId != null and restaurantId != ''"> and t.restaurant_id = #{restaurantId} </if>
+    		<if test="restaurantIdVague != null and restaurantIdVague != ''"> and t.restaurant_id like concat('%',#{restaurantIdVague},'%') </if>
+            <if test="userAddrId != null and userAddrId != ''"> and t.user_addr_id = #{userAddrId} </if>
+    		<if test="userAddrIdVague != null and userAddrIdVague != ''"> and t.user_addr_id like concat('%',#{userAddrIdVague},'%') </if>
+            <if test="expressCompnay != null and expressCompnay != ''"> and t.express_compnay = #{expressCompnay} </if>
+    		<if test="expressCompnayVague != null and expressCompnayVague != ''"> and t.express_compnay like concat('%',#{expressCompnayVague},'%') </if>
+            <if test="expressNum != null and expressNum != ''"> and t.express_num = #{expressNum} </if>
+    		<if test="expressNumVague != null and expressNumVague != ''"> and t.express_num like concat('%',#{expressNumVague},'%') </if>
+            <if test="expressName != null and expressName != ''"> and t.express_name = #{expressName} </if>
+    		<if test="expressNameVague != null and expressNameVague != ''"> and t.express_name like concat('%',#{expressNameVague},'%') </if>
+            <if test="expressPhone != null and expressPhone != ''"> and t.express_phone = #{expressPhone} </if>
+    		<if test="expressPhoneVague != null and expressPhoneVague != ''"> and t.express_phone like concat('%',#{expressPhoneVague},'%') </if>
+            <if test="status != null and status != ''"> and t.status = #{status} </if>
+    		<if test="statusVague != null and statusVague != ''"> and t.status like concat('%',#{statusVague},'%') </if>
+            <if test="orderTotal != null and orderTotal != ''"> and t.order_total = #{orderTotal} </if>
+    		<if test="orderTotalVague != null and orderTotalVague != ''"> and t.order_total like concat('%',#{orderTotalVague},'%') </if>
+            <if test="remark != null and remark != ''"> and t.remark = #{remark} </if>
+    		<if test="remarkVague != null and remarkVague != ''"> and t.remark like concat('%',#{remarkVague},'%') </if>
+            <if test="orderType != null and orderType != ''"> and t.order_type = #{orderType} </if>
+    		<if test="orderTypeVague != null and orderTypeVague != ''"> and t.order_type like concat('%',#{orderTypeVague},'%') </if>
+            <if test="userPayFee != null and userPayFee != ''"> and t.user_pay_fee = #{userPayFee} </if>
+    		<if test="userPayFeeVague != null and userPayFeeVague != ''"> and t.user_pay_fee like concat('%',#{userPayFeeVague},'%') </if>
+            <if test="wayFee != null and wayFee != ''"> and t.way_fee = #{wayFee} </if>
+    		<if test="wayFeeVague != null and wayFeeVague != ''"> and t.way_fee like concat('%',#{wayFeeVague},'%') </if>
+            <if test="packFee != null and packFee != ''"> and t.pack_fee = #{packFee} </if>
+    		<if test="packFeeVague != null and packFeeVague != ''"> and t.pack_fee like concat('%',#{packFeeVague},'%') </if>
+            <if test="couponId != null and couponId != ''"> and t.coupon_id = #{couponId} </if>
+    		<if test="couponIdVague != null and couponIdVague != ''"> and t.coupon_id like concat('%',#{couponIdVague},'%') </if>
+            <if test="discount != null and discount != ''"> and t.discount = #{discount} </if>
+    		<if test="discountVague != null and discountVague != ''"> and t.discount like concat('%',#{discountVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.SrvOrder">
+		insert into srv_order
+		(
+			`id`, 
+			`order_no`, 
+			`user_id`, 
+			`restaurant_id`, 
+			`user_addr_id`, 
+			`express_compnay`, 
+			`express_num`, 
+			`express_name`, 
+			`express_phone`, 
+			`status`, 
+			`order_total`, 
+			`remark`, 
+			`order_type`, 
+			`user_pay_fee`, 
+			`way_fee`, 
+			`pack_fee`, 
+			`coupon_id`, 
+			`discount`
+		)
+		values
+		(
+			#{id}, 
+			#{orderNo}, 
+			#{userId}, 
+			#{restaurantId}, 
+			#{userAddrId}, 
+			#{expressCompnay}, 
+			#{expressNum}, 
+			#{expressName}, 
+			#{expressPhone}, 
+			#{status}, 
+			#{orderTotal}, 
+			#{remark}, 
+			#{orderType}, 
+			#{userPayFee}, 
+			#{wayFee}, 
+			#{packFee}, 
+			#{couponId}, 
+			#{discount}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.SrvOrder">
+		update srv_order 
+		<set>
+			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="restaurantId != null">`restaurant_id` = #{restaurantId}, </if>
+			<if test="userAddrId != null">`user_addr_id` = #{userAddrId}, </if>
+			<if test="expressCompnay != null">`express_compnay` = #{expressCompnay}, </if>
+			<if test="expressNum != null">`express_num` = #{expressNum}, </if>
+			<if test="expressName != null">`express_name` = #{expressName}, </if>
+			<if test="expressPhone != null">`express_phone` = #{expressPhone}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="orderTotal != null">`order_total` = #{orderTotal}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="orderType != null">`order_type` = #{orderType}, </if>
+			<if test="userPayFee != null">`user_pay_fee` = #{userPayFee}, </if>
+			<if test="wayFee != null">`way_fee` = #{wayFee}, </if>
+			<if test="packFee != null">`pack_fee` = #{packFee}, </if>
+			<if test="couponId != null">`coupon_id` = #{couponId}, </if>
+			<if test="discount != null">`discount` = #{discount}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_order where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_order where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
