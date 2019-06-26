@@ -1,170 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a6552166-08dc-4430-abdc-ff5aeb94aa63" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/entity/SrvFood.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/controller/SrvFoodController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/dao/SrvFoodDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/mapper/SrvFoodMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/service/SrvFoodService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/service/impl/SrvFoodServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/templates/srvfood/add.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/templates/srvfood/common.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/templates/srvfood/edit.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/templates/srvfood/info.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/templates/srvfood/list.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/templates/srvfood/js/list.js" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\.name" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\copyright\profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__aopalliance_aopalliance_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__avalon_framework_avalon_framework_4_1_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__c3p0_c3p0_0_9_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__ch_qos_logback_logback_classic_1_1_11.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__ch_qos_logback_logback_core_1_1_11.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_alibaba_druid_1_1_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_alibaba_fastjson_1_2_41.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_aliyun_oss_aliyun_sdk_oss_2_5_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_belerweb_pinyin4j_2_5_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_fasterxml_classmate_1_3_4.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_fasterxml_jackson_core_jackson_core_2_8_10.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_fasterxml_jackson_core_jackson_databind_2_8_10.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_github_penggle_kaptcha_2_3_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_google_guava_guava_18_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_google_inject_extensions_guice_multibindings_3_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_google_inject_guice_3_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_google_zxing_core_3_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_google_zxing_javase_3_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_jayway_jsonpath_json_path_2_2_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_jhlabs_filters_2_0_235_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_mortennobel_java_image_scaling_0_8_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_sun_mail_javax_mail_1_5_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__commons_beanutils_commons_beanutils_1_9_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__commons_beanutils_commons_beanutils_core_1_7_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__commons_codec_commons_codec_1_10.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__commons_collections_commons_collections_3_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__commons_configuration_commons_configuration_1_5.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__commons_digester_commons_digester_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__commons_io_commons_io_2_5.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__commons_lang_commons_lang_2_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__commons_logging_commons_logging_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__commons_net_commons_net_3_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__io_springfox_springfox_core_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__io_springfox_springfox_schema_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__io_springfox_springfox_spi_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__io_springfox_springfox_spring_web_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__io_springfox_springfox_swagger2_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__io_springfox_springfox_swagger_common_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__io_springfox_springfox_swagger_ui_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__io_swagger_swagger_annotations_1_5_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__io_swagger_swagger_models_1_5_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__javax_activation_activation_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__javax_inject_javax_inject_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__javax_servlet_javax_servlet_api_3_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__javax_servlet_servlet_api_2_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__javax_validation_validation_api_1_1_0_Final.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__junit_junit_4_12.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__log4j_log4j_1_2_17.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__logkit_logkit_1_0_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__mysql_mysql_connector_java_5_1_44.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__net_mingsoft_shiro_freemarker_tags_0_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__net_minidev_accessors_smart_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__net_minidev_json_smart_2_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__net_sf_ezmorph_ezmorph_1_0_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__net_sf_json_lib_json_lib_jdk15_2_4.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__net_sourceforge_jexcelapi_jxl_2_6_12.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_httpcomponents_httpclient_4_5_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_httpcomponents_httpcore_4_4_8.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_shiro_shiro_all_1_2_4.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_shiro_shiro_core_1_3_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_shiro_shiro_guice_1_2_4.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_shiro_shiro_spring_1_3_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_shiro_shiro_web_1_3_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_tomcat_embed_tomcat_embed_core_8_5_23.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_tomcat_embed_tomcat_embed_el_8_5_23.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_tomcat_embed_tomcat_embed_websocket_8_5_23.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_tomcat_tomcat_annotations_api_8_5_23.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_tomcat_tomcat_jdbc_8_5_23.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_tomcat_tomcat_juli_8_5_23.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_apache_velocity_velocity_1_7.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_aspectj_aspectjrt_1_8_13.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_aspectj_aspectjweaver_1_8_13.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_assertj_assertj_core_2_6_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_flywaydb_flyway_core_5_0_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_freemarker_freemarker_2_3_27_incubating.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_hamcrest_hamcrest_core_1_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_hamcrest_hamcrest_library_1_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_hibernate_hibernate_validator_5_3_6_Final.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_jboss_logging_jboss_logging_3_3_1_Final.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_jdom_jdom_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_jsoup_jsoup_1_9_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_mapstruct_mapstruct_1_0_0_CR1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_mockito_mockito_core_1_10_19.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_mybatis_mybatis_3_4_4.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_mybatis_mybatis_spring_1_3_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_mybatis_spring_boot_mybatis_spring_boot_autoconfigure_1_3_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_mybatis_spring_boot_mybatis_spring_boot_starter_1_3_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_objenesis_objenesis_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_ow2_asm_asm_5_0_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_quartz_scheduler_quartz_2_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_skyscreamer_jsonassert_1_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_slf4j_jcl_over_slf4j_1_7_25.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_slf4j_jul_to_slf4j_1_7_25.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_slf4j_log4j_over_slf4j_1_7_25.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_slf4j_slf4j_api_1_7_25.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_autoconfigure_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_devtools_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_starter_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_starter_aop_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_starter_freemarker_1_4_1_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_starter_jdbc_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_starter_logging_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_starter_test_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_starter_tomcat_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_starter_web_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_test_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_boot_spring_boot_test_autoconfigure_1_5_9_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_hateoas_spring_hateoas_0_23_0_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_integration_spring_integration_core_4_3_12_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_integration_spring_integration_mail_4_3_12_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_plugin_spring_plugin_core_1_2_0_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_plugin_spring_plugin_metadata_1_2_0_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_retry_spring_retry_1_2_1_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_aop_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_beans_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_context_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_context_support_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_core_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_expression_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_jdbc_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_messaging_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_test_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_tx_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_web_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_springframework_spring_webmvc_4_3_13_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\libraries\Maven__org_yaml_snakeyaml_1_17.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\uiDesigner.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wm\take\.idea\vcs.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xin/cymall/dao/CommparaDao.java" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/dao/CommparaDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/mapper/CommparaMapper.xml" afterPath="$PROJECT_DIR$/src/main/resources/mapper/CommparaMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xin/cymall/service/CommparaService.java" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/service/CommparaService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xin/cymall/service/impl/CommparaServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/service/impl/CommparaServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xin/cymall/controller/GetDataController.java" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/controller/GetDataController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xin/cymall/controller/SrvRestaurantController.java" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/controller/SrvRestaurantController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xin/cymall/controller/SysLoginController.java" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/controller/SysLoginController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xin/cymall/common/log/WebLogAspect.java" afterPath="$PROJECT_DIR$/src/main/java/xin/cymall/common/log/WebLogAspect.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/srvrestaurant/common.ftl" afterPath="$PROJECT_DIR$/src/main/resources/templates/srvrestaurant/common.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/frontframe/widget/pageGrid.html" afterPath="$PROJECT_DIR$/src/main/resources/static/frontframe/widget/pageGrid.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/common/js/pageGrid.js" afterPath="$PROJECT_DIR$/src/main/resources/static/common/js/pageGrid.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/common/js/whole/setting.js" afterPath="$PROJECT_DIR$/src/main/resources/static/common/js/whole/setting.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/common/js/uploadTool.js" afterPath="$PROJECT_DIR$/src/main/resources/static/common/js/uploadTool.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="a6552166-08dc-4430-abdc-ff5aeb94aa63" name="Default" comment="" />
     <ignored path="cy-fast.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -219,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="35" column="10" selection-start-line="35" selection-start-column="10" selection-end-line="35" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -228,8 +65,8 @@
       <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.548387">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.28387097">
+              <caret line="459" column="15" selection-start-line="459" selection-start-column="15" selection-end-line="459" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -1007,8 +844,8 @@
       <method />
     </configuration>
     <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Application.R" />
-      <item index="1" class="java.lang.String" itemvalue="Spring Boot.start" />
+      <item index="0" class="java.lang.String" itemvalue="Spring Boot.start" />
+      <item index="1" class="java.lang.String" itemvalue="Application.R" />
     </list>
     <recent_temporary>
       <list size="1">
@@ -1028,12 +865,12 @@
       <updated>1561429061847</updated>
       <workItem from="1561429062439" duration="1273000" />
       <workItem from="1561455782350" duration="3438000" />
-      <workItem from="1561510874427" duration="19390000" />
+      <workItem from="1561510874427" duration="20505000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9126000" />
+    <option name="totallyTimeSpent" value="10241000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -1540,14 +1377,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/common/js/whole/setting.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/CommparaMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1592,18 +1421,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/common/js/whole/setting.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="35" column="10" selection-start-line="35" selection-start-column="10" selection-end-line="35" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.548387">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.28387097">
+          <caret line="459" column="15" selection-start-line="459" selection-start-column="15" selection-end-line="459" selection-end-column="15" />
           <folding />
         </state>
       </provider>
