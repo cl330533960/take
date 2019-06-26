@@ -88,6 +88,33 @@
 
             return data;
         },
+        /**获取数据 by chenyi 2017/7/5*/
+        getDataByTable: function (tableName) {
+            /**localStorage是否已存在该数据*/
+            var data = $t.getStorageItem(tableName);
+            if (!data) {
+                $.ajax({
+                    url: $s.getDataByTable,
+                    async: false,
+                    data: {tableName: tableName},
+                    type: 'post',
+                    dataType: "json",
+                    success: function (R) {
+                        if (R.code == 0) {
+                            data = R;
+                            /**设置localStorage缓存*/
+                            $t.setStorageItem(tableName, data);
+                        } else {
+                            data = {};
+                            alert(R.msg);
+                        }
+                    }
+                });
+
+            }
+
+            return data;
+        },
         /**获取数据 by chenyi 2017/7/19*/
         getDataByEnum: function (enumName) {
             /**localStorage是否已存在该数据*/
@@ -198,6 +225,8 @@
                     var render = params.render;
                     var enumName = params.enumName;
                     var codeName = params.codeName;
+                    var multiple = params.isMultiple || "";
+                    var tableName = params.tableName;
                     //是否是操作列
                     var operate = params.operate || "false";
                     var hide = params.hide || "false";
@@ -235,14 +264,38 @@
                                 }
                                 //如果是表码
                                 if (codeName != null && codeName != undefined && codeName != "") {
-
-                                    var codeValues = PageGrid.getDataByCode(codeName).data || "";
+                                    if(multiple == "true"){
+                                        var multipleArray = new Array();
+                                        $.each(data[i][key].split(','), function(i,val){
+                                            var codeValues = PageGrid.getDataByCode(codeName).data || "";
+                                            for (var _code in codeValues) {
+                                                if (codeValues[_code].code == val) {
+                                                    multipleArray.push(codeValues[_code].value);
+                                                }
+                                            }
+                                        });
+                                        data[i][key] = multipleArray.join(',');
+                                    }else {
+                                        var codeValues = PageGrid.getDataByCode(codeName).data || "";
+                                        for (var _code in codeValues) {
+                                            if (codeValues[_code].code == data[i][key]) {
+                                                data[i][key] = codeValues[_code].value
+                                            }
+                                        }
+                                    }
+                                }
+                                //如果是数据表
+                                if (tableName != null && tableName != undefined && tableName != "") {
+                                    console.log(tableName);
+                                    var codeValues = PageGrid.getDataByTable(tableName).data || "";
                                     for (var _code in codeValues) {
                                         if (codeValues[_code].code == data[i][key]) {
                                             data[i][key] = codeValues[_code].value
                                         }
                                     }
+
                                 }
+
                                 //如果有渲染的方法 先进去渲染方法
                                 if (render != null && render != undefined && render != "") {
 

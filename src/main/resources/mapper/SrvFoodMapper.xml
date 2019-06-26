@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvFoodDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.SrvFood" id="srvFoodMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="scale" column="scale"/>
+        <result property="cal" column="cal"/>
+        <result property="price" column="price"/>
+        <result property="foodType" column="food_type"/>
+        <result property="hotCold" column="hot_cold"/>
+        <result property="chianId" column="chian_id"/>
+        <result property="restaurantId" column="restaurant_id"/>
+        <result property="isAllRestaurant" column="is_all_restaurant"/>
+        <result property="remark" column="remark"/>
+        <result property="status" column="status"/>
+        <result property="sysPrice" column="sys_price"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.SrvFood">
+		select * from srv_food where id = #{value}
+	</select>
+
+	<select id="getList" resultType="xin.cymall.entity.SrvFood">
+		select * from srv_food t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_food t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="name != null and name != ''"> and t.name = #{name} </if>
+    		<if test="nameVague != null and nameVague != ''"> and t.name like concat('%',#{nameVague},'%') </if>
+            <if test="scale != null and scale != ''"> and t.scale = #{scale} </if>
+    		<if test="scaleVague != null and scaleVague != ''"> and t.scale like concat('%',#{scaleVague},'%') </if>
+            <if test="cal != null and cal != ''"> and t.cal = #{cal} </if>
+    		<if test="calVague != null and calVague != ''"> and t.cal like concat('%',#{calVague},'%') </if>
+            <if test="price != null and price != ''"> and t.price = #{price} </if>
+    		<if test="priceVague != null and priceVague != ''"> and t.price like concat('%',#{priceVague},'%') </if>
+            <if test="foodType != null and foodType != ''"> and t.food_type = #{foodType} </if>
+    		<if test="foodTypeVague != null and foodTypeVague != ''"> and t.food_type like concat('%',#{foodTypeVague},'%') </if>
+            <if test="hotCold != null and hotCold != ''"> and t.hot_cold = #{hotCold} </if>
+    		<if test="hotColdVague != null and hotColdVague != ''"> and t.hot_cold like concat('%',#{hotColdVague},'%') </if>
+            <if test="chianId != null and chianId != ''"> and t.chian_id = #{chianId} </if>
+    		<if test="chianIdVague != null and chianIdVague != ''"> and t.chian_id like concat('%',#{chianIdVague},'%') </if>
+            <if test="restaurantId != null and restaurantId != ''"> and t.restaurant_id = #{restaurantId} </if>
+    		<if test="restaurantIdVague != null and restaurantIdVague != ''"> and t.restaurant_id like concat('%',#{restaurantIdVague},'%') </if>
+            <if test="isAllRestaurant != null and isAllRestaurant != ''"> and t.is_all_restaurant = #{isAllRestaurant} </if>
+    		<if test="isAllRestaurantVague != null and isAllRestaurantVague != ''"> and t.is_all_restaurant like concat('%',#{isAllRestaurantVague},'%') </if>
+            <if test="remark != null and remark != ''"> and t.remark = #{remark} </if>
+    		<if test="remarkVague != null and remarkVague != ''"> and t.remark like concat('%',#{remarkVague},'%') </if>
+            <if test="status != null and status != ''"> and t.status = #{status} </if>
+    		<if test="statusVague != null and statusVague != ''"> and t.status like concat('%',#{statusVague},'%') </if>
+            <if test="sysPrice != null and sysPrice != ''"> and t.sys_price = #{sysPrice} </if>
+    		<if test="sysPriceVague != null and sysPriceVague != ''"> and t.sys_price like concat('%',#{sysPriceVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.SrvFood">
+		insert into srv_food
+		(
+			`id`, 
+			`name`, 
+			`scale`, 
+			`cal`, 
+			`price`, 
+			`food_type`, 
+			`hot_cold`, 
+			`chian_id`, 
+			`restaurant_id`, 
+			`is_all_restaurant`, 
+			`remark`, 
+			`status`, 
+			`sys_price`,
+			image_path,
+			use_scope,
+			update_time
+
+		)
+		values
+		(
+			#{id}, 
+			#{name}, 
+			#{scale}, 
+			#{cal}, 
+			#{price}, 
+			#{foodType}, 
+			#{hotCold}, 
+			#{chianId}, 
+			#{restaurantId}, 
+			#{isAllRestaurant}, 
+			#{remark}, 
+			#{status}, 
+			#{sysPrice},
+			#{imagePath},
+			#{useScope},
+			now()
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.SrvFood">
+		update srv_food 
+		<set>
+			update_time = now(),
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="scale != null">`scale` = #{scale}, </if>
+			<if test="cal != null">`cal` = #{cal}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="foodType != null">`food_type` = #{foodType}, </if>
+			<if test="hotCold != null">`hot_cold` = #{hotCold}, </if>
+			<if test="chianId != null">`chian_id` = #{chianId}, </if>
+			<if test="restaurantId != null">`restaurant_id` = #{restaurantId}, </if>
+			<if test="isAllRestaurant != null">`is_all_restaurant` = #{isAllRestaurant}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="sysPrice != null">`sys_price` = #{sysPrice},</if>
+			<if test="imagePath != null">`image_path` = #{imagePath},</if>
+			<if test="useScope != null">`use_scope` = #{useScope},</if>
+
+
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_food where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_food where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

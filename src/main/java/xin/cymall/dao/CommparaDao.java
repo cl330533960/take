@@ -17,4 +17,6 @@ public interface CommparaDao extends BaseDao<Commpara> {
     List<Commpara> getCodeValues(Map<String, Object> params);
 
     List<Commpara> findByVerify(Commpara commpara);
+
+    List<Commpara> getTableValues(Map<String, Object> params);
 }

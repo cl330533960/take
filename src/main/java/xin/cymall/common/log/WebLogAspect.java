@@ -48,14 +48,14 @@ public class WebLogAspect {
         HttpServletRequest request = attributes.getRequest();
 
         // 记录下请求内容
-        logger.info("URL : " + request.getRequestURL().toString());
-        logger.info("HTTP_METHOD : " + request.getMethod());
-        logger.info("IP : " + request.getRemoteAddr());
-        logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+//        logger.info("URL : " + request.getRequestURL().toString());
+//        logger.info("HTTP_METHOD : " + request.getMethod());
+//        logger.info("IP : " + request.getRemoteAddr());
+//        logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+//        logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
         //获取方法日志注解
         String value=getControllerMethodDescription(joinPoint);
-        logger.info("SysLog : " + value);
+//        logger.info("SysLog : " + value);
 
         if(!StringUtil.isEmpty(value)){
             // TODO: 2017/12/28  插入数据库......

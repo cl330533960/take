@@ -91,6 +91,23 @@ public class GetDataController {
     /**
      * @param
      * @author chenyi
+     * @Description 通过表码获取数据列表
+     * @date date 2017-7-20
+     */
+    @ResponseBody
+    @RequestMapping("/getTableValue")
+    public R getTableValue(@RequestParam Map<String, Object> params) {
+        List<Commpara> sysCodeList = null;
+        if (params.get("tableName") != null) {
+            sysCodeList = commparaService.getTableValues(params);
+        }
+        return R.ok().put("data", sysCodeList);
+    }
+
+
+    /**
+     * @param
+     * @author chenyi
      * @Description oss文件上传
      * @date date 2017-7-20
      */
@@ -162,39 +179,26 @@ public class GetDataController {
      */
     @ResponseBody
     @RequestMapping("/uploads")
-    public R uploads(@RequestParam("uploadFile") MultipartFile[] file, HttpServletRequest request) throws Exception {
+    public R uploads(@RequestParam("file") MultipartFile[] files, HttpServletRequest request) throws Exception {
 
-        if (file[0].isEmpty()) {
-            throw new MyException("上传文件不能为空");
+        if (files.length > 0) {
+            throw new MyException("请选择上传文件");
         }
-        String fileName = file[0].getOriginalFilename();
-        String _extName = fileName.substring(fileName.indexOf("."), fileName.length());//获取扩展名
-        Long size = file[0].getSize();
-//        if (size > 1 * 1024 * 1024) {
-//            throw new MyException("图片不能大于1M");
-//        }
 
-        //上传文件
-        String url = uploadImage(file[0].getOriginalFilename(), file[0].getInputStream());
-        //存到本地文件
-        //String url = "/statics/img/timg.jpg";
-        String relationId = request.getParameter("relationId");
-        File uploadFile = new File();
-        uploadFile.setUploadId(relationId);
-        uploadFile.setFileName(fileName);
-        uploadFile.setFileSize(size.toString());
-        uploadFile.setCreateTime(new Date());
-        uploadFile.setUrl(url);
-        //获取文件类型
-        boolean isPicture = FileUtil.isPicture(fileName);
-        if (isPicture) {
-            uploadFile.setFileType("image");
-        } else {
-            uploadFile.setFileType(_extName);
+        String imagePath = "";
+        for(int i = 0; i < files.length; i++){
+            if(files[i].getSize() == 0){
+                throw new MyException("上传文件不能为空");
+            }
+            if (files[i].getSize() > 5 * 1024 * 1024) {
+                throw new MyException("图片不能大于5M");
+            }
+            imagePath += uploadImage(files[i]) + ",";
         }
-        fileService.save(uploadFile);
+        if(imagePath.endsWith(",")) imagePath = imagePath.substring(0,imagePath.lastIndexOf(","));
+        return R.ok().put("url", imagePath);
 
-        return R.ok().put("url", url).put("fileId", uploadFile.getId());
+
     }
 
 

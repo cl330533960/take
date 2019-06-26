@@ -1,5 +1,6 @@
 package xin.cymall.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
+import xin.cymall.common.utils.EnumBean;
 import xin.cymall.entity.SrvRestaurant;
 import xin.cymall.service.SrvRestaurantService;
 import xin.cymall.common.utils.PageUtils;
@@ -132,7 +134,7 @@ public class SrvRestaurantController {
     @RequiresPermissions("srvrestaurant:update")
     public R enable(@RequestBody String[] ids){
         String stateValue=StateEnum.ENABLE.getCode();
-		srvRestaurantService.updateState(ids,stateValue);
+		srvRestaurantService.updateState(ids, stateValue);
         return R.ok();
     }
     /**
@@ -160,5 +162,25 @@ public class SrvRestaurantController {
 		
 		return R.ok();
 	}
-	
+
+    /**
+     * 获取下级地区
+     */
+    @ResponseBody
+    @RequiresPermissions("srvrestaurant:list")
+    @RequestMapping("normalList")
+    public R normalList() {
+        List<SrvRestaurant> areaList = srvRestaurantService.getList(null);
+        List<EnumBean> list = new ArrayList<>();
+        if (areaList != null && areaList.size() > 0) {
+            for (int i = 0; i < areaList.size(); i++) {
+                EnumBean bean = new EnumBean();
+                bean.setCode(areaList.get(i).getId());
+                bean.setValue(areaList.get(i).getName());
+                list.add(bean);
+            }
+        }
+        return R.ok().put("data", list);
+    }
+
 }

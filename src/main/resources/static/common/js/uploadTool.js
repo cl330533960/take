@@ -49,12 +49,13 @@
                 '</blockquote>',
                 ' </div>'].join(""));
             if (_value != "") {
+                $grid.val(_value);
                 var values = _value.split(",");
                 for (var i = 0; i < values.length; i++) {
                     $("#" + _uploadId + "_imgs").append(
                         ['<div class="file-div">',
-                            '<img class="layui-upload-img"  src="' + values[i] + '">',
-                            '<input type="hidden" name="' + _name + ' ">',
+                            '<img class="layui-upload-img"  src="/getData/showImage?imagePath=' + values[i] + '">',
+                            '<input type="hidden"  value ="' +values[i]+ '" name="' + _name + '">',
                             '<div class="file-delete" ><span class="delete-list">',
                             '<i class="fa fa-undo"></i>',
                             '<i class="fa fa-repeat"></i>',
@@ -77,8 +78,8 @@
                         if (res.code === 0) {
                             $("#" + _uploadId + "_imgs").append(
                                 ['<div class="file-div">',
-                                    '<img class="layui-upload-img"   src="' + res.url + '">',
-                                    '<input type="hidden" name="' + _name + ' ">',
+                                    '<img class="layui-upload-img"   src="/getData/showImage?imagePath=' + res.url + '">',
+                                    '<input type="hidden" name="' + _name + '" value ="' +res.url+ '">',
                                     '<div class="file-delete" ><span class="delete-list"> ',
                                     '<i class="fa fa-undo"></i>',
                                     '<i class="fa fa-repeat"></i>',

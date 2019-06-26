@@ -71,4 +71,11 @@ public class CommparaServiceImpl implements CommparaService {
 		return commparaDao.findByVerify(commpara);
 	}
 
+
+	@Override
+	public List<Commpara> getTableValues(Map<String, Object> params) {
+		return commparaDao.getTableValues(params);
+	}
+
+
 }

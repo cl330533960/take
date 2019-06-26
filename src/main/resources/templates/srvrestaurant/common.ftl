@@ -11,7 +11,7 @@
             <label class="layui-form-label">连锁店名</label>
               <div class="layui-input-normal">
                   <div cyType="selectTool" cyProps="codeName:'chainCode'" name="chainCode"
-                       value="${(model.healthLevel)!""}" class="layui-input-inline"></div>
+                       value="${(model.chainCode)!""}" class="layui-input-inline"></div>
               </div>
         </div>
 
@@ -94,7 +94,7 @@
         <div class="layui-form-item">${(model.bucket)!""}
             <label class="layui-form-label">备注</label>
             <div class="layui-input-normal">
-                <textarea  maxlength="200" placeholder="请输入" rows="8" cols="60" >${(model.remark)!""}</textarea>
+                <textarea  maxlength="200" placeholder="请输入" class="layui-textarea"  >${(model.remark)!""}</textarea>
                 <#--<input type="text"  name="remark" maxlength="200"-->
                  <#--value="${(model.remark)!""}"  placeholder="请输入"  class="layui-input">-->
             </div>

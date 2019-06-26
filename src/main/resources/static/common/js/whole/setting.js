@@ -6,6 +6,9 @@
 var $s ={
     //通过表码获取值得后台请求地址
     getDataByCode:"/getData/getCodeValues",
+    //通过数据表获取值得后台请求地址
+    getDataByTable:"/getData/getTableValue",
     //通过枚举获取值得后台请求地址
     getDataByEnum:"/getData/getEnum"
+
 };
