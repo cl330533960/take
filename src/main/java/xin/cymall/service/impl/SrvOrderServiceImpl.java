@@ -58,7 +58,7 @@ public class SrvOrderServiceImpl implements SrvOrderService {
     public void updateState(String[] ids,String stateValue) {
         for (String id:ids){
 			SrvOrder srvOrder=get(id);
-			srvOrder.setState(stateValue);
+			srvOrder.setStatus(stateValue);
             update(srvOrder);
         }
     }
