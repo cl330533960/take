@@ -29,15 +29,15 @@
     </div>
 </form>
 <div class="layui-btn-group">
-        <@shiro.hasPermission name="srvmerchanopinion:save">
-        <button class="layui-btn" onclick="addPage('/srvmerchanopinion/add')">
-            <i class="fa fa-plus">&nbsp;</i>增加
-        </button>
-        </@shiro.hasPermission>
+        <#--<@shiro.hasPermission name="srvmerchanopinion:save">-->
+        <#--<button class="layui-btn" onclick="addPage('/srvmerchanopinion/add')">-->
+            <#--<i class="fa fa-plus">&nbsp;</i>增加-->
+        <#--</button>-->
+        <#--</@shiro.hasPermission>-->
         <@shiro.hasPermission name="srvmerchanopinion:update">
-        <button class="layui-btn" onclick="editPage('srvMerchanopinionTable','/srvmerchanopinion/edit')">
-            <i class="fa fa-pencil-square-o">&nbsp;</i>修改
-        </button>
+        <#--<button class="layui-btn" onclick="editPage('srvMerchanopinionTable','/srvmerchanopinion/edit')">-->
+            <#--<i class="fa fa-pencil-square-o">&nbsp;</i>修改-->
+        <#--</button>-->
          <button class="layui-btn layui-btn-green" onclick="updateState('批量通过','srvMerchanopinionTable','/srvmerchanopinion/enable')">
             <i class="fa fa-check-square-o">&nbsp;</i>通过
         </button>
@@ -78,7 +78,7 @@
 		          <th width="10%" param="{name:'phone'}">电话号码</th>
 			                        <!--isPrimary：渲染列-->
             <#--<th width="10%" param="{name:'state',enumName:'StateEnum',render:'Render.customState'}">状态</th>-->
-            <th width="10%" param="{operate:'true',buttons:'Render.state,Render.edit'}">操作</th>
+            <#--<th width="10%" param="{operate:'true',buttons:'Render.state,Render.edit'}">操作</th>-->
         </tr>
         </thead>
     </table>
