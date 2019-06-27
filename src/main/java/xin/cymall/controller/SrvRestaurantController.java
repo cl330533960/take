@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import xin.cymall.common.enumresource.DefaultEnum;
 import xin.cymall.common.enumresource.StateEnum;
 import xin.cymall.common.log.SysLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -15,10 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import xin.cymall.common.utils.EnumBean;
 import xin.cymall.entity.SrvRestaurant;
+import xin.cymall.entity.SysUser;
 import xin.cymall.service.SrvRestaurantService;
 import xin.cymall.common.utils.PageUtils;
 import xin.cymall.common.utils.Query;
 import xin.cymall.common.utils.R;
+import xin.cymall.service.SysUserService;
 
 
 /**
@@ -30,9 +34,11 @@ import xin.cymall.common.utils.R;
  */
 @Controller
 @RequestMapping("srvrestaurant")
-public class SrvRestaurantController {
+public class SrvRestaurantController extends  AbstractController{
 	@Autowired
 	private SrvRestaurantService srvRestaurantService;
+    @Autowired
+    private SysUserService sysUserService;
 	
     /**
      * 跳转到列表页
@@ -105,8 +111,18 @@ public class SrvRestaurantController {
 	@RequiresPermissions("srvrestaurant:save")
 	public R save(@RequestBody SrvRestaurant srvRestaurant){
         String[] parentids = srvRestaurant.getParentAreaIds();
-        srvRestaurant.setArea(String.join(",", parentids));
-		srvRestaurantService.save(srvRestaurant);
+        if(parentids.length > 0)
+            srvRestaurant.setArea(String.join(",", parentids));
+
+        SysUser existUser = sysUserService.queryByUserName(srvRestaurant.getUsername());
+        if(existUser!=null){
+            return R.error("用户名已存在!");
+        }
+        SysUser user = new SysUser();
+        user.setPassword(DefaultEnum.PASSWORD.getCode());
+        user.setCreateUserId(getUserId());
+        user.setStatus(Integer.parseInt(StateEnum.ENABLE.getCode()));
+		srvRestaurantService.save(srvRestaurant,user);
 		return R.ok();
 	}
 	

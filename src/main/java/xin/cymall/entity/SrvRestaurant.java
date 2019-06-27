@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 
 
@@ -74,6 +75,12 @@ public class SrvRestaurant implements Serializable {
 	private String lat;
 
 	private String[] parentAreaIds;
+
+	private String username;
+
+	private List<Long> roleIdList;
+
+	private Long userId;
 
 	/**
 	 * 设置�?
@@ -410,5 +417,29 @@ public class SrvRestaurant implements Serializable {
 
 	public void setParentAreaIds(String[] parentAreaIds) {
 		this.parentAreaIds = parentAreaIds;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public List<Long> getRoleIdList() {
+		return roleIdList;
+	}
+
+	public void setRoleIdList(List<Long> roleIdList) {
+		this.roleIdList = roleIdList;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }

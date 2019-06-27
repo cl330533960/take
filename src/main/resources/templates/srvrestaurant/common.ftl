@@ -101,7 +101,9 @@
         </div>
 
 
-        <div class="layui-form-item">
+
+
+            <div class="layui-form-item">
             <label class="layui-form-label"><span class="span_must">*</span>状态</label>
             <div cyType="radioTool" cyProps="codeName:'busstatus'" name="status"
                  value="${(model.status)!"1"}" class="layui-input-inline"></div>

@@ -147,7 +147,9 @@
 			`bus_hour_end`, 
 			`is_all_day`, 
 			`lng`, 
-			`lat`
+			`lat`,
+			user_id,
+			user_name
 		)
 		values
 		(
@@ -177,7 +179,9 @@
 			#{busHourEnd}, 
 			#{isAllDay}, 
 			#{lng}, 
-			#{lat}
+			#{lat},
+			#{userId},
+			#{username}
 		)
 	</insert>
 	 

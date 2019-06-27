@@ -1,6 +1,7 @@
 package xin.cymall.service;
 
 import xin.cymall.entity.SrvRestaurant;
+import xin.cymall.entity.SysUser;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface SrvRestaurantService {
 	
 	int getCount(Map<String, Object> map);
 	
-	void save(SrvRestaurant srvRestaurant);
+	void save(SrvRestaurant srvRestaurant,SysUser user);
 	
 	void update(SrvRestaurant srvRestaurant);
 	

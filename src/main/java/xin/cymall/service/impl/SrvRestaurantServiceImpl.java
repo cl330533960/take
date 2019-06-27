@@ -10,10 +10,11 @@ import xin.cymall.common.utils.StringUtil;
 import xin.cymall.common.utils.UUID;
 import xin.cymall.dao.AreaDao;
 import xin.cymall.dao.SrvRestaurantDao;
+import xin.cymall.dao.SysUserDao;
 import xin.cymall.entity.SrvRestaurant;
+import xin.cymall.entity.SysUser;
 import xin.cymall.service.SrvRestaurantService;
-
-
+import xin.cymall.service.SysUserService;
 
 
 @Service("srvRestaurantService")
@@ -21,6 +22,8 @@ import xin.cymall.service.SrvRestaurantService;
 public class SrvRestaurantServiceImpl implements SrvRestaurantService {
 	@Autowired
 	private SrvRestaurantDao srvRestaurantDao;
+	@Autowired
+	private SysUserService sysUserService;
 
 	@Autowired
 	private AreaDao areaDao;
@@ -41,9 +44,15 @@ public class SrvRestaurantServiceImpl implements SrvRestaurantService {
 	}
 
 	@Override
-	public void save(SrvRestaurant srvRestaurant){
+	@Transactional
+	public void save(SrvRestaurant srvRestaurant,SysUser user){
+		user.setUsername(srvRestaurant.getUsername());
+		user.setRoleIdList(srvRestaurant.getRoleIdList());
+		sysUserService.save(user);
 		srvRestaurant.setId(UUID.generateId());
+		srvRestaurant.setUserId(user.getUserId());
 		srvRestaurantDao.save(srvRestaurant);
+
 	}
 
 	@Override
