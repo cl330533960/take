@@ -79,7 +79,6 @@ public class FnMethod {
 
         try {
 
-
             /**
              * 将参数构造成一个json
              */

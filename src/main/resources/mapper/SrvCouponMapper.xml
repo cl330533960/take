@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvCouponDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.SrvCoupon" id="srvCouponMap">
+        <result property="id" column="id"/>
+        <result property="amount" column="amount"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="userId" column="user_id"/>
+        <result property="isUse" column="is_use"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.SrvCoupon">
+		select * from srv_coupon where id = #{value}
+	</select>
+
+	<select id="getList" resultType="xin.cymall.entity.SrvCoupon">
+		select * from srv_coupon t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_coupon t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="amount != null and amount != ''"> and t.amount = #{amount} </if>
+    		<if test="amountVague != null and amountVague != ''"> and t.amount like concat('%',#{amountVague},'%') </if>
+            <if test="startTime != null and startTime != ''"> and t.start_time = #{startTime} </if>
+    		<if test="startTimeVague != null and startTimeVague != ''"> and t.start_time like concat('%',#{startTimeVague},'%') </if>
+            <if test="endTime != null and endTime != ''"> and t.end_time = #{endTime} </if>
+    		<if test="endTimeVague != null and endTimeVague != ''"> and t.end_time like concat('%',#{endTimeVague},'%') </if>
+            <if test="userId != null and userId != ''"> and t.user_id = #{userId} </if>
+    		<if test="userIdVague != null and userIdVague != ''"> and t.user_id like concat('%',#{userIdVague},'%') </if>
+            <if test="isUse != null and isUse != ''"> and t.is_use = #{isUse} </if>
+    		<if test="isUseVague != null and isUseVague != ''"> and t.is_use like concat('%',#{isUseVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.SrvCoupon">
+		insert into srv_coupon
+		(
+			`id`, 
+			`amount`, 
+			`start_time`, 
+			`end_time`, 
+			`user_id`, 
+			`is_use`
+		)
+		values
+		(
+			#{id}, 
+			#{amount}, 
+			#{startTime}, 
+			#{endTime}, 
+			#{userId}, 
+			#{isUse}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.SrvCoupon">
+		update srv_coupon 
+		<set>
+			<if test="amount != null">`amount` = #{amount}, </if>
+			<if test="startTime != null">`start_time` = #{startTime}, </if>
+			<if test="endTime != null">`end_time` = #{endTime}, </if>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="isUse != null">`is_use` = #{isUse}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_coupon where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_coupon where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

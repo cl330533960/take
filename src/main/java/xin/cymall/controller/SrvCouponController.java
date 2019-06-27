@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
-import xin.cymall.entity.SrvDiscounreserve;
-import xin.cymall.service.SrvDiscounreserveService;
+import xin.cymall.entity.SrvCoupon;
+import xin.cymall.service.SrvCouponService;
 import xin.cymall.common.utils.PageUtils;
 import xin.cymall.common.utils.Query;
 import xin.cymall.common.utils.R;
@@ -23,22 +23,22 @@ import xin.cymall.common.utils.R;
  * 
  * @author chenyi
  * @email 228112142@qq.com
- * @date 2019-06-25 17:24:03
- * 打折预定chen
+ * @date 2019-06-27 13:47:41
+ * 优惠券管理
  */
 @Controller
-@RequestMapping("srvdiscounreserve")
-public class SrvDiscounreserveController {
+@RequestMapping("srvcoupon")
+public class SrvCouponController {
 	@Autowired
-	private SrvDiscounreserveService srvDiscounreserveService;
+	private SrvCouponService srvCouponService;
 	
     /**
      * 跳转到列表页
      */
     @RequestMapping("/list")
-    @RequiresPermissions("srvdiscounreserve:list")
+    @RequiresPermissions("srvcoupon:list")
     public String list() {
-        return "srvdiscounreserve/list";
+        return "srvcoupon/list";
     }
     
 	/**
@@ -46,15 +46,15 @@ public class SrvDiscounreserveController {
 	 */
     @ResponseBody
 	@RequestMapping("/listData")
-	@RequiresPermissions("srvdiscounreserve:list")
+	@RequiresPermissions("srvcoupon:list")
 	public R listData(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
 
-		List<SrvDiscounreserve> srvDiscounreserveList = srvDiscounreserveService.getList(query);
-		int total = srvDiscounreserveService.getCount(query);
+		List<SrvCoupon> srvCouponList = srvCouponService.getList(query);
+		int total = srvCouponService.getCount(query);
 		
-		PageUtils pageUtil = new PageUtils(srvDiscounreserveList, total, query.getLimit(), query.getPage());
+		PageUtils pageUtil = new PageUtils(srvCouponList, total, query.getLimit(), query.getPage());
 		
 		return R.ok().put("page", pageUtil);
 	}
@@ -63,20 +63,20 @@ public class SrvDiscounreserveController {
      * 跳转到新增页面
      **/
     @RequestMapping("/add")
-    @RequiresPermissions("srvdiscounreserve:save")
+    @RequiresPermissions("srvcoupon:save")
     public String add(){
-        return "srvdiscounreserve/add";
+        return "srvcoupon/add";
     }
 
     /**
      *   跳转到修改页面
      **/
     @RequestMapping("/edit/{id}")
-    @RequiresPermissions("srvdiscounreserve:update")
+    @RequiresPermissions("srvcoupon:update")
     public String edit(Model model, @PathVariable("id") String id){
-		SrvDiscounreserve srvDiscounreserve = srvDiscounreserveService.get(id);
-        model.addAttribute("model",srvDiscounreserve);
-        return "srvdiscounreserve/edit";
+		SrvCoupon srvCoupon = srvCouponService.get(id);
+        model.addAttribute("model",srvCoupon);
+        return "srvcoupon/edit";
     }
 
 	/**
@@ -84,10 +84,10 @@ public class SrvDiscounreserveController {
 	 */
     @ResponseBody
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("srvdiscounreserve:info")
+    @RequiresPermissions("srvcoupon:info")
     public R info(@PathVariable("id") String id){
-        SrvDiscounreserve srvDiscounreserve = srvDiscounreserveService.get(id);
-        return R.ok().put("srvDiscounreserve", srvDiscounreserve);
+        SrvCoupon srvCoupon = srvCouponService.get(id);
+        return R.ok().put("srvCoupon", srvCoupon);
     }
 
     /**
@@ -96,9 +96,9 @@ public class SrvDiscounreserveController {
     @ResponseBody
     @SysLog("保存")
 	@RequestMapping("/save")
-	@RequiresPermissions("srvdiscounreserve:save")
-	public R save(@RequestBody SrvDiscounreserve srvDiscounreserve){
-		srvDiscounreserveService.save(srvDiscounreserve);
+	@RequiresPermissions("srvcoupon:save")
+	public R save(@RequestBody SrvCoupon srvCoupon){
+		srvCouponService.save(srvCoupon);
 		
 		return R.ok();
 	}
@@ -109,9 +109,9 @@ public class SrvDiscounreserveController {
     @ResponseBody
     @SysLog("修改")
 	@RequestMapping("/update")
-	@RequiresPermissions("srvdiscounreserve:update")
-	public R update(@RequestBody SrvDiscounreserve srvDiscounreserve){
-		srvDiscounreserveService.update(srvDiscounreserve);
+	@RequiresPermissions("srvcoupon:update")
+	public R update(@RequestBody SrvCoupon srvCoupon){
+		srvCouponService.update(srvCoupon);
 		
 		return R.ok();
 	}
@@ -122,10 +122,10 @@ public class SrvDiscounreserveController {
     @ResponseBody
     @SysLog("启用")
     @RequestMapping("/enable")
-    @RequiresPermissions("srvdiscounreserve:update")
+    @RequiresPermissions("srvcoupon:update")
     public R enable(@RequestBody String[] ids){
         String stateValue=StateEnum.ENABLE.getCode();
-		srvDiscounreserveService.updateState(ids,stateValue);
+		srvCouponService.updateState(ids,stateValue);
         return R.ok();
     }
     /**
@@ -134,10 +134,10 @@ public class SrvDiscounreserveController {
     @ResponseBody
     @SysLog("禁用")
     @RequestMapping("/limit")
-    @RequiresPermissions("srvdiscounreserve:update")
+    @RequiresPermissions("srvcoupon:update")
     public R limit(@RequestBody String[] ids){
         String stateValue=StateEnum.LIMIT.getCode();
-		srvDiscounreserveService.updateState(ids,stateValue);
+		srvCouponService.updateState(ids,stateValue);
         return R.ok();
     }
 	
@@ -147,9 +147,9 @@ public class SrvDiscounreserveController {
     @ResponseBody
     @SysLog("删除")
 	@RequestMapping("/delete")
-	@RequiresPermissions("srvdiscounreserve:delete")
+	@RequiresPermissions("srvcoupon:delete")
 	public R delete(@RequestBody String[] ids){
-		srvDiscounreserveService.deleteBatch(ids);
+		srvCouponService.deleteBatch(ids);
 		
 		return R.ok();
 	}
