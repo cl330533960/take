@@ -63,7 +63,10 @@
 			`start_time`, 
 			`end_time`, 
 			`user_id`, 
-			`is_use`
+			`is_use`,
+			send_time,
+			`type`
+
 		)
 		values
 		(
@@ -72,7 +75,9 @@
 			#{startTime}, 
 			#{endTime}, 
 			#{userId}, 
-			#{isUse}
+			#{isUse},
+			#{sendTime},
+			#{type}
 		)
 	</insert>
 	 

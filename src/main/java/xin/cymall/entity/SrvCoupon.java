@@ -28,6 +28,10 @@ public class SrvCoupon implements Serializable {
 	/**是否使用**/
 	private String isUse;
 
+	private Date sendTime;
+	private Date useTime;
+	private String type;
+
 	/**
 	 * 设置：主键ID
 	 */
@@ -99,5 +103,29 @@ public class SrvCoupon implements Serializable {
 	 */
 	public String getIsUse() {
 		return isUse;
+	}
+
+	public Date getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(Date sendTime) {
+		this.sendTime = sendTime;
+	}
+
+	public Date getUseTime() {
+		return useTime;
+	}
+
+	public void setUseTime(Date useTime) {
+		this.useTime = useTime;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

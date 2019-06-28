@@ -13,6 +13,12 @@ public class Constant {
 	/** 超级管理员ID */
 	public static final int SUPER_ADMIN = 1;
 
+    public static final String GETUI_KEY = "getui_token";
+    public static final String appId = "UKB7grhkK196I42UxQ6B15";
+    public static final String appSecret ="Rgqcz78OCZ6Zue5KvbOYF2";
+    public static final String appKey = "ehVt9jkXfs53Zur3ZNt5v2";
+    public static final String  masterSecret = "VNFFbJmzKS9tzttDgxDWY2";
+
 	/**
 	 * 菜单类型
 	 * 

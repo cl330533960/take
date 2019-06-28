@@ -1,11 +1,10 @@
 package xin.cymall.common.fnopen.util;
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.Consts;
-import org.apache.http.HttpEntity;
-import org.apache.http.StatusLine;
+import org.apache.http.*;
 import org.apache.http.annotation.NotThreadSafe;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -17,9 +16,11 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import xin.cymall.common.utils.StringUtil;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -101,6 +102,38 @@ public class HttpClient {
             }
         }
         return null;
+    }
+
+
+    /*入参说明
+*
+* param url 请求地址
+* param jsonObject	请求的json数据
+* param encoding	编码格式
+*
+* */
+    public static JSONObject jsonPost(String url,String authtoken,String jsonStr, String encoding) {
+        CloseableHttpClient httpclient = HttpClientBuilder.create().build();
+
+        HttpPost post = new HttpPost(url);
+        if(!StringUtil.isEmpty(authtoken)){
+            post.setHeader("authtoken",authtoken);
+        }
+        JSONObject response = null;
+        try {
+            StringEntity s = new StringEntity(jsonStr);
+            s.setContentEncoding(encoding);
+            s.setContentType("application/json");//发送json数据需要设置contentType
+            post.setEntity(s);
+            HttpResponse res = httpclient.execute(post);
+            if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                String result = EntityUtils.toString(res.getEntity());// 返回json格式：
+                response = JSONObject.parseObject(result);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return response;
     }
 
 
