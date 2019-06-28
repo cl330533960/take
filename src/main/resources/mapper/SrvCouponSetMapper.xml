@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvCouponSetDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.SrvCouponSet" id="srvCouponSetMap">
+        <result property="id" column="id"/>
+        <result property="amount" column="amount"/>
+        <result property="validDay" column="valid_day"/>
+        <result property="type" column="type"/>
+        <result property="openClose" column="open_close"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.SrvCouponSet">
+		select * from srv_coupon_set where id = #{value}
+	</select>
+
+	<select id="getList" resultType="xin.cymall.entity.SrvCouponSet">
+		select * from srv_coupon_set t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_coupon_set t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="amount != null and amount != ''"> and t.amount = #{amount} </if>
+    		<if test="amountVague != null and amountVague != ''"> and t.amount like concat('%',#{amountVague},'%') </if>
+            <if test="validDay != null and validDay != ''"> and t.valid_day = #{validDay} </if>
+    		<if test="validDayVague != null and validDayVague != ''"> and t.valid_day like concat('%',#{validDayVague},'%') </if>
+            <if test="type != null and type != ''"> and t.type = #{type} </if>
+    		<if test="typeVague != null and typeVague != ''"> and t.type like concat('%',#{typeVague},'%') </if>
+            <if test="openClose != null and openClose != ''"> and t.open_close = #{openClose} </if>
+    		<if test="openCloseVague != null and openCloseVague != ''"> and t.open_close like concat('%',#{openCloseVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.SrvCouponSet">
+		insert into srv_coupon_set
+		(
+			`id`, 
+			`amount`, 
+			`valid_day`, 
+			`type`, 
+			`open_close`
+		)
+		values
+		(
+			#{id}, 
+			#{amount}, 
+			#{validDay}, 
+			#{type}, 
+			#{openClose}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.SrvCouponSet">
+		update srv_coupon_set 
+		<set>
+			<if test="amount != null">`amount` = #{amount}, </if>
+			<if test="validDay != null">`valid_day` = #{validDay}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="openClose != null">`open_close` = #{openClose}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_coupon_set where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_coupon_set where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
