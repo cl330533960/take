@@ -247,6 +247,24 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.7.3</version>
 		</dependency>
+		<!--个推maven-->
+		<!--<dependency>-->
+			<!--<groupId>com.gexin.platform</groupId>-->
+			<!--<artifactId>gexin-rp-sdk-http</artifactId>-->
+			<!--<version>4.1.0.3</version>-->
+		<!--</dependency>-->
+
+		<!--<dependency>-->
+			<!--<groupId>com.gexin.platform</groupId>-->
+			<!--<artifactId>gexin-rp-sdk-base</artifactId>-->
+			<!--<version>4.1.0.3</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>com.gexin.platform</groupId>-->
+			<!--<artifactId>gexin-rp-sdk-template</artifactId>-->
+			<!--<version>4.1.0.3</version>-->
+		<!--</dependency>-->
+
 
 		<dependency>
 			<groupId>com.gexin.platform</groupId>
@@ -256,6 +274,13 @@
 
 
 	</dependencies>
+
+	<!--<repositories>-->
+		<!--<repository>-->
+			<!--<id>getui-nexus</id>-->
+			<!--<url>http://mvn.gt.igexin.com/nexus/content/repositories/releases/</url>-->
+		<!--</repository>-->
+	<!--</repositories>-->
 
 	<build>
 		<!--<finalName>fast</finalName>-->
