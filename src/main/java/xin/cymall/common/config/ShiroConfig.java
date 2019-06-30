@@ -48,6 +48,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/favicon.ico", "anon");
         filterChainDefinitionMap.put("/captcha.jpg", "anon");
         filterChainDefinitionMap.put("/", "anon");
+        filterChainDefinitionMap.put("/api/**", "anon");
+        filterChainDefinitionMap.put("/wx/**", "anon");
         filterChainDefinitionMap.put("/**", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return bean;
