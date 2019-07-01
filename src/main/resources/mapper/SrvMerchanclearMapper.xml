@@ -30,7 +30,7 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
  	<select id="getCount" resultType="int">
 		select count(*) from srv_merchant_clear t  <include refid="where_clause" />
 	</select>

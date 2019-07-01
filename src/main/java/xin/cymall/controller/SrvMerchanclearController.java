@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
 import xin.cymall.entity.SrvMerchanclear;
+import xin.cymall.entity.SrvRestaurant;
 import xin.cymall.service.SrvMerchanclearService;
 import xin.cymall.common.utils.PageUtils;
 import xin.cymall.common.utils.Query;
@@ -38,6 +39,25 @@ public class SrvMerchanclearController {
     @RequiresPermissions("srvmerchanclear:list")
     public String list() {
         return "srvmerchanclear/list";
+    }
+
+
+    /**
+     * 列表数据
+     */
+    @ResponseBody
+    @RequestMapping("/listBalanceData")
+    @RequiresPermissions("srvmerchanclear:listBalance")
+    public R listBalanceData(@RequestParam Map<String, Object> params){
+        //查询列表数据
+        Query query = new Query(params);
+
+        List<SrvRestaurant> srvMerchanclearList = srvMerchanclearService.getBalanceList(query);
+        int total = srvMerchanclearService.getBalanceCount(query);
+
+        PageUtils pageUtil = new PageUtils(srvMerchanclearList, total, query.getLimit(), query.getPage());
+
+        return R.ok().put("page", pageUtil);
     }
     
 	/**

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvBaseSetDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.SrvBaseSet" id="srvBaseSetMap">
+        <result property="id" column="id"/>
+        <result property="bmi" column="bmi"/>
+        <result property="thin" column="thin"/>
+        <result property="normal" column="normal"/>
+        <result property="overWeight" column="over_weight"/>
+        <result property="obesity" column="obesity"/>
+        <result property="normalWeightUp" column="normal_weight_up"/>
+        <result property="normalWeightDown" column="normal_weight_down"/>
+        <result property="manBee" column="man_bee"/>
+        <result property="woman" column="woman"/>
+        <result property="sportRatio" column="sport_ratio"/>
+        <result property="overWeightHeatDown" column="over_weight_heat_down"/>
+        <result property="overWeightHeatUp" column="over_weight_heat_up"/>
+        <result property="obesityHeatDown" column="obesity_heat_down"/>
+        <result property="obesityHeatUp" column="obesity_heat_up"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.SrvBaseSet">
+		select * from srv_base_set where id = #{value}
+	</select>
+
+	<select id="getList" resultType="xin.cymall.entity.SrvBaseSet">
+		select * from srv_base_set t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_base_set t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="bmi != null and bmi != ''"> and t.bmi = #{bmi} </if>
+    		<if test="bmiVague != null and bmiVague != ''"> and t.bmi like concat('%',#{bmiVague},'%') </if>
+            <if test="thin != null and thin != ''"> and t.thin = #{thin} </if>
+    		<if test="thinVague != null and thinVague != ''"> and t.thin like concat('%',#{thinVague},'%') </if>
+            <if test="normal != null and normal != ''"> and t.normal = #{normal} </if>
+    		<if test="normalVague != null and normalVague != ''"> and t.normal like concat('%',#{normalVague},'%') </if>
+            <if test="overWeight != null and overWeight != ''"> and t.over_weight = #{overWeight} </if>
+    		<if test="overWeightVague != null and overWeightVague != ''"> and t.over_weight like concat('%',#{overWeightVague},'%') </if>
+            <if test="obesity != null and obesity != ''"> and t.obesity = #{obesity} </if>
+    		<if test="obesityVague != null and obesityVague != ''"> and t.obesity like concat('%',#{obesityVague},'%') </if>
+            <if test="normalWeightUp != null and normalWeightUp != ''"> and t.normal_weight_up = #{normalWeightUp} </if>
+    		<if test="normalWeightUpVague != null and normalWeightUpVague != ''"> and t.normal_weight_up like concat('%',#{normalWeightUpVague},'%') </if>
+            <if test="normalWeightDown != null and normalWeightDown != ''"> and t.normal_weight_down = #{normalWeightDown} </if>
+    		<if test="normalWeightDownVague != null and normalWeightDownVague != ''"> and t.normal_weight_down like concat('%',#{normalWeightDownVague},'%') </if>
+            <if test="manBee != null and manBee != ''"> and t.man_bee = #{manBee} </if>
+    		<if test="manBeeVague != null and manBeeVague != ''"> and t.man_bee like concat('%',#{manBeeVague},'%') </if>
+            <if test="woman != null and woman != ''"> and t.woman = #{woman} </if>
+    		<if test="womanVague != null and womanVague != ''"> and t.woman like concat('%',#{womanVague},'%') </if>
+            <if test="sportRatio != null and sportRatio != ''"> and t.sport_ratio = #{sportRatio} </if>
+    		<if test="sportRatioVague != null and sportRatioVague != ''"> and t.sport_ratio like concat('%',#{sportRatioVague},'%') </if>
+            <if test="overWeightHeatDown != null and overWeightHeatDown != ''"> and t.over_weight_heat_down = #{overWeightHeatDown} </if>
+    		<if test="overWeightHeatDownVague != null and overWeightHeatDownVague != ''"> and t.over_weight_heat_down like concat('%',#{overWeightHeatDownVague},'%') </if>
+            <if test="overWeightHeatUp != null and overWeightHeatUp != ''"> and t.over_weight_heat_up = #{overWeightHeatUp} </if>
+    		<if test="overWeightHeatUpVague != null and overWeightHeatUpVague != ''"> and t.over_weight_heat_up like concat('%',#{overWeightHeatUpVague},'%') </if>
+            <if test="obesityHeatDown != null and obesityHeatDown != ''"> and t.obesity_heat_down = #{obesityHeatDown} </if>
+    		<if test="obesityHeatDownVague != null and obesityHeatDownVague != ''"> and t.obesity_heat_down like concat('%',#{obesityHeatDownVague},'%') </if>
+            <if test="obesityHeatUp != null and obesityHeatUp != ''"> and t.obesity_heat_up = #{obesityHeatUp} </if>
+    		<if test="obesityHeatUpVague != null and obesityHeatUpVague != ''"> and t.obesity_heat_up like concat('%',#{obesityHeatUpVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.SrvBaseSet">
+		insert into srv_base_set
+		(
+			`id`, 
+			`bmi`, 
+			`thin`, 
+			`normal`, 
+			`over_weight`, 
+			`obesity`, 
+			`normal_weight_up`, 
+			`normal_weight_down`, 
+			`man_bee`, 
+			`woman`, 
+			`sport_ratio`, 
+			`over_weight_heat_down`, 
+			`over_weight_heat_up`, 
+			`obesity_heat_down`, 
+			`obesity_heat_up`
+		)
+		values
+		(
+			#{id}, 
+			#{bmi}, 
+			#{thin}, 
+			#{normal}, 
+			#{overWeight}, 
+			#{obesity}, 
+			#{normalWeightUp}, 
+			#{normalWeightDown}, 
+			#{manBee}, 
+			#{woman}, 
+			#{sportRatio}, 
+			#{overWeightHeatDown}, 
+			#{overWeightHeatUp}, 
+			#{obesityHeatDown}, 
+			#{obesityHeatUp}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.SrvBaseSet">
+		update srv_base_set 
+		<set>
+			<if test="bmi != null">`bmi` = #{bmi}, </if>
+			<if test="thin != null">`thin` = #{thin}, </if>
+			<if test="normal != null">`normal` = #{normal}, </if>
+			<if test="overWeight != null">`over_weight` = #{overWeight}, </if>
+			<if test="obesity != null">`obesity` = #{obesity}, </if>
+			<if test="normalWeightUp != null">`normal_weight_up` = #{normalWeightUp}, </if>
+			<if test="normalWeightDown != null">`normal_weight_down` = #{normalWeightDown}, </if>
+			<if test="manBee != null">`man_bee` = #{manBee}, </if>
+			<if test="woman != null">`woman` = #{woman}, </if>
+			<if test="sportRatio != null">`sport_ratio` = #{sportRatio}, </if>
+			<if test="overWeightHeatDown != null">`over_weight_heat_down` = #{overWeightHeatDown}, </if>
+			<if test="overWeightHeatUp != null">`over_weight_heat_up` = #{overWeightHeatUp}, </if>
+			<if test="obesityHeatDown != null">`obesity_heat_down` = #{obesityHeatDown}, </if>
+			<if test="obesityHeatUp != null">`obesity_heat_up` = #{obesityHeatUp}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_base_set where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_base_set where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

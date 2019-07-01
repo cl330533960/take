@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import xin.cymall.dao.SrvMerchanclearDao;
+import xin.cymall.dao.SrvRestaurantDao;
 import xin.cymall.entity.SrvMerchanclear;
+import xin.cymall.entity.SrvRestaurant;
 import xin.cymall.service.SrvMerchanclearService;
 
 
@@ -18,6 +20,9 @@ import xin.cymall.service.SrvMerchanclearService;
 public class SrvMerchanclearServiceImpl implements SrvMerchanclearService {
 	@Autowired
 	private SrvMerchanclearDao srvMerchanclearDao;
+
+	@Autowired
+	private SrvRestaurantDao srvRestaurantDao;
 	
 	@Override
 	public SrvMerchanclear get(String id){
@@ -62,5 +67,15 @@ public class SrvMerchanclearServiceImpl implements SrvMerchanclearService {
             update(srvMerchanclear);
         }
     }
-	
+
+	@Override
+	public List<SrvRestaurant> getBalanceList(Map<String, Object> map) {
+		return srvRestaurantDao.getBalanceList(map);
+	}
+
+	@Override
+	public int getBalanceCount(Map<String, Object> map) {
+		return srvRestaurantDao.getBalanceCount(map);
+	}
+
 }

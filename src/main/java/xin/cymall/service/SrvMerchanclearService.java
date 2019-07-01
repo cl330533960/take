@@ -1,6 +1,7 @@
 package xin.cymall.service;
 
 import xin.cymall.entity.SrvMerchanclear;
+import xin.cymall.entity.SrvRestaurant;
 
 import java.util.List;
 import java.util.Map;
@@ -29,4 +30,8 @@ public interface SrvMerchanclearService {
 	void deleteBatch(String[] ids);
 
     void updateState(String[] ids, String stateValue);
+
+	List<SrvRestaurant> getBalanceList(Map<String, Object> map);
+
+	int getBalanceCount(Map<String, Object> map);
 }

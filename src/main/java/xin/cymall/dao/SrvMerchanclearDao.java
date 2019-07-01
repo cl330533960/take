@@ -10,5 +10,5 @@ import xin.cymall.entity.SrvMerchanclear;
  * @date 2019-06-26 18:38:42
  */
 public interface SrvMerchanclearDao extends BaseDao<SrvMerchanclear> {
-	
+
 }

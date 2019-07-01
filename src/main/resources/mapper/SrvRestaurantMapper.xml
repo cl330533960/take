@@ -229,4 +229,27 @@
 		</foreach>
 	</delete>
 
+
+	<select id="getBalanceList" resultType="xin.cymall.entity.SrvRestaurant">
+		select t.name,t.id,t.addr,max(m.clear_time) as last_time,t.balance from srv_restaurant t
+		LEFT JOIN srv_merchant_clear m on t.id = m.restaurant_id
+		<include refid="where_clause" />
+		GROUP BY t.id
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="getBalanceCount" resultType="int">
+		select count(*) from srv_restaurant t  <include refid="where_clause" />
+	</select>
+
 </mapper>

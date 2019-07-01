@@ -82,6 +82,9 @@ public class SrvRestaurant implements Serializable {
 
 	private Long userId;
 
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+	private Date lastTime; //最近结算时间，用于显示
+
 	/**
 	 * 设置�?
 	 */
@@ -441,5 +444,13 @@ public class SrvRestaurant implements Serializable {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public Date getLastTime() {
+		return lastTime;
+	}
+
+	public void setLastTime(Date lastTime) {
+		this.lastTime = lastTime;
 	}
 }
