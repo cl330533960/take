@@ -44,6 +44,24 @@ var Render = {
     /**
      * @param rowdata    行数据
      * @param renderData 渲染后的列
+     * @description      结算按钮渲染
+     */
+    clear:function(rowdata,renderData){
+        var btn=' <button  onclick="editOne(\'结算\',\''+"/srvmerchanclear/clear"+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-mini">结算</button>';
+        return btn;
+    },
+    /**
+     * @param rowdata    行数据
+     * @param renderData 渲染后的列
+     * @description      明细按钮渲染
+     */
+    details:function(rowdata,renderData){
+        var btn=' <button  onclick="detailOne(\'明细\',\''+"/srvmerchanclear/listClear"+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-mini">明细</button>';
+        return btn;
+    },
+    /**
+     * @param rowdata    行数据
+     * @param renderData 渲染后的列
      * @description      删除按钮渲染
      */
     delete:function(rowdata,renderData){

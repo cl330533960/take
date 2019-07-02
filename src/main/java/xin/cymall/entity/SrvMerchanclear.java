@@ -22,7 +22,7 @@ public class SrvMerchanclear implements Serializable {
 	/**商家ID**/
 	private String restaurantId;
 	/**余额**/
-	private String clearAmount;
+	private Double clearAmount;
 	/**上次结余**/
 	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	private Date clearTime;
@@ -56,13 +56,13 @@ public class SrvMerchanclear implements Serializable {
 	/**
 	 * 设置：余额
 	 */
-	public void setClearAmount(String clearAmount) {
+	public void setClearAmount(Double clearAmount) {
 		this.clearAmount = clearAmount;
 	}
 	/**
 	 * 获取：余额
 	 */
-	public String getClearAmount() {
+	public Double getClearAmount() {
 		return clearAmount;
 	}
 	/**

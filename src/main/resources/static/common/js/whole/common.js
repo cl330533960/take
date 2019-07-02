@@ -125,6 +125,23 @@ function editOne(url,id){
 }
 
 /**
+ * 修改
+ * @param url 请求地址
+ * @param id  选中的id
+ */
+function editOne(title,url,id){
+    parent.layer.open({
+        type: 2,
+        title: title,
+        shadeClose: false,
+        shade: [0.3, '#000'],
+        maxmin: true, //开启最大化最小化按钮
+        area: ['800px', '400px'],
+        content: url+"/"+id
+    });
+}
+
+/**
  * 批量删除
  * @param table_id 表格id
  * @param url      请求地址
@@ -314,6 +331,24 @@ function detailOne(url,id){
     parent.layer.open({
         type: 2,
         title: '详情',
+        shadeClose: false,
+        shade: [0.3, '#000'],
+        maxmin: true, //开启最大化最小化按钮
+        area: ['1000px', '700px'],
+        content: url+"/"+id
+    });
+
+}
+
+/**
+ * 详情
+ * @param url
+ * @param id
+ */
+function detailOne(title,url,id){
+    parent.layer.open({
+        type: 2,
+        title: title,
         shadeClose: false,
         shade: [0.3, '#000'],
         maxmin: true, //开启最大化最小化按钮

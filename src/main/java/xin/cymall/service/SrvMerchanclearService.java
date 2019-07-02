@@ -34,4 +34,6 @@ public interface SrvMerchanclearService {
 	List<SrvRestaurant> getBalanceList(Map<String, Object> map);
 
 	int getBalanceCount(Map<String, Object> map);
+
+	void saveClearInfo(SrvMerchanclear srvMerchanclear);
 }

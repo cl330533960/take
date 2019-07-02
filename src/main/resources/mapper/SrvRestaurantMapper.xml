@@ -252,4 +252,11 @@
 		select count(*) from srv_restaurant t  <include refid="where_clause" />
 	</select>
 
+	<select id="getBalance"  resultType="xin.cymall.entity.SrvRestaurant">
+		select balance from srv_restaurant  where id = #{value} for update
+	</select>
+	<update id="updateBalance" parameterType="java.lang.Object">
+		update srv_restaurant set balance = balance - #{param1} where id = #{param2}
+	</update>
+
 </mapper>

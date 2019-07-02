@@ -78,4 +78,11 @@ public class SrvMerchanclearServiceImpl implements SrvMerchanclearService {
 		return srvRestaurantDao.getBalanceCount(map);
 	}
 
+	@Transactional
+	public void saveClearInfo(SrvMerchanclear srvMerchanclear){
+		srvRestaurantDao.getBalance(srvMerchanclear.getRestaurantId());
+		srvMerchanclearDao.save(srvMerchanclear);
+		srvRestaurantDao.updateBalance(srvMerchanclear.getClearAmount(),srvMerchanclear.getRestaurantId());
+	}
+
 }

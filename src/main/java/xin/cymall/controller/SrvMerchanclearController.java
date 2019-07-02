@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
+import xin.cymall.common.utils.UUID;
 import xin.cymall.entity.SrvMerchanclear;
 import xin.cymall.entity.SrvRestaurant;
 import xin.cymall.service.SrvMerchanclearService;
 import xin.cymall.common.utils.PageUtils;
 import xin.cymall.common.utils.Query;
 import xin.cymall.common.utils.R;
+import xin.cymall.service.SrvRestaurantService;
 
 
 /**
@@ -28,18 +30,60 @@ import xin.cymall.common.utils.R;
  */
 @Controller
 @RequestMapping("srvmerchanclear")
-public class SrvMerchanclearController {
+public class SrvMerchanclearController extends AbstractController {
 	@Autowired
 	private SrvMerchanclearService srvMerchanclearService;
+    @Autowired
+    private SrvRestaurantService srvRestaurantService;
 	
     /**
      * 跳转到列表页
      */
     @RequestMapping("/list")
-    @RequiresPermissions("srvmerchanclear:list")
+    @RequiresPermissions("srvmerchanclear:listBalance")
     public String list() {
         return "srvmerchanclear/list";
     }
+
+    /**
+     * 跳转到列表页
+     */
+    @RequestMapping("/listClear/{id}")
+    @RequiresPermissions("srvmerchanclear:list")
+    public String listClear(Model model,@PathVariable("id") String id) {
+        model.addAttribute("id",id);
+        return "srvmerchanclear/listclear";
+    }
+
+
+    /**
+     * 跳转到结算页面
+     */
+    @RequestMapping("/clear/{id}")
+    @RequiresPermissions("srvmerchanclear:clear")
+    public String clear(Model model, @PathVariable("id") String id) {
+        SrvRestaurant srvRestaurant = srvRestaurantService.get(id);
+        model.addAttribute("model",srvRestaurant);
+        return "srvmerchanclear/clear";
+    }
+
+
+    /**
+     * 修改
+     */
+    @ResponseBody
+    @SysLog("修改")
+    @RequestMapping("/clearAmount")
+    @RequiresPermissions("srvmerchanclear:clear")
+    public R clearAmount(@RequestBody SrvMerchanclear srvMerchanclear){
+        srvMerchanclear.setId(UUID.generateId());
+        srvMerchanclear.setOptrName(this.getUser().getUsername());
+        srvMerchanclearService.saveClearInfo(srvMerchanclear);
+        return R.ok();
+    }
+
+
+
 
 
     /**

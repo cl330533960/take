@@ -18,5 +18,9 @@ public interface SrvRestaurantDao extends BaseDao<SrvRestaurant> {
 
 
     int getBalanceCount(Map<String, Object> map);
+
+    void updateBalance(Double balance,String id);
+
+    SrvRestaurant getBalance(String id);
 	
 }

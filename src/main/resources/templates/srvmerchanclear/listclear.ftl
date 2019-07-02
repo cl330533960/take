@@ -7,27 +7,27 @@
     <script type="text/javascript" src="/srvmerchanclear/js/list.js"></script>
 </head>
 <body>
-<form class="layui-form " action="">
-    <div class="layui-form-item">
-        <label class="layui-form-label">名称:</label>
-        <div class="layui-input-inline">
-            <input type="text" name=""  placeholder="请输入名称" class="layui-input">
-        </div>
+<#--<form class="layui-form " action="">-->
+    <#--<div class="layui-form-item">-->
+        <#--<label class="layui-form-label">名称:</label>-->
+        <#--<div class="layui-input-inline">-->
+            <#--<input type="text" name=""  placeholder="请输入名称" class="layui-input">-->
+        <#--</div>-->
 
-        <div class="layui-input-normal">
-            <button class="layui-btn layui-btn-green" lay-submit="" lay-filter="moreSearch">
-                <i class="fa fa-chevron-down">&nbsp;</i>更多
-            </button>
-            <button class="layui-btn search-btn" table-id="srvMerchanclearTable" lay-submit="" lay-filter="search">
-                <i class="fa fa-search">&nbsp;</i>查询
-            </button>
-            <button type="reset" class="layui-btn layui-btn-primary"><i class="fa fa-refresh">&nbsp;</i>重置</button>
-        </div>
-    </div>
-    <div class="layui-form-item more-search">
-       <#-- 更多条件-->
-    </div>
-</form>
+        <#--<div class="layui-input-normal">-->
+            <#--<button class="layui-btn layui-btn-green" lay-submit="" lay-filter="moreSearch">-->
+                <#--<i class="fa fa-chevron-down">&nbsp;</i>更多-->
+            <#--</button>-->
+            <#--<button class="layui-btn search-btn" table-id="srvMerchanclearTable" lay-submit="" lay-filter="search">-->
+                <#--<i class="fa fa-search">&nbsp;</i>查询-->
+            <#--</button>-->
+            <#--<button type="reset" class="layui-btn layui-btn-primary"><i class="fa fa-refresh">&nbsp;</i>重置</button>-->
+        <#--</div>-->
+    <#--</div>-->
+    <#--<div class="layui-form-item more-search">-->
+       <#--&lt;#&ndash; 更多条件&ndash;&gt;-->
+    <#--</div>-->
+<#--</form>-->
 <div class="layui-btn-group">
         <#--<@shiro.hasPermission name="srvmerchanclear:save">-->
         <#--<button class="layui-btn" onclick="addPage('/srvmerchanclear/add')">-->
@@ -54,7 +54,7 @@
 </div>
 <div class="layui-form ">
     <table class="layui-table" id="srvMerchanclearTable" cyType="pageGrid"
-           cyProps="url:'/srvmerchanclear/listBalanceData',checkbox:'true',pageColor:'#2991d9'">
+           cyProps="url:'/srvmerchanclear/list',checkbox:'true',pageColor:'#2991d9'">
         <thead>
         <tr>
             <!--复选框-->
@@ -65,16 +65,16 @@
             <th width="10%" param="{name:'id',isPrimary:'true',hide:'true'}">主键ID</th>
             
 		                			
-		          <th width="10%" param="{name:'name'}">商家</th>
+		          <th width="10%" param="{name:'name'}">用户</th>
 
-                  <th width="10%" param="{name:'addr'}">餐厅地址</th>
+                  <th width="10%" param="{name:'addr'}">手机号</th>
 			            			
-		          <th width="10%" param="{name:'balance'}">余额</th>
+		          <th width="10%" param="{name:'balance'}">订单余额</th>
 			            			
-		          <th width="10%" param="{name:'lastTime'}">上次结余</th>
+		          <th width="10%" param="{name:'lastTime'}">下单时间</th>
+                    <th width="10%" param="{name:'lastTime'}">配送员</th>
+                    <th width="10%" param="{name:'lastTime'}">配送电话</th>
 			                        <!--isPrimary：渲染列-->
-            <#--<th width="10%" param="{name:'state',enumName:'StateEnum',render:'Render.customState'}">状态</th>-->
-                 <th width="10%" param="{operate:'true',buttons:'Render.state,Render.clear,Render.details'}">操作</th>
         </tr>
         </thead>
     </table>
