@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvRestauranapplyDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.SrvRestauranapply" id="srvRestauranapplyMap">
+        <result property="id" column="id"/>
+        <result property="applicant" column="applicant"/>
+        <result property="applyPhone" column="apply_phone"/>
+        <result property="restaurantName" column="restaurant_name"/>
+        <result property="addr" column="addr"/>
+        <result property="healthLevel" column="health_level"/>
+        <result property="applyTime" column="apply_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.SrvRestauranapply">
+		select * from srv_restaurant_apply where id = #{value}
+	</select>
+
+	<select id="getList" resultType="xin.cymall.entity.SrvRestauranapply">
+		select * from srv_restaurant_apply t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_restaurant_apply t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="applicant != null and applicant != ''"> and t.applicant = #{applicant} </if>
+    		<if test="applicantVague != null and applicantVague != ''"> and t.applicant like concat('%',#{applicantVague},'%') </if>
+            <if test="applyPhone != null and applyPhone != ''"> and t.apply_phone = #{applyPhone} </if>
+    		<if test="applyPhoneVague != null and applyPhoneVague != ''"> and t.apply_phone like concat('%',#{applyPhoneVague},'%') </if>
+            <if test="restaurantName != null and restaurantName != ''"> and t.restaurant_name = #{restaurantName} </if>
+    		<if test="restaurantNameVague != null and restaurantNameVague != ''"> and t.restaurant_name like concat('%',#{restaurantNameVague},'%') </if>
+            <if test="addr != null and addr != ''"> and t.addr = #{addr} </if>
+    		<if test="addrVague != null and addrVague != ''"> and t.addr like concat('%',#{addrVague},'%') </if>
+            <if test="healthLevel != null and healthLevel != ''"> and t.health_level = #{healthLevel} </if>
+    		<if test="healthLevelVague != null and healthLevelVague != ''"> and t.health_level like concat('%',#{healthLevelVague},'%') </if>
+            <if test="applyTime != null and applyTime != ''"> and t.apply_time = #{applyTime} </if>
+    		<if test="applyTimeVague != null and applyTimeVague != ''"> and t.apply_time like concat('%',#{applyTimeVague},'%') </if>
+            <if test="status != null and status != ''"> and t.status = #{status} </if>
+    		<if test="statusVague != null and statusVague != ''"> and t.status like concat('%',#{statusVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.SrvRestauranapply">
+		insert into srv_restaurant_apply
+		(
+			`id`, 
+			`applicant`, 
+			`apply_phone`, 
+			`restaurant_name`, 
+			`addr`, 
+			`health_level`, 
+			`apply_time`, 
+			`status`
+		)
+		values
+		(
+			#{id}, 
+			#{applicant}, 
+			#{applyPhone}, 
+			#{restaurantName}, 
+			#{addr}, 
+			#{healthLevel}, 
+			#{applyTime}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.SrvRestauranapply">
+		update srv_restaurant_apply 
+		<set>
+			<if test="applicant != null">`applicant` = #{applicant}, </if>
+			<if test="applyPhone != null">`apply_phone` = #{applyPhone}, </if>
+			<if test="restaurantName != null">`restaurant_name` = #{restaurantName}, </if>
+			<if test="addr != null">`addr` = #{addr}, </if>
+			<if test="healthLevel != null">`health_level` = #{healthLevel}, </if>
+			<if test="applyTime != null">`apply_time` = #{applyTime}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_restaurant_apply where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_restaurant_apply where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
