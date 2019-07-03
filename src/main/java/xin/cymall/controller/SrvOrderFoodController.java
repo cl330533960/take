@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
-import xin.cymall.entity.SrvOrder;
+import xin.cymall.entity.SrvOrderFood;
 import xin.cymall.service.SrvOrderFoodService;
-import xin.cymall.service.SrvOrderService;
 import xin.cymall.common.utils.PageUtils;
 import xin.cymall.common.utils.Query;
 import xin.cymall.common.utils.R;
@@ -24,24 +23,21 @@ import xin.cymall.common.utils.R;
  * 
  * @author chenyi
  * @email 228112142@qq.com
- * @date 2019-06-26 14:01:40
+ * @date 2019-06-28 14:55:15
  */
 @Controller
-@RequestMapping("srvorder")
-public class SrvOrderController {
+@RequestMapping("srvorderfood")
+public class SrvOrderFoodController {
 	@Autowired
-	private SrvOrderService srvOrderService;
-
-//add by  chenz 具体的菜单根据订单id来查询有哪些菜
-    @Autowired
-    private SrvOrderFoodService srvOrderFoodService;
+	private SrvOrderFoodService srvOrderFoodService;
+	
     /**
      * 跳转到列表页
      */
     @RequestMapping("/list")
-    @RequiresPermissions("srvorder:list")
+    @RequiresPermissions("srvorderfood:list")
     public String list() {
-        return "srvorder/list";
+        return "srvorderfood/list";
     }
     
 	/**
@@ -49,15 +45,15 @@ public class SrvOrderController {
 	 */
     @ResponseBody
 	@RequestMapping("/listData")
-	@RequiresPermissions("srvorder:list")
+	@RequiresPermissions("srvorderfood:list")
 	public R listData(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
 
-		List<SrvOrder> srvOrderList = srvOrderService.getList(query);
-		int total = srvOrderService.getCount(query);
+		List<SrvOrderFood> srvOrderFoodList = srvOrderFoodService.getList(query);
+		int total = srvOrderFoodService.getCount(query);
 		
-		PageUtils pageUtil = new PageUtils(srvOrderList, total, query.getLimit(), query.getPage());
+		PageUtils pageUtil = new PageUtils(srvOrderFoodList, total, query.getLimit(), query.getPage());
 		
 		return R.ok().put("page", pageUtil);
 	}
@@ -66,37 +62,31 @@ public class SrvOrderController {
      * 跳转到新增页面
      **/
     @RequestMapping("/add")
-    @RequiresPermissions("srvorder:save")
+    @RequiresPermissions("srvorderfood:save")
     public String add(){
-        return "srvorder/add";
+        return "srvorderfood/add";
     }
 
     /**
      *   跳转到修改页面
      **/
     @RequestMapping("/edit/{id}")
-    @RequiresPermissions("srvorder:update")
+    @RequiresPermissions("srvorderfood:update")
     public String edit(Model model, @PathVariable("id") String id){
-		SrvOrder srvOrder = srvOrderService.get(id);
-        model.addAttribute("model",srvOrder);
-        return "srvorder/edit";
+		SrvOrderFood srvOrderFood = srvOrderFoodService.get(id);
+        model.addAttribute("model",srvOrderFood);
+        return "srvorderfood/edit";
     }
 
-
-
-
-
-
-
-    /**
+	/**
 	 * 信息
 	 */
     @ResponseBody
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("srvorder:info")
+    @RequiresPermissions("srvorderfood:info")
     public R info(@PathVariable("id") String id){
-        SrvOrder srvOrder = srvOrderService.get(id);
-        return R.ok().put("srvOrder", srvOrder);
+        SrvOrderFood srvOrderFood = srvOrderFoodService.get(id);
+        return R.ok().put("srvOrderFood", srvOrderFood);
     }
 
     /**
@@ -105,9 +95,9 @@ public class SrvOrderController {
     @ResponseBody
     @SysLog("保存")
 	@RequestMapping("/save")
-	@RequiresPermissions("srvorder:save")
-	public R save(@RequestBody SrvOrder srvOrder){
-		srvOrderService.save(srvOrder);
+	@RequiresPermissions("srvorderfood:save")
+	public R save(@RequestBody SrvOrderFood srvOrderFood){
+		srvOrderFoodService.save(srvOrderFood);
 		
 		return R.ok();
 	}
@@ -118,9 +108,9 @@ public class SrvOrderController {
     @ResponseBody
     @SysLog("修改")
 	@RequestMapping("/update")
-	@RequiresPermissions("srvorder:update")
-	public R update(@RequestBody SrvOrder srvOrder){
-		srvOrderService.update(srvOrder);
+	@RequiresPermissions("srvorderfood:update")
+	public R update(@RequestBody SrvOrderFood srvOrderFood){
+		srvOrderFoodService.update(srvOrderFood);
 		
 		return R.ok();
 	}
@@ -131,10 +121,10 @@ public class SrvOrderController {
     @ResponseBody
     @SysLog("启用")
     @RequestMapping("/enable")
-    @RequiresPermissions("srvorder:update")
+    @RequiresPermissions("srvorderfood:update")
     public R enable(@RequestBody String[] ids){
         String stateValue=StateEnum.ENABLE.getCode();
-		srvOrderService.updateState(ids,stateValue);
+		srvOrderFoodService.updateState(ids,stateValue);
         return R.ok();
     }
     /**
@@ -143,10 +133,10 @@ public class SrvOrderController {
     @ResponseBody
     @SysLog("禁用")
     @RequestMapping("/limit")
-    @RequiresPermissions("srvorder:update")
+    @RequiresPermissions("srvorderfood:update")
     public R limit(@RequestBody String[] ids){
         String stateValue=StateEnum.LIMIT.getCode();
-		srvOrderService.updateState(ids,stateValue);
+		srvOrderFoodService.updateState(ids,stateValue);
         return R.ok();
     }
 	
@@ -156,9 +146,9 @@ public class SrvOrderController {
     @ResponseBody
     @SysLog("删除")
 	@RequestMapping("/delete")
-	@RequiresPermissions("srvorder:delete")
+	@RequiresPermissions("srvorderfood:delete")
 	public R delete(@RequestBody String[] ids){
-		srvOrderService.deleteBatch(ids);
+		srvOrderFoodService.deleteBatch(ids);
 		
 		return R.ok();
 	}

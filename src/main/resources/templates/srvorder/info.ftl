@@ -53,7 +53,7 @@
             <label class="layui-label-right">${(model.orderTotal)!"-"}</label>
         </div>
               <div class="layui-form-item">
-            <label class="layui-label-left">评论<span class="label_span">:</span></label>
+            <label class="layui-label-left">备注<span class="label_span">:</span></label>
             <label class="layui-label-right">${(model.remark)!"-"}</label>
         </div>
               <div class="layui-form-item">
