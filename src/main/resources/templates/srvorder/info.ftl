@@ -57,13 +57,18 @@
             <label class="layui-label-right">${(model.orderTotal)!"-"}</label>
         </div>
         <div class="layui-form-item">
-            <label class="layui-label-left">外卖类型<span class="label_span">:</span></label>
-            <label class="layui-label-right">${(model.orderType)!"-"}</label>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-label-left">用户支付费用<span class="label_span">:</span></label>
-            <label class="layui-label-right">${(model.userPayFee)!"-"}</label>
-        </div>
+            <div class="layui-form-item">
+                <label class="layui-label-left">备注<span class="label_span">:</span></label>
+                <label class="layui-label-right">${(model.remark)!"-"}</label>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-label-left">外卖类型<span class="label_span">:</span></label>
+                <label class="layui-label-right">${(model.orderType)!"-"}</label>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-label-left">用户支付费用<span class="label_span">:</span></label>
+                <label class="layui-label-right">${(model.userPayFee)!"-"}</label>
+            </div>
     </form>
 </div>
 

@@ -89,10 +89,10 @@
         </div>
 
               <div class="layui-form-item">${(model.bucket)!""}
-            <label class="layui-form-label">评论<span class="span_must">*</span></label>
+            <label class="layui-form-label">备注<span class="span_must">*</span></label>
             <div class="layui-input-normal">
                 <input type="text"  name="remark" maxlength="2000" lay-verify="required"
-                 value="${(model.remark)!""}"  placeholder="请输入评论"  class="layui-input">
+                 value="${(model.remark)!""}"  placeholder="备注"  class="layui-input">
             </div>
         </div>
 
@@ -144,8 +144,8 @@
             </div>
         </div>
 
-              <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
-            <div cyType="radioTool" cyProps="enumName:'StateEnum'" name="state"
-                 value="${(model.state)!"1"}" class="layui-input-inline"></div>
-        </div>
+              <#--<div class="layui-form-item">-->
+            <#--<label class="layui-form-label">状态</label>-->
+            <#--<div cyType="radioTool" cyProps="enumName:'StateEnum'" name="state"-->
+                 <#--value="${(model.state)!"1"}" class="layui-input-inline"></div>-->
+        <#--</div>-->
