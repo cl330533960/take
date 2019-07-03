@@ -47,7 +47,7 @@ var Render = {
      * @description      结算按钮渲染
      */
     clear:function(rowdata,renderData){
-        var btn=' <button  onclick="editOne(\'结算\',\''+"/srvmerchanclear/clear"+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-mini">结算</button>';
+        var btn=' <button  onclick="editOne_copy(\'结算\',\''+"/srvmerchanclear/clear"+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-mini">结算</button>';
         return btn;
     },
     /**
@@ -56,7 +56,7 @@ var Render = {
      * @description      明细按钮渲染
      */
     details:function(rowdata,renderData){
-        var btn=' <button  onclick="detailOne(\'明细\',\''+"/srvmerchanclear/listClear"+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-mini">明细</button>';
+        var btn=' <button  onclick="detailOne_copy(\'明细\',\''+"/srvmerchanclear/listClear"+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-mini">明细</button>';
         return btn;
     },
     /**

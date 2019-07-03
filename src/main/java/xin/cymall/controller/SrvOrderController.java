@@ -81,12 +81,12 @@ public class SrvOrderController {
 	/**
 	 * 信息
 	 */
-    @ResponseBody
     @RequestMapping("/info/{id}")
     @RequiresPermissions("srvorder:info")
-    public R info(@PathVariable("id") String id){
+    public String info(Model model,@PathVariable("id") String id){
         SrvOrder srvOrder = srvOrderService.get(id);
-        return R.ok().put("srvOrder", srvOrder);
+        model.addAttribute("model",srvOrder);
+        return "srvorder/info";
     }
 
     /**
