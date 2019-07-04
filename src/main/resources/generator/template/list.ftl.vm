@@ -4,7 +4,7 @@
 <head>
     <title>${comments}列表</title>
     <#[[#]]#include "../resource.ftl"/>
-    <script type="text/javascript" src="/${pathName}/js/list.js"></script>
+    <script type="text/javascript" src="/${pathName}/js/index.js"></script>
 </head>
 <body>
 <form class="layui-form " action="">

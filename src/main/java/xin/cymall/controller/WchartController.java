@@ -7,8 +7,10 @@ import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xin.cymall.common.utils.MessageUtil;
@@ -211,5 +213,13 @@ public class WchartController {
         }
     }
 
+    /**
+     * 跳转到新增页面
+     **/
+    @RequestMapping(value = "/getindex",method = { RequestMethod.GET, RequestMethod.POST })
+    public String getindex(){
+
+        return "wchat/index";
+    }
 
 }
