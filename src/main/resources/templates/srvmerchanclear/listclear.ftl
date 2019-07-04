@@ -3,15 +3,16 @@
 <html>
 <head>
     <title>列表</title>
-    <#include "../resource.ftl"/>
+<#include "../resource.ftl"/>
     <script type="text/javascript" src="/srvmerchanclear/js/list.js"></script>
 </head>
 <body>
 <#--<form class="layui-form " action="">-->
     <#--<div class="layui-form-item">-->
         <#--<label class="layui-form-label">名称:</label>-->
+
         <#--<div class="layui-input-inline">-->
-            <#--<input type="text" name=""  placeholder="请输入名称" class="layui-input">-->
+            <#--<input type="text" name="" placeholder="请输入名称" class="layui-input">-->
         <#--</div>-->
 
         <#--<div class="layui-input-normal">-->
@@ -25,56 +26,36 @@
         <#--</div>-->
     <#--</div>-->
     <#--<div class="layui-form-item more-search">-->
-       <#--&lt;#&ndash; 更多条件&ndash;&gt;-->
+    <#--&lt;#&ndash; 更多条件&ndash;&gt;-->
     <#--</div>-->
 <#--</form>-->
 <div class="layui-btn-group">
-        <#--<@shiro.hasPermission name="srvmerchanclear:save">-->
-        <#--<button class="layui-btn" onclick="addPage('/srvmerchanclear/add')">-->
-            <#--<i class="fa fa-plus">&nbsp;</i>增加-->
-        <#--</button>-->
-        <#--</@shiro.hasPermission>-->
-        <#--<@shiro.hasPermission name="srvmerchanclear:update">-->
-        <#--<button class="layui-btn" onclick="editPage('srvMerchanclearTable','/srvmerchanclear/edit')">-->
-            <#--<i class="fa fa-pencil-square-o">&nbsp;</i>修改-->
-        <#--</button>-->
-         <#--<button class="layui-btn layui-btn-green" onclick="updateState('批量启用','srvMerchanclearTable','/srvmerchanclear/enable')">-->
-            <#--<i class="fa fa-check-square-o">&nbsp;</i>启用-->
-        <#--</button>-->
-        <#--<button class="layui-btn  layui-btn-danger" onclick="updateState('批量禁用','srvMerchanclearTable','/srvmerchanclear/limit')">-->
-            <#--<i class="fa fa-expeditedssl">&nbsp;</i>禁用-->
-        <#--</button>-->
-        <#--</@shiro.hasPermission>-->
-        <#--<@shiro.hasPermission name="srvmerchanclear:delete">-->
-         <#--<button class="layui-btn layui-btn-delete" onclick="deleteBatch('批量删除','srvMerchanclearTable','/srvmerchanclear/delete');">-->
-            <#--<i class="fa fa-trash-o">&nbsp;</i>删除-->
-        <#--</button>-->
-        <#--</@shiro.hasPermission>-->
 
 </div>
 <div class="layui-form ">
     <table class="layui-table" id="srvMerchanclearTable" cyType="pageGrid"
-           cyProps="url:'/srvmerchanclear/list',checkbox:'true',pageColor:'#2991d9'">
+           cyProps="url:'/srvmerchanclear/listData?restaurantId=${id}',checkbox:'false',pageColor:'#2991d9'">
         <thead>
         <tr>
             <!--复选框-->
-            <th width="1%" param="{type:'checkbox'}">
-                <input type="checkbox" lay-skin="primary" lay-filter="allChoose">
-            </th>
-            			            <!--isPrimary：是否是主键-->
+            <#--<th width="1%" param="{type:'checkbox'}">-->
+                <#--<input type="checkbox" lay-skin="primary" lay-filter="allChoose">-->
+            <#--</th>-->
+            <!--isPrimary：是否是主键-->
             <th width="10%" param="{name:'id',isPrimary:'true',hide:'true'}">主键ID</th>
-            
-		                			
-		          <th width="10%" param="{name:'name'}">用户</th>
 
-                  <th width="10%" param="{name:'addr'}">手机号</th>
-			            			
-		          <th width="10%" param="{name:'balance'}">订单余额</th>
-			            			
-		          <th width="10%" param="{name:'lastTime'}">下单时间</th>
-                    <th width="10%" param="{name:'lastTime'}">配送员</th>
-                    <th width="10%" param="{name:'lastTime'}">配送电话</th>
-			                        <!--isPrimary：渲染列-->
+
+            <th width="10%" param="{name:'wxName'}">用户</th>
+
+            <th width="10%" param="{name:'phone'}">手机号</th>
+
+            <th width="10%" param="{name:'orderNo'}">订单号</th>
+            <th width="10%" param="{name:'userPayFee'}">订单金额</th>
+
+            <th width="10%" param="{name:'orderTime'}">下单时间</th>
+            <th width="10%" param="{name:'expressName'}">配送员</th>
+            <th width="10%" param="{name:'expressPhone'}">配送电话</th>
+            <!--isPrimary：渲染列-->
         </tr>
         </thead>
     </table>

@@ -1,5 +1,7 @@
 package xin.cymall.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -51,6 +53,16 @@ public class SrvOrder implements Serializable {
 	private String couponId;
 	/**折扣**/
 	private String discount;
+	/**下单时间**/
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date orderTime;
+
+	private String wxName;
+	private String phone;
+	private String restaurantName;
+	private String receiveAddr;
+	private String receivePhone;
+	private String receiveName;
 
 	/**
 	 * 设置：主键ID
@@ -267,5 +279,61 @@ public class SrvOrder implements Serializable {
 	 */
 	public String getDiscount() {
 		return discount;
+	}
+
+	public Date getOrderTime() {
+		return orderTime;
+	}
+
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
+
+	public String getWxName() {
+		return wxName;
+	}
+
+	public void setWxName(String wxName) {
+		this.wxName = wxName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getRestaurantName() {
+		return restaurantName;
+	}
+
+	public void setRestaurantName(String restaurantName) {
+		this.restaurantName = restaurantName;
+	}
+
+	public String getReceiveAddr() {
+		return receiveAddr;
+	}
+
+	public void setReceiveAddr(String receiveAddr) {
+		this.receiveAddr = receiveAddr;
+	}
+
+	public String getReceivePhone() {
+		return receivePhone;
+	}
+
+	public void setReceivePhone(String receivePhone) {
+		this.receivePhone = receivePhone;
+	}
+
+	public String getReceiveName() {
+		return receiveName;
+	}
+
+	public void setReceiveName(String receiveName) {
+		this.receiveName = receiveName;
 	}
 }

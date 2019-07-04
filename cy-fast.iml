@@ -164,6 +164,7 @@
     <orderEntry type="library" name="Maven: com.gexin.platform:gexin-rp-sdk-base:4.0.0.28" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:2.5.0" level="project" />
     <orderEntry type="library" name="Maven: com.gexin.platform:gexin-rp-fastjson:1.0.0.1" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" name="Maven: com.github.binarywang:weixin-java-mp:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: com.github.binarywang:weixin-java-common:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.4.10" level="project" />
@@ -173,5 +174,7 @@
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" name="Maven: org.dom4j:dom4j:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: jaxen:jaxen:1.1.6" level="project" />
+=======
+>>>>>>> e9a11f4085e5f3ba94b7ca9e04d608d56b65ca3a
   </component>
 </module>

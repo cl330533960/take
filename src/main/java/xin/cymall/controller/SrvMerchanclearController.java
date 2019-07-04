@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import xin.cymall.common.utils.UUID;
 import xin.cymall.entity.SrvMerchanclear;
+import xin.cymall.entity.SrvOrder;
 import xin.cymall.entity.SrvRestaurant;
 import xin.cymall.service.SrvMerchanclearService;
 import xin.cymall.common.utils.PageUtils;
 import xin.cymall.common.utils.Query;
 import xin.cymall.common.utils.R;
+import xin.cymall.service.SrvOrderService;
 import xin.cymall.service.SrvRestaurantService;
 
 
@@ -35,6 +37,8 @@ public class SrvMerchanclearController extends AbstractController {
 	private SrvMerchanclearService srvMerchanclearService;
     @Autowired
     private SrvRestaurantService srvRestaurantService;
+    @Autowired
+    private SrvOrderService srvOrderService;
 	
     /**
      * 跳转到列表页
@@ -111,15 +115,14 @@ public class SrvMerchanclearController extends AbstractController {
 	@RequestMapping("/listData")
 	@RequiresPermissions("srvmerchanclear:list")
 	public R listData(@RequestParam Map<String, Object> params){
-		//查询列表数据
         Query query = new Query(params);
 
-		List<SrvMerchanclear> srvMerchanclearList = srvMerchanclearService.getList(query);
-		int total = srvMerchanclearService.getCount(query);
-		
-		PageUtils pageUtil = new PageUtils(srvMerchanclearList, total, query.getLimit(), query.getPage());
-		
-		return R.ok().put("page", pageUtil);
+        List<SrvOrder> srvOrderList = srvOrderService.getList(query);
+        int total = srvOrderService.getCount(query);
+
+        PageUtils pageUtil = new PageUtils(srvOrderList, total, query.getLimit(), query.getPage());
+
+        return R.ok().put("page", pageUtil);
 	}
 
     /**

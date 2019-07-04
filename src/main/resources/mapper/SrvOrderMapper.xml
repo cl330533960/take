@@ -23,14 +23,30 @@
         <result property="packFee" column="pack_fee"/>
         <result property="couponId" column="coupon_id"/>
         <result property="discount" column="discount"/>
-    </resultMap>
+		<result property="orderTime" column="order_time"/>
+		<result property="wxName" column="wx_name"/>
+		<result property="phone" column="phone"/>
+		<result property="restaurantName" column="restaurantName"/>
+		<result property="receiveName" column="receive_name"/>
+		<result property="receivePhone" column="receive_phone"/>
+		<result property="receiveAddr" column="receive_addr"/>
+
+	</resultMap>
 
 	<select id="get" resultType="xin.cymall.entity.SrvOrder">
-		select * from srv_order where id = #{value}
+		select t.*,u.wx_name,u.phone,r.name,ua.receive_name,ua.receive_phone,ua.receive_addr as restaurantName from srv_order t
+		left join srv_user u on t.user_id = u.id
+		left join srv_restaurant r on t.restaurant_id = r.id
+		left join srv_user_addr ua on t.user_addr_id = ua.id
+		where t.id = #{value}
 	</select>
 
 	<select id="getList" resultType="xin.cymall.entity.SrvOrder">
-		select * from srv_order t <include refid="where_clause" />
+		select t.*,u.wx_name,u.phone,r.name,ua.receive_name,ua.receive_phone,ua.receive_addr as restaurantName from srv_order t
+		left join srv_user u on t.user_id = u.id
+		left join srv_restaurant r on t.restaurant_id = r.id
+		left join srv_user_addr ua on t.user_addr_id = ua.id
+		<include refid="where_clause" />
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -111,7 +127,8 @@
 			`way_fee`, 
 			`pack_fee`, 
 			`coupon_id`, 
-			`discount`
+			`discount`,
+			order_time
 		)
 		values
 		(
@@ -132,7 +149,8 @@
 			#{wayFee}, 
 			#{packFee}, 
 			#{couponId}, 
-			#{discount}
+			#{discount},
+			#now()
 		)
 	</insert>
 	 

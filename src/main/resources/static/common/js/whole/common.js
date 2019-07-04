@@ -129,7 +129,7 @@ function editOne(url,id){
  * @param url 请求地址
  * @param id  选中的id
  */
-function editOne(title,url,id){
+function editOne_copy(title,url,id){
     parent.layer.open({
         type: 2,
         title: title,
@@ -345,7 +345,7 @@ function detailOne(url,id){
  * @param url
  * @param id
  */
-function detailOne(title,url,id){
+function detailOne_copy(title,url,id){
     parent.layer.open({
         type: 2,
         title: title,
