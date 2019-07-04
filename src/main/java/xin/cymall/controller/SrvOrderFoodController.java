@@ -48,14 +48,9 @@ public class SrvOrderFoodController {
 	@RequiresPermissions("srvorderfood:list")
 	public R listData(@RequestParam Map<String, Object> params){
 		//查询列表数据
-        Query query = new Query(params);
 
-		List<SrvOrderFood> srvOrderFoodList = srvOrderFoodService.getList(query);
-		int total = srvOrderFoodService.getCount(query);
-		
-		PageUtils pageUtil = new PageUtils(srvOrderFoodList, total, query.getLimit(), query.getPage());
-		
-		return R.ok().put("page", pageUtil);
+		List<SrvOrderFood> srvOrderFoodList = srvOrderFoodService.getList(params);
+		return R.ok().put("data", srvOrderFoodList);
 	}
 
     /**
