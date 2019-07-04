@@ -1,7 +1,3 @@
-/**
- * Created by 陈熠 on 2017/6/23.
- *  email   :  228112142@qq.com
- */
 /**跳转到添加页面*/
 function add(url) {
     //$("body").load(url);
@@ -21,27 +17,26 @@ var type =1;
 
 function setdata(num) {
     type=num;
-    alert(type);
+    // alert(type);
 }
 
 function start(url) {
-        confirm("确认初始化？", function () {
-            $.ajax({
-                type: "get",
-                url: url+'?type='+type,
-                contentType: "application/json",
-                async: false,
-                success: function (R) {
-                    if (R.code === 0) {
-                        Msg.success('操作成功');
-                    } else {
-                        Msg.error(R.msg);
-                    }
-                },
-                error: function (e) {
-                    Msg.error("系统繁忙"+e);
-                }
-            });
-        });
+
+    window.location.href=url+'?type='+type;
+
+    // confirm("确认初始化？", function () {
+    //         $.ajax({
+    //             type: "get",
+    //             url: url+'?type='+type,
+    //             contentType: "application/json",
+    //             async: false,
+    //             success: function (R) {
+    //                 Msg.success('操作成功'+R);
+    //             },
+    //             error: function (e) {
+    //                 Msg.error("系统繁忙"+e);
+    //             }
+    //         });
+    //     });
 
 }

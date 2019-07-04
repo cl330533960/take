@@ -6,6 +6,17 @@
     <title>我的热量我知道</title>
     <#include "../resource.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
+    <style type="text/css">
+           .button{
+           border-radius:12px;
+           margin-left: 5%;
+           margin-right: 5%;
+           height: 90px;
+           display: block;border: 14px solid #06CB06;
+           background: #06CB06;margin-top: 15%;text-align: center
+           }
+
+    </style>
 </head>
 <body>
 <div style="margin-left: 5%;margin-right: 5%">
@@ -50,8 +61,7 @@
     <div> <p style="font-size: 32px"> 3、怀孕、哺乳期不适用。</p></div>
 
 
-    <div  style="height: 90px;width: 100%;
-         display: block;border: 14px solid #06CB06;background: #06CB06;margin-top: 15%;text-align: center">
+    <div  class="button">
          <a href="javascript:;" onclick="start('/wx/start')"
             style="font-size: 34px;padding: 2px 6px;
             display: block;color: #ffffff;line-height:90px " >开始评估</a>
