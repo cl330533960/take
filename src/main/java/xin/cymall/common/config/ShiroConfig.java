@@ -42,6 +42,11 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/**/*.css", "anon");
         filterChainDefinitionMap.put("/**/*.js", "anon");
         filterChainDefinitionMap.put("/**/login.html", "anon");
+
+        filterChainDefinitionMap.put("**/wchart/*.html", "anon");
+
+
+
         filterChainDefinitionMap.put("/**/fonts/**", "anon");
         filterChainDefinitionMap.put("/**/plugins/**", "anon");
         filterChainDefinitionMap.put("/swagger/**", "anon");
