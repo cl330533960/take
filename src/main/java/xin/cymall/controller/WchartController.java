@@ -222,4 +222,17 @@ public class WchartController {
         return "wchat/index";
     }
 
+    /**
+     * 开始评估
+     **/
+    @RequestMapping(value = "/start",method = { RequestMethod.GET, RequestMethod.POST })
+    public String start(int type){
+
+        if (type==1) {
+            return "wchat/assess1";
+        }else {
+            return "wchat/assess2";
+        }
+    }
+
 }

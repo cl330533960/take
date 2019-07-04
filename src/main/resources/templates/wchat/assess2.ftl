@@ -3,13 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>HB热量评估</title>
+    <title>瘦体重法热量评估</title>
     <#include "../resource.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
 </head>
 <body>
 
-aaaaaa
+bbbb
 
 </body>
 </html>

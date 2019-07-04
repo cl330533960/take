@@ -17,16 +17,31 @@ function add(url) {
     });
 }
 //显示一个对话框
-$.alert("我是一个对话框");
+var type =1;
 
-function getdata(id) {
-    // 方法一
-    var item = null;
-    var obj = document.getElementsByName(id)
-    for (var i = 0; i < obj.length; i++) { //遍历Radio
-        if (obj[i].checked) {
-            item = obj[i].value;
-        }
-    }
-    alert(item);
+function setdata(num) {
+    type=num;
+    alert(type);
+}
+
+function start(url) {
+        confirm("确认初始化？", function () {
+            $.ajax({
+                type: "get",
+                url: url+'?type='+type,
+                contentType: "application/json",
+                async: false,
+                success: function (R) {
+                    if (R.code === 0) {
+                        Msg.success('操作成功');
+                    } else {
+                        Msg.error(R.msg);
+                    }
+                },
+                error: function (e) {
+                    Msg.error("系统繁忙"+e);
+                }
+            });
+        });
+
 }

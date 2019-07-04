@@ -23,11 +23,12 @@
                 <p style="font-size: 32px">推荐，考虑因素全面，医学常用 </p>
             </div>
             <div class="weui-cell__ft">
-                <input type="radio" class="weui-check" style="width: 20px;height: 20px" name="type" id="x11"
-                       checked="checked">
+                <input type="radio" class="weui-check"  name="type1" id="x11"
+                       checked="checked"  onclick="setdata(1)">
                 <span class="weui-icon-checked"></span>
             </div>
         </label>
+
         <label class="weui-cell weui-check__label" for="x12">
 
             <div class="weui-cell__bd">
@@ -35,7 +36,8 @@
                 <p style="font-size: 32px">知道自己的瘦体重（去脂体重）者适用</p>
             </div>
             <div class="weui-cell__ft">
-                <input type="radio" name="type" class="weui-check" id="x12">
+                <input type="radio" name="type1" class="weui-check" id="x12"
+                       onclick="setdata(2)">
                 <span class="weui-icon-checked"></span>
             </div>
     </div>
@@ -47,8 +49,12 @@
         使用。</p></div>
     <div> <p style="font-size: 32px"> 3、怀孕、哺乳期不适用。</p></div>
 
-    <div style="margin-top: 5%" class="demos-content-padded">
-         <a href="javascript:;" onclick="alert('2')" style="height: 40px" class="weui-btn weui-btn_primary">主按钮</a>
+
+    <div  style="height: 90px;width: 100%;
+         display: block;border: 14px solid #06CB06;background: #06CB06;margin-top: 15%;text-align: center">
+         <a href="javascript:;" onclick="start('/wx/start')"
+            style="font-size: 34px;padding: 2px 6px;
+            display: block;color: #ffffff;line-height:90px " >开始评估</a>
     </div>
 
 </div>
