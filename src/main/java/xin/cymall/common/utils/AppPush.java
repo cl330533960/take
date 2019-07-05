@@ -139,7 +139,7 @@ public class AppPush {
         HashMap<String, String> hashMap = new HashMap();
         hashMap.put("title","顶");
         hashMap.put("titleText","顶你");
-        hashMap.put("transText","顶你个肺");
-        appPush.pushMsgToSingle("faff30fc9e7c2f8e763ae04dfad57494", hashMap);
+        hashMap.put("transText", "顶你个肺");
+        System.out.println(appPush.pushMsgToSingle("ccdebfd8d8237d5f44ef2d03596c9e81", hashMap).getResponse());
     }
 }
