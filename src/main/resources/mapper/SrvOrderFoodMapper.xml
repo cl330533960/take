@@ -9,14 +9,18 @@
         <result property="foodId" column="food_id"/>
         <result property="number" column="number"/>
         <result property="totalPrice" column="total_price"/>
-    </resultMap>
+		<result property="orderId" column="order_id"/>
+		<result property="foodName" column="food_name"/>
+	</resultMap>
 
 	<select id="get" resultType="xin.cymall.entity.SrvOrderFood">
 		select * from srv_order_food where id = #{value}
 	</select>
 
 	<select id="getList" resultType="xin.cymall.entity.SrvOrderFood">
-		select * from srv_order_food t <include refid="where_clause" />
+		select t.*,f.name as food_name from srv_order_food t
+		left join srv_food f on t.food_id = f.id
+		<include refid="where_clause" />
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}

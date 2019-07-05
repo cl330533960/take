@@ -2,6 +2,8 @@ package xin.cymall.controller;
 
 import java.util.List;
 import java.util.Map;
+
+import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.enumresource.StateEnum;
 import xin.cymall.common.log.SysLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -95,7 +97,8 @@ public class SrvOrderController {
     @RequiresPermissions("srvorder:info")
     public String info(Model model,@PathVariable("id") String id){
         SrvOrder srvOrder = srvOrderService.get(id);
-        model.addAttribute("model",srvOrder);
+        srvOrder.setStatus(OrderStatusEnum.getValue(srvOrder.getStatus()));
+        model.addAttribute("model", srvOrder);
         return "srvorder/info";
     }
 

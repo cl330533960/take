@@ -32,6 +32,15 @@
             <label class="layui-label-left">收件人地址<span class="label_span">:</span></label>
             <label class="layui-label-right">${(model.receiveAddr)!"-"}</label>
         </div>
+        <table id="foodList" lay-filter="test"></table>
+        <div class="layui-form-item">
+            <label class="layui-label-left">用户支付费用<span class="label_span">:</span></label>
+            <label class="layui-label-right">${(model.userPayFee)!"-"}</label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-label-left">总金额<span class="label_span">:</span></label>
+            <label class="layui-label-right">${(model.orderTotal)!"-"}</label>
+        </div>
         <div class="layui-form-item">
             <label class="layui-label-left">快递公司<span class="label_span">:</span></label>
             <label class="layui-label-right">${(model.expressCompnay)!"-"}</label>
@@ -52,10 +61,7 @@
             <label class="layui-label-left">订单状态<span class="label_span">:</span></label>
             <label class="layui-label-right">${(model.status)!"-"}</label>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-label-left">总金额<span class="label_span">:</span></label>
-            <label class="layui-label-right">${(model.orderTotal)!"-"}</label>
-        </div>
+
         <div class="layui-form-item">
             <div class="layui-form-item">
                 <label class="layui-label-left">备注<span class="label_span">:</span></label>
@@ -63,14 +69,35 @@
             </div>
             <div class="layui-form-item">
                 <label class="layui-label-left">外卖类型<span class="label_span">:</span></label>
-                <#--<label class="layui-label-right">${(model.orderType)!"-"}</label>-->
+                <div class="layui-input-normal">
+                    <div cyType="selectTool" cyProps="codeName:'ordertype',name:'ordertype'" name="openClose"
+                         value="${(model.orderType)!""}" class="layui-input-inline"></div>
+                </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-label-left">用户支付费用<span class="label_span">:</span></label>
-                <label class="layui-label-right">${(model.userPayFee)!"-"}</label>
-            </div>
+
     </form>
 </div>
+<script>
+    $(document).ready(function() {
+        $('select').attr('disabled', 'disabled');
+    })
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#foodList'
+            ,height: 200
+            ,width:600
+            ,url: '/srvorderfood/listData?orderId=${model.id}' //数据接口
+            ,cols: [[ //表头
+                {field: 'foodName', title: '食品', width:145}
+                ,{field: 'price', title: '单价', width:145}
+                ,{field: 'number', title: '数量', width:150}
+                ,{field: 'totalPrice', title: '总价', width:150}
+            ]]
+        });
+    });
+</script>
+
 
 </body>
 </html>

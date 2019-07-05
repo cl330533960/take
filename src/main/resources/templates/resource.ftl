@@ -18,6 +18,20 @@
 <script src="/common/js/HuploadTool.js"></script>
 <script src="/common/js/tplTool.js"></script>
 <script src="/common/js/editGrid.js"></script>
+
+
+<!-- 微信UI开始 -->
+<#--<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>-->
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script>
+<!-- 微信UI结束 -->
+
+
 <!--全局-->
 <script src="/common/js/whole/cyLayer.js"></script>
 <script src="/common/js/whole/common.js"></script>
