@@ -235,4 +235,18 @@ public class WchartController {
         }
     }
 
+    /**
+     * 跳转评估界面
+     **/
+    @RequestMapping(value = "/gotoassessresult",method = { RequestMethod.GET, RequestMethod.POST })
+    public String gotoassessresult(int type){
+
+        if (type==1) {
+            return "wchat/assessresult";
+        }else {
+            return "wchat/assessresult2";
+        }
+
+    }
+
 }

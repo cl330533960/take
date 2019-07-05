@@ -40,3 +40,10 @@ function start(url) {
     //     });
 
 }
+function getassessresult() {
+
+    window.location.href='/wx/gotoassessresult?type='+type;
+
+
+
+}
