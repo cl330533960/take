@@ -32,4 +32,6 @@ public interface SrvRestaurantService {
     void updateState(String[] ids, String stateValue);
 
 	String getArea(String area);
+
+	SrvRestaurant getByUserId(String userId);
 }

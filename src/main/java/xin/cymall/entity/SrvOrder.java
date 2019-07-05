@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
 
 
 /**
@@ -63,6 +63,7 @@ public class SrvOrder implements Serializable {
 	private String receiveAddr;
 	private String receivePhone;
 	private String receiveName;
+	private List<SrvOrderFood> foodList;
 
 	/**
 	 * 设置：主键ID
@@ -335,5 +336,13 @@ public class SrvOrder implements Serializable {
 
 	public void setReceiveName(String receiveName) {
 		this.receiveName = receiveName;
+	}
+
+	public List<SrvOrderFood> getFoodList() {
+		return foodList;
+	}
+
+	public void setFoodList(List<SrvOrderFood> foodList) {
+		this.foodList = foodList;
 	}
 }

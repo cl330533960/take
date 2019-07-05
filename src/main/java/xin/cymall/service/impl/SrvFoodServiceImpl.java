@@ -64,5 +64,10 @@ public class SrvFoodServiceImpl implements SrvFoodService {
             update(srvFood);
         }
     }
-	
+
+	@Override
+	public List<SrvFood> queryFoodByRestaurantId(String restaurantId) {
+		return srvFoodDao.queryFoodByRestaurantId(restaurantId);
+	}
+
 }

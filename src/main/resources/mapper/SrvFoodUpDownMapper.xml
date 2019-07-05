@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvFoodUpDownDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.SrvFoodUpDown" id="srvFoodUpDownMap">
+        <result property="id" column="id"/>
+        <result property="foodId" column="food_id"/>
+        <result property="restaurantId" column="restaurant_id"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.SrvFoodUpDown">
+		select * from srv_food_up_down where id = #{value}
+	</select>
+
+	<select id="getList" resultType="xin.cymall.entity.SrvFoodUpDown">
+		select * from srv_food_up_down t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_food_up_down t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="foodId != null and foodId != ''"> and t.food_id = #{foodId} </if>
+    		<if test="foodIdVague != null and foodIdVague != ''"> and t.food_id like concat('%',#{foodIdVague},'%') </if>
+            <if test="restaurantId != null and restaurantId != ''"> and t.restaurant_id = #{restaurantId} </if>
+    		<if test="restaurantIdVague != null and restaurantIdVague != ''"> and t.restaurant_id like concat('%',#{restaurantIdVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.SrvFoodUpDown">
+		insert into srv_food_up_down
+		(
+			`id`, 
+			`food_id`, 
+			`restaurant_id`
+		)
+		values
+		(
+			#{id}, 
+			#{foodId}, 
+			#{restaurantId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.SrvFoodUpDown">
+		update srv_food_up_down 
+		<set>
+			<if test="foodId != null">`food_id` = #{foodId}, </if>
+			<if test="restaurantId != null">`restaurant_id` = #{restaurantId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_food_up_down where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_food_up_down where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<delete id="downFood" parameterType="xin.cymall.entity.SrvFoodUpDown">
+		delete from srv_food_up_down where food_id = #{foodId} and restaurant_id = #{restaurantId}
+	</delete>
+
+</mapper>

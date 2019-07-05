@@ -29,4 +29,6 @@ public interface SrvOrderService {
 	void deleteBatch(String[] ids);
 
     void updateState(String[] ids, String stateValue);
+
+	SrvOrder receiptOrder(SrvOrder srvOrder);
 }

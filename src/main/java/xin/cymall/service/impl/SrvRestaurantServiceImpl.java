@@ -87,5 +87,10 @@ public class SrvRestaurantServiceImpl implements SrvRestaurantService {
 		}
 		return "";
 	}
-	
+
+	@Override
+	public SrvRestaurant getByUserId(String userId) {
+		return srvRestaurantDao.getByUserId(userId);
+	}
+
 }

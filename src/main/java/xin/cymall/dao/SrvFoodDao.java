@@ -2,6 +2,8 @@ package xin.cymall.dao;
 
 import xin.cymall.entity.SrvFood;
 
+import java.util.List;
+
 /**
  * 
  * 
@@ -10,5 +12,6 @@ import xin.cymall.entity.SrvFood;
  * @date 2019-06-25 17:47:38
  */
 public interface SrvFoodDao extends BaseDao<SrvFood> {
-	
+
+    List<SrvFood> queryFoodByRestaurantId(String restaurantId);
 }

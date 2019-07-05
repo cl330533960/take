@@ -29,4 +29,6 @@ public interface SrvFoodService {
 	void deleteBatch(String[] ids);
 
     void updateState(String[] ids, String stateValue);
+
+	List<SrvFood> queryFoodByRestaurantId(String restaurantId);
 }

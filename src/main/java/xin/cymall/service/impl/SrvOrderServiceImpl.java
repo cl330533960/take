@@ -62,5 +62,10 @@ public class SrvOrderServiceImpl implements SrvOrderService {
             update(srvOrder);
         }
     }
-	
+
+	@Override
+	public SrvOrder receiptOrder(SrvOrder srvOrder) {
+		return srvOrderDao.receiptOrder(srvOrder);
+	}
+
 }

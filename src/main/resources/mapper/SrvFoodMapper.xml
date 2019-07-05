@@ -152,5 +152,12 @@
 			#{id}
 		</foreach>
 	</delete>
+	
+	<select id="queryFoodByRestaurantId" resultType="xin.cymall.entity.SrvFood" parameterType="string">
+		select * from srv_food f
+		left join srv_restaurant r
+		on f.restaurant_id = r.id or r.chain_code = f.chian_id
+		where r.id = #{value}
+	</select>
 
 </mapper>
