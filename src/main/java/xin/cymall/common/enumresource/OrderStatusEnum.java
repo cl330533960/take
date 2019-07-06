@@ -12,7 +12,8 @@ public enum OrderStatusEnum  implements EnumMessage {
     ORDRT_STATUS4("4","待骑手取餐"),
     ORDRT_STATUS5("5","骑手正在向你飞奔"),
     ORDRT_STATUS6("6","已签收"),
-    ORDRT_STATUS7("7","已取消");
+    ORDRT_STATUS7("7","已取消"),
+    ORDRT_STATUS8("8","餐厅拒接");
 
     private final String code;
     private final String value;

@@ -9,16 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import xin.cymall.common.utils.R;
-import xin.cymall.common.utils.StringUtil;
+import xin.cymall.common.enumresource.OrderStatusEnum;
+import xin.cymall.common.utils.*;
 import xin.cymall.common.utils.UUID;
 import xin.cymall.entity.*;
 import xin.cymall.service.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName SysApiController
@@ -97,8 +94,8 @@ public class SysApiController {
             srvFoodUpDown.setFoodId(foodId);
             list.add(srvFoodUpDown);
         }
-        srvFoodUpDownService.batchUporDown(list,status);
-        return R.ok().put("data",list);
+        srvFoodUpDownService.batchUporDown(list, status);
+        return R.ok().put("data", list);
     }
 
     @RequestMapping("/saveOpinion")
@@ -110,7 +107,7 @@ public class SysApiController {
     }
 
     /**
-     * 查询待接单订单
+     * 查询订单详细
      * @param srvOrder
      * @return
      */
@@ -121,7 +118,47 @@ public class SysApiController {
         map.put("orderId", returnOrder.getId());
         List<SrvOrderFood> list = srvOrderFoodService.getList(map);
         returnOrder.setFoodList(list);
-        return R.ok().put("data",returnOrder);
+        return R.ok().put("data", returnOrder);
     }
 
+    /**
+     * 查询订单列表
+     * @param params
+     * @return
+     */
+    @RequestMapping("/queryOrderList")
+    public R queryOrderList(@RequestParam String restaurantId,@RequestParam Integer page,@RequestParam Integer limit,String status){
+        Map<String,Object> params = new HashMap<>();
+        params.put("restaurantId",restaurantId);
+        params.put("status","status");
+        params.put("page",page);
+        params.put("limit",limit);
+        params.put("sidx","orderTime");
+        params.put("order","asc");
+        Query query = new Query(params);
+        List<SrvOrder> orderList = srvOrderService.getList(query);
+        for(SrvOrder srvOrder : orderList){
+            srvOrder.setStatusText(OrderStatusEnum.getValue(srvOrder.getStatus()));
+        }
+        int total = srvOrderService.getCount(query);
+        PageUtils pageUtil = new PageUtils(orderList, total, query.getLimit(), query.getPage());
+        return R.ok().put("page", pageUtil);
+    }
+
+    /**
+     * 更新订单状态
+     * @param srvOrder
+     * @return
+     */
+    @RequestMapping("/updateOrder")
+    public R updateOrder(SrvOrder srvOrder){
+        if(OrderStatusEnum.ORDRT_STATUS3.getCode().equals(srvOrder.getStatus())){
+            srvOrder.setReceiptTime(new Date());
+            //通知骑手
+        }else{
+            srvOrder.setStatus(OrderStatusEnum.ORDRT_STATUS8.getCode());
+        }
+        srvOrderService.update(srvOrder);
+        return R.ok();
+    }
 }

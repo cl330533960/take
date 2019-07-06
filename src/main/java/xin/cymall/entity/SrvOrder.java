@@ -56,6 +56,9 @@ public class SrvOrder implements Serializable {
 	/**下单时间**/
 	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date orderTime;
+	/**接单时间*/
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date receiptTime;
 
 	private String wxName;
 	private String phone;
@@ -64,6 +67,7 @@ public class SrvOrder implements Serializable {
 	private String receivePhone;
 	private String receiveName;
 	private List<SrvOrderFood> foodList;
+	private String statusText;
 
 	/**
 	 * 设置：主键ID
@@ -345,4 +349,21 @@ public class SrvOrder implements Serializable {
 	public void setFoodList(List<SrvOrderFood> foodList) {
 		this.foodList = foodList;
 	}
+
+	public String getStatusText() {
+		return statusText;
+	}
+
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
+	}
+
+	public Date getReceiptTime() {
+		return receiptTime;
+	}
+
+	public void setReceiptTime(Date receiptTime) {
+		this.receiptTime = receiptTime;
+	}
+	
 }
