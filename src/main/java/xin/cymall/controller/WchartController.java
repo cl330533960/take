@@ -246,7 +246,10 @@ public class WchartController {
         }else {
             return "wchat/assessresult2";
         }
-
     }
+    @RequestMapping(value = "/gohome",method = { RequestMethod.GET, RequestMethod.POST })
+    public String gohome(){
 
+            return "wchat/home";
+    }
 }

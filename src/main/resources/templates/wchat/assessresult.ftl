@@ -200,11 +200,11 @@
 
 
     <div>
-        <p style="margin-left: 5%;margin-top:4px; font-size: 28px">有品有味联合多家线下优质餐厅,由营养师搭配,全新推出上述符合的多种方案 既可食堂又可以外卖欢迎点餐</p>
+        <p style="margin-left: 5%;margin-top:4px;margin-top:10%;color: #ff563e; font-size: 28px">有品有味联合多家线下优质餐厅,由营养师搭配,全新推出上述符合的多种方案 既可食堂又可以外卖欢迎点餐</p>
     </div>
 
     <div  class="gobutton">
-        <a href="javascript:;"
+        <a href="javascript:;" onclick="gohome()"
            style="font-size: 34px;padding: 2px 6px;
             display: block;color: #ffffff;line-height:90px " >去点餐 </a>
     </div>

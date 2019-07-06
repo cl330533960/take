@@ -17,7 +17,6 @@ var type =1;
 
 function setdata(num) {
     type=num;
-    // alert(type);
 }
 
 function start(url) {
@@ -40,10 +39,14 @@ function start(url) {
     //     });
 
 }
-function getassessresult() {
-
+function getassessresult(type) {
     window.location.href='/wx/gotoassessresult?type='+type;
 
-
-
 }
+
+function gohome() {
+    window.location.href='/wx/gohome';
+}
+// $(function (){
+//     alert(type);
+// })

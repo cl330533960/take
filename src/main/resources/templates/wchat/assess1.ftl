@@ -116,7 +116,7 @@
 
 
          <div  class="button">
-             <a href="javascript:;" onclick="getassessresult()"
+             <a href="javascript:;" onclick="getassessresult(1)"
                 style="font-size: 34px;padding: 2px 6px;
             display: block;color: #ffffff;line-height:90px " >开始评估</a>
          </div>
