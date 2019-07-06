@@ -43,7 +43,26 @@ $(function (){
     //var obj = eval('(' + data + ')');
     //console.log(obj.result.data)
 
-    setTimeout(function (){render("#list_warp",false)},5000);
+
+    setTimeout(function (){
+        render("#list_warp",false);
+        var num_jia = document.getElementById("num-jia");
+        var num_jian = document.getElementById("num-jian");
+        var input_num = document.getElementById("input-num");
+        num_jia.onclick = function() {
+            input_num.value = parseInt(input_num.value) + 1;
+        }
+
+        num_jian.onclick = function() {
+
+            if(input_num.value <= 0) {
+                input_num.value = 0;
+            } else {
+
+                input_num.value = parseInt(input_num.value) - 1;
+            }
+
+        }},1000);
 
 })
 
@@ -60,23 +79,14 @@ function render(selector, tpl ,type) {
 
     type = arguments[3] || false;
     var html = template("info", {data:data});
-    //if(type) {
-    //    elem.innerHTML += html;
-    //} else {
-    //    elem.innerHTML = html;
-    //}
+
     $("#list_warp").html(html);
 }
 
 
-const res = [
-    {"name":"小明", "age":16, "marry":"单身"},
-    {"name":"小花","age":15, "marry":"有男朋友"},
-    {"name":"小胖","age":15, "marry":"有女朋友"},
-    {"name":"小丽","age":15, "marry":"单身"}
-];
 
-const data = [{
+
+var data = [{
     "uniquekey": "4859e5d9123a05dada6829a44ce60061",
     "title": "宿便天敌”找到了，每天没事吃一吃，肚腩消了，体重也能轻不少",
     "date": "2019-07-06 13:18",
