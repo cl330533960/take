@@ -1,29 +1,31 @@
 package xin.cymall.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.common.bean.menu.WxMenuButton;
-import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import xin.cymall.common.utils.CalcBmiUtil;
 import xin.cymall.common.utils.MessageUtil;
+import xin.cymall.common.utils.R;
 import xin.cymall.common.utils.TextMessage;
+import xin.cymall.entity.SrvBaseSet;
+import xin.cymall.entity.wchart.AssessOne;
+import xin.cymall.service.SrvBaseSetService;
 
+import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/wx")
 public class WchartController {
 
+    @Autowired
+    private SrvBaseSetService srvBaseSetService;
 
     @RequestMapping("/auth")
     @ResponseBody
@@ -251,5 +253,26 @@ public class WchartController {
     public String gohome(){
 
             return "wchat/home";
+    }
+
+    public R assessOne(AssessOne assessOne) throws ScriptException {
+        double bmi = CalcBmiUtil.round(assessOne.getWeight()/(assessOne.getHeight()*assessOne.getHeight()),1);
+        List<SrvBaseSet> list = srvBaseSetService.getList(null);
+        SrvBaseSet srvBaseSet = list.get(0);
+        String thin = srvBaseSet.getThin();
+        boolean flag1 = CalcBmiUtil.calcBmi(thin, "BMI", bmi);
+        String norma = srvBaseSet.getNormal();
+        boolean flag2 = CalcBmiUtil.calcBmi(norma, "BMI", bmi);
+        String overWeight = srvBaseSet.getOverWeight();
+        boolean flag3 = CalcBmiUtil.calcBmi(overWeight, "BMI", bmi);
+        String obesity = srvBaseSet.getObesity();
+        boolean flag4 = CalcBmiUtil.calcBmi(obesity, "BMI", bmi);
+        
+        return R.ok();
+    }
+
+    public R assessTwo(){
+
+        return R.ok();
     }
 }

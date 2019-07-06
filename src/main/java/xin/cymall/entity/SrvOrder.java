@@ -365,5 +365,5 @@ public class SrvOrder implements Serializable {
 	public void setReceiptTime(Date receiptTime) {
 		this.receiptTime = receiptTime;
 	}
-	
+
 }
