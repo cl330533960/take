@@ -40,6 +40,8 @@ public class SysApiController {
     private SrvOrderService srvOrderService;
     @Autowired
     private SrvOrderFoodService srvOrderFoodService;
+    @Autowired
+    private SrvRestauranapplyService srvRestauranapplyService;
 
     @RequestMapping("/login")
     public R login(@RequestParam String username,@RequestParam String password){
@@ -68,8 +70,15 @@ public class SysApiController {
             return R.error(errorMsg);
     }
 
+    @RequestMapping("/apply")
+    public R apply(SrvRestauranapply srvRestauranapply){
+        srvRestauranapply.setId(UUID.generateId());
+        srvRestauranapplyService.save(srvRestauranapply);
+        return R.ok();
+    }
+
     @RequestMapping("/setRestaurant")
-      public R setRestaurant(@RequestBody SrvRestaurant srvRestaurant){
+      public R setRestaurant(SrvRestaurant srvRestaurant){
         srvRestaurantService.update(srvRestaurant);
         return R.ok();
     }

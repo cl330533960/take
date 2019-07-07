@@ -255,19 +255,44 @@ public class WchartController {
             return "wchat/home";
     }
 
+    @RequestMapping(value = "/rationorderFood",method = { RequestMethod.GET, RequestMethod.POST })
+    public String rationorderFood(){
+
+        return "wchat/rationorderfood";
+    }
+
+    @RequestMapping(value = "/locationManage",method = { RequestMethod.GET, RequestMethod.POST })
+    public String locationManage(){
+
+        return "wchat/location";
+    }
+
     public R assessOne(AssessOne assessOne) throws ScriptException {
+        String repalce = "BMI";
         double bmi = CalcBmiUtil.round(assessOne.getWeight()/(assessOne.getHeight()*assessOne.getHeight()),1);
         List<SrvBaseSet> list = srvBaseSetService.getList(null);
         SrvBaseSet srvBaseSet = list.get(0);
         String thin = srvBaseSet.getThin();
-        boolean flag1 = CalcBmiUtil.calcBmi(thin, "BMI", bmi);
+        boolean flag1 = CalcBmiUtil.calcBmi(thin, repalce, bmi);
         String norma = srvBaseSet.getNormal();
-        boolean flag2 = CalcBmiUtil.calcBmi(norma, "BMI", bmi);
+        boolean flag2 = CalcBmiUtil.calcBmi(norma, repalce, bmi);
         String overWeight = srvBaseSet.getOverWeight();
-        boolean flag3 = CalcBmiUtil.calcBmi(overWeight, "BMI", bmi);
+        boolean flag3 = CalcBmiUtil.calcBmi(overWeight, repalce, bmi);
         String obesity = srvBaseSet.getObesity();
-        boolean flag4 = CalcBmiUtil.calcBmi(obesity, "BMI", bmi);
-        
+        boolean flag4 = CalcBmiUtil.calcBmi(obesity, repalce, bmi);
+        String bmiRes = "";
+        if(flag1){
+            bmiRes = "偏瘦";
+        }
+        if(flag2){
+            bmiRes = "正常";
+        }
+        if(flag3){
+            bmiRes = "超重";
+        }
+        if(flag4){
+            bmiRes = "肥胖";
+        }
         return R.ok();
     }
 

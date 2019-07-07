@@ -81,7 +81,7 @@
 			#{restaurantName}, 
 			#{addr}, 
 			#{healthLevel}, 
-			#{applyTime}, 
+			now(),
 			#{status}
 		)
 	</insert>
