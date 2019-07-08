@@ -77,8 +77,6 @@
             </a>
         </div>
     </div>
-
-
 </div>
 <a href="javascript:;" class="weui-btn weui-btn_primary">下一步</a>
 </body>

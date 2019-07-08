@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>收件地址</title>
+    <title>收件地址详细</title>
 <#include "../resource.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
     <style type="text/css">
@@ -21,59 +21,26 @@
     </style>
 </head>
 <body>
-<div class="weui-cells weui-cells_radio">
-    <label class="weui-cell weui-check__label" for="x11">
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">联系人</label></div>
         <div class="weui-cell__bd">
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <p>张三 13512345678</p>
-
-                <p>山东省青岛市市北区黄河路18号1号楼3层301室</p>
-
-                <div class="weui-cell__ft">编辑</div>
-            </a>
+            <input class="weui-input"  placeholder="请输入联系人">
         </div>
-        <div class="weui-cell__ft">
-            <input type="radio" class="weui-check" name="radio1" id="x11" checked="checked">
-            <span class="weui-icon-checked"></span>
-        </div>
-    </label>
-    <label class="weui-cell weui-check__label" for="x12">
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">联系电话</label></div>
         <div class="weui-cell__bd">
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <div class="weui-cell__bd">
-                    <p>张三 13512345678</p>
-
-                    <p>山东省青岛市市北区黄河路18号1号楼3层301室</p>
-                </div>
-                <div class="weui-cell__ft">编辑</div>
-            </a>
+            <input class="weui-input" type="tel" placeholder="请输入联系电话">
         </div>
-        <div class="weui-cell__ft">
-            <input type="radio" class="weui-check" name="radio1" id="x12">
-            <span class="weui-icon-checked"></span>
-        </div>
-    </label>
-    <label class="weui-cell weui-check__label" for="x13">
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
         <div class="weui-cell__bd">
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <div class="weui-cell__bd">
-                    <p>张三 13512345678</p>
-
-                    <p>山东省青岛市市北区黄河路18号1号楼3层301室</p>
-                </div>
-                <div class="weui-cell__ft">编辑</div>
-            </a>
+            <input class="weui-input"  placeholder="请输入详细地址">
         </div>
-        <div class="weui-cell__ft">
-            <input type="radio" class="weui-check" name="radio1" id="x13">
-            <span class="weui-icon-checked"></span>
-        </div>
-    </label>
-    <#--<a href="javascript:void(0);" class="weui-cell weui-cell_link">-->
-        <#--<div class="weui-cell__bd">添加收货地址</div>-->
-    <#--</a>-->
-
+    </div>
 </div>
-<a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 10px;">添加收货地址</a>
+<a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 10px;">保存</a>
 </body>
 </html>
