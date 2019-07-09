@@ -77,7 +77,7 @@ public class SrvBaseSetController {
     @SysLog("修改")
 	@RequestMapping("/update")
 	@RequiresPermissions("srvbaseset:update")
-	public R update(@RequestBody SrvBaseSet srvBaseSet){
+	public R update(SrvBaseSet srvBaseSet){
 		srvBaseSetService.update(srvBaseSet);
 		
 		return R.ok();

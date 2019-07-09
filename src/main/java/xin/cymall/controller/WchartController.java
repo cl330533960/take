@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import xin.cymall.common.utils.CalcBmiUtil;
-import xin.cymall.common.utils.MessageUtil;
-import xin.cymall.common.utils.R;
-import xin.cymall.common.utils.TextMessage;
+import xin.cymall.common.utils.*;
 import xin.cymall.entity.SrvBaseSet;
 import xin.cymall.entity.wchart.AssessOne;
 import xin.cymall.service.SrvBaseSetService;
@@ -280,9 +277,33 @@ public class WchartController {
 
     public R assessOne(AssessOne assessOne) throws ScriptException {
         String repalce = "BMI";
-        double bmi = CalcBmiUtil.round(assessOne.getWeight()/(assessOne.getHeight()*assessOne.getHeight()),1);
+        double bmi = CalcBmiUtil.round(assessOne.getWeight() / (assessOne.getHeight() * assessOne.getHeight()), 1);
         List<SrvBaseSet> list = srvBaseSetService.getList(null);
         SrvBaseSet srvBaseSet = list.get(0);
+        String bmiRes = calcBmi(bmi, srvBaseSet, repalce);
+        String centerObesityRes = calcCenterObesity(assessOne);
+        Double upRes = CalcBmiUtil.calcRes(srvBaseSet.getNormalWeightUp(), new Double[]{assessOne.getHeight() / 100, assessOne.getHeight() / 100}, new String[]{"H", "H"});
+        Double normalWeightUp = CalcBmiUtil.round(upRes, 0);
+        Double downRes = CalcBmiUtil.calcRes(srvBaseSet.getNormalWeightDown(), new Double[]{assessOne.getHeight() / 100, assessOne.getHeight() / 100}, new String[]{"H", "H"});
+        Double normalWeightDown = CalcBmiUtil.round(downRes, 0);
+        String overWeight = "";
+        if(assessOne.getWeight() - normalWeightUp  > 0){
+            overWeight = String.valueOf(assessOne.getWeight() - normalWeightUp);
+        }
+        Double bee = calcBee(assessOne,srvBaseSet);
+        String cal = "";
+        if(bmiRes.equals("超重")){
+
+        }else  if(bmiRes.equals("肥胖")){
+            cal = String.valueOf(bee * 1.0) + "-";
+        }else{
+            cal = String.valueOf(bee * assessOne.getSportRatio());
+        }
+
+        return R.ok();
+    }
+
+    public String calcBmi(double bmi,SrvBaseSet srvBaseSet,String repalce) throws ScriptException{
         String thin = srvBaseSet.getThin();
         boolean flag1 = CalcBmiUtil.calcBmi(thin, repalce, bmi);
         String norma = srvBaseSet.getNormal();
@@ -304,8 +325,40 @@ public class WchartController {
         if(flag4){
             bmiRes = "肥胖";
         }
-        return R.ok();
+        return bmiRes;
     }
+
+    public String calcCenterObesity(AssessOne assessOne){
+        // 中心型肥胖： 中心型肥胖前期，85	<=	男性腰围 <90 ，80	<=	 女性腰围 <85 ，中心型肥胖，男性腰围>=90，女性腰围>=85
+        String centerObesityRes = "";
+        if(assessOne.getSex().equals("男")){
+            if(assessOne.getWaistline()>=90){
+                centerObesityRes = "中心型肥胖";
+            }else if (assessOne.getWaistline()>= 85 && assessOne.getWaistline()<90){
+                centerObesityRes = "中心型肥胖前期";
+            }
+        }else  if(assessOne.getSex().equals("女")){
+            if(assessOne.getWaistline()>=85){
+                centerObesityRes = "中心型肥胖";
+            }else if (assessOne.getWaistline()>= 80 && assessOne.getWaistline()<85){
+                centerObesityRes = "中心型肥胖前期";
+            }
+        }
+        return centerObesityRes;
+    }
+
+    public Double calcBee(AssessOne assessOne,SrvBaseSet srvBaseSet) throws ScriptException {
+        if(assessOne.getSex().equals("男")){
+            Double beeRes = CalcBmiUtil.calcRes(srvBaseSet.getManBee(), new Double[]{assessOne.getWeight(), assessOne.getHeight() / 100, Double.valueOf(assessOne.getAge())}, new String[]{"W", "H", "A"});
+            Double bee = CalcBmiUtil.round(beeRes, 0);
+        }else{
+            Double beeRes = CalcBmiUtil.calcRes(srvBaseSet.getWoman(), new Double[]{assessOne.getWeight(), assessOne.getHeight() / 100, Double.valueOf(assessOne.getAge())}, new String[]{"W", "H", "A"});
+            Double bee = CalcBmiUtil.round(beeRes, 0);
+        }
+    }
+
+
+
 
     public R assessTwo(){
 
