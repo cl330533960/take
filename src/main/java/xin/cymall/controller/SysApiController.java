@@ -139,7 +139,7 @@ public class SysApiController {
     public R queryOrderList(@RequestParam String restaurantId,@RequestParam Integer page,@RequestParam Integer limit,String status){
         Map<String,Object> params = new HashMap<>();
         params.put("restaurantId",restaurantId);
-        params.put("status","status");
+        params.put("status",status);
         params.put("page",page);
         params.put("limit",limit);
         params.put("sidx","orderTime");
