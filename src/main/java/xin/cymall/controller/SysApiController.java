@@ -146,8 +146,12 @@ public class SysApiController {
         params.put("order","asc");
         Query query = new Query(params);
         List<SrvOrder> orderList = srvOrderService.getList(query);
+        Map<String,Object> map = new HashMap<>();
         for(SrvOrder srvOrder : orderList){
+            map.put("orderId", srvOrder.getId());
             srvOrder.setStatusText(OrderStatusEnum.getValue(srvOrder.getStatus()));
+            List<SrvOrderFood> list = srvOrderFoodService.getList(map);
+            srvOrder.setFoodList(list);
         }
         int total = srvOrderService.getCount(query);
         PageUtils pageUtil = new PageUtils(orderList, total, query.getLimit(), query.getPage());
