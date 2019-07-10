@@ -351,9 +351,11 @@ public class WchartController {
         if(assessOne.getSex().equals("男")){
             Double beeRes = CalcBmiUtil.calcRes(srvBaseSet.getManBee(), new Double[]{assessOne.getWeight(), assessOne.getHeight() / 100, Double.valueOf(assessOne.getAge())}, new String[]{"W", "H", "A"});
             Double bee = CalcBmiUtil.round(beeRes, 0);
+            return bee;
         }else{
             Double beeRes = CalcBmiUtil.calcRes(srvBaseSet.getWoman(), new Double[]{assessOne.getWeight(), assessOne.getHeight() / 100, Double.valueOf(assessOne.getAge())}, new String[]{"W", "H", "A"});
             Double bee = CalcBmiUtil.round(beeRes, 0);
+            return bee;
         }
     }
 
