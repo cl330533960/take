@@ -165,7 +165,7 @@ public class SysApiController {
      */
     @RequestMapping("/updateOrder")
     public R updateOrder(SrvOrder srvOrder){
-        if(OrderStatusEnum.ORDRT_STATUS3.getCode().equals(srvOrder.getStatus())){
+        if(OrderStatusEnum.ORDRT_STATUS4.getCode().equals(srvOrder.getStatus())){
             srvOrder.setReceiptTime(new Date());
             //通知骑手
         }else{
