@@ -168,8 +168,6 @@ public class SysApiController {
         if(OrderStatusEnum.ORDRT_STATUS4.getCode().equals(srvOrder.getStatus())){
             srvOrder.setReceiptTime(new Date());
             //通知骑手
-        }else{
-            srvOrder.setStatus(OrderStatusEnum.ORDRT_STATUS8.getCode());
         }
         srvOrderService.update(srvOrder);
         return R.ok();
