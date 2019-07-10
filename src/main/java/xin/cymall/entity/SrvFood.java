@@ -55,6 +55,9 @@ public class SrvFood implements Serializable {
 	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	private Date updateTime;
 
+	private String rid;
+	private String rname;
+
 	/**
 	 * 设置：
 	 */
@@ -252,5 +255,19 @@ public class SrvFood implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	public String getRname() {
+		return rname;
+	}
 
+	public void setRname(String rname) {
+		this.rname = rname;
+	}
+
+	public String getRid() {
+		return rid;
+	}
+
+	public void setRid(String rid) {
+		this.rid = rid;
+	}
 }

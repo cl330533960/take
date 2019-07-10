@@ -70,4 +70,9 @@ public class SrvFoodServiceImpl implements SrvFoodService {
 		return srvFoodDao.queryFoodByRestaurantId(restaurantId);
 	}
 
+	@Override
+	public List<SrvFood> findHealthFood(String userAddrId, Integer cal) {
+		return srvFoodDao.findHealthFood(userAddrId, cal);
+	}
+
 }

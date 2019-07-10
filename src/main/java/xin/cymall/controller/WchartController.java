@@ -7,9 +7,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xin.cymall.common.utils.*;
+import xin.cymall.entity.wchart.HealthOrderRequest;
 import xin.cymall.entity.SrvBaseSet;
+import xin.cymall.entity.SrvFood;
+import xin.cymall.entity.SrvOrder;
 import xin.cymall.entity.wchart.AssessOne;
 import xin.cymall.service.SrvBaseSetService;
+import xin.cymall.service.SrvFoodService;
+import xin.cymall.service.SrvOrderService;
 
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +28,11 @@ public class WchartController {
 
     @Autowired
     private SrvBaseSetService srvBaseSetService;
+    @Autowired
+    private SrvFoodService srvFoodService;
+    @Autowired
+    private SrvOrderService srvOrderService;
+
 
     @RequestMapping("/auth")
     @ResponseBody
@@ -300,6 +310,19 @@ public class WchartController {
             cal = String.valueOf(bee * assessOne.getSportRatio());
         }
 
+        return R.ok();
+    }
+    @RequestMapping(value = "/getRecommendFood")
+    public R getRecommendFood(HealthOrderRequest healthOrderRequest){
+        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(),healthOrderRequest.getCal());
+        return R.ok().put("data",list);
+    }
+
+    @RequestMapping(value = "/saveOrder")
+    public R getRecommendFood(SrvOrder srvOrder){
+        srvOrder.setId(UUID.generateId());
+        srvOrder.setOrderNo(OrderUtil.generateOrderNo(srvOrder.getUserId(), ""));
+        srvOrderService.save(srvOrder);
         return R.ok();
     }
 
