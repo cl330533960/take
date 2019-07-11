@@ -140,6 +140,6 @@ public class AppPush {
         hashMap.put("title","顶");
         hashMap.put("titleText","顶你");
         hashMap.put("transText", "顶你个肺");
-        System.out.println(appPush.pushMsgToSingle("ccdebfd8d8237d5f44ef2d03596c9e81", hashMap).getResponse());
+        System.out.println(appPush.pushMsgToSingle("7aeab31d6cb477e38ecc73daac9e209a", hashMap).getResponse());
     }
 }
