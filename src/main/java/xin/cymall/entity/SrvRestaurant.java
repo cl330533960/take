@@ -1,6 +1,7 @@
 package xin.cymall.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -64,8 +65,10 @@ public class SrvRestaurant implements Serializable {
 	/****/
 	private String packFee;
 	/****/
+	@DateTimeFormat(pattern="HH:mm")
 	private Date busHourStart;
 	/****/
+	@DateTimeFormat(pattern="HH:mm")
 	private Date busHourEnd;
 	/**1�?0�?**/
 	private String isAllDay;
