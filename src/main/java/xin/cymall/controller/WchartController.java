@@ -281,6 +281,13 @@ public class WchartController {
         return "wchat/orderinfo";
     }
 
+    @RequestMapping(value = "/healthyFood",method = { RequestMethod.GET, RequestMethod.POST })
+    public String healthyFood(){
+
+        return "wchat/healthyfood";
+    }
+
+
     @RequestMapping(value = "/editLocation",method = { RequestMethod.GET, RequestMethod.POST })
     public String editLocation(){
         return "wchat/location";
