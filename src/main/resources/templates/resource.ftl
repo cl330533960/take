@@ -25,10 +25,10 @@
 <script src="https://cdn.bootcss.com/jquery-weui/1.0.0/js/jquery-weui.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.0.0/style/weui.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.0.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
 
-<script src="https://cdn.bootcss.com/jquery-weui/1.0.0/js/swiper.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery-weui/1.0.0/js/city-picker.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script>
 <!-- 微信UI结束 -->
 
 
