@@ -56,6 +56,8 @@ public class SrvFood implements Serializable {
 	private Date updateTime;
 
 	private String isUpDown;
+	private String rid;
+	private String rname;
 
 	/**
 	 * 设置：
@@ -260,5 +262,20 @@ public class SrvFood implements Serializable {
 
 	public void setIsUpDown(String isUpDown) {
 		this.isUpDown = isUpDown;
+	}
+	public String getRname() {
+		return rname;
+	}
+
+	public void setRname(String rname) {
+		this.rname = rname;
+	}
+
+	public String getRid() {
+		return rid;
+	}
+
+	public void setRid(String rid) {
+		this.rid = rid;
 	}
 }

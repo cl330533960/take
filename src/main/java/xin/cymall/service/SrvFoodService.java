@@ -31,4 +31,6 @@ public interface SrvFoodService {
     void updateState(String[] ids, String stateValue);
 
 	List<SrvFood> queryFoodByRestaurantId(String restaurantId);
+
+	List<SrvFood> findHealthFood(String userAddrId,Integer cal);
 }

@@ -14,4 +14,6 @@ import java.util.List;
 public interface SrvFoodDao extends BaseDao<SrvFood> {
 
     List<SrvFood> queryFoodByRestaurantId(String restaurantId);
+
+    List<SrvFood> findHealthFood(String userAddrId, Integer cal);
 }

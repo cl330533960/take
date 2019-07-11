@@ -16,6 +16,9 @@ public class DateUtil {
 	private static SimpleDateFormat SDF_MD = new SimpleDateFormat("MMdd");
 	private static SimpleDateFormat SDF_CHINA_MD = new SimpleDateFormat("MM鏈坉d鏃�");
 
+	private static SimpleDateFormat SDF_YMDHMSS_FNAME = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+
+
 
 	public static String getYmdhms() {
 		return SDF_YMDHMS.format(new Date());
@@ -265,6 +268,9 @@ public class DateUtil {
 		return date2;
 	}
 
+	public static String getYmdhmssFName() {
+		return SDF_YMDHMSS_FNAME.format(new Date());
+	}
 
 	public static void main(String[] args) {
 		// System.out.println(getYmdhms());
