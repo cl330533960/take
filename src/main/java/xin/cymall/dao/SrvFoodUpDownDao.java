@@ -11,5 +11,5 @@ import xin.cymall.entity.SrvFoodUpDown;
  * @date 2019-07-05 23:30:59
  */
 public interface SrvFoodUpDownDao extends BaseDao<SrvFoodUpDown> {
-    String downFood(SrvFoodUpDown srvFoodUpDown);
+    void downFood(SrvFoodUpDown srvFoodUpDown);
 }
