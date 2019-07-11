@@ -55,6 +55,8 @@ public class SrvFood implements Serializable {
 	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	private Date updateTime;
 
+	private String isUpDown;
+
 	/**
 	 * 设置：
 	 */
@@ -252,5 +254,11 @@ public class SrvFood implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	public String getIsUpDown() {
+		return isUpDown;
+	}
 
+	public void setIsUpDown(String isUpDown) {
+		this.isUpDown = isUpDown;
+	}
 }
