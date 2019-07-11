@@ -12,6 +12,7 @@ import xin.cymall.entity.SrvBaseSet;
 import xin.cymall.entity.SrvFood;
 import xin.cymall.entity.SrvOrder;
 import xin.cymall.entity.wchart.AssessOne;
+import xin.cymall.entity.wchart.WxOrder;
 import xin.cymall.service.SrvBaseSetService;
 import xin.cymall.service.SrvFoodService;
 import xin.cymall.service.SrvOrderService;
@@ -313,16 +314,19 @@ public class WchartController {
         return R.ok();
     }
     @RequestMapping(value = "/getRecommendFood")
+    @ResponseBody
     public R getRecommendFood(HealthOrderRequest healthOrderRequest){
         List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(),healthOrderRequest.getCal());
         return R.ok().put("data",list);
     }
 
     @RequestMapping(value = "/saveOrder")
-    public R getRecommendFood(SrvOrder srvOrder){
-        srvOrder.setId(UUID.generateId());
-        srvOrder.setOrderNo(OrderUtil.generateOrderNo(srvOrder.getUserId(), ""));
-        srvOrderService.save(srvOrder);
+    @ResponseBody
+    public R saveOrder(WxOrder wxOrder){
+        SrvOrder order = new SrvOrder();
+        order.setId(UUID.generateId());
+        order.setOrderNo(OrderUtil.generateOrderNo(wxOrder.getWxId(), ""));
+        srvOrderService.save(order);
         return R.ok();
     }
 

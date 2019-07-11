@@ -74,6 +74,8 @@ public class SrvRestaurant implements Serializable {
 	/****/
 	private String lat;
 
+	private String clientId;
+
 	private String[] parentAreaIds;
 
 	private String username;
@@ -452,5 +454,13 @@ public class SrvRestaurant implements Serializable {
 
 	public void setLastTime(Date lastTime) {
 		this.lastTime = lastTime;
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
 	}
 }
