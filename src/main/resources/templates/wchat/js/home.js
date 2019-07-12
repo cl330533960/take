@@ -43,7 +43,7 @@ $(function (){
     //var obj = eval('(' + data + ')');
     //console.log(obj.result.data)
 
-
+    //设置加减按钮
     setTimeout(function (){
         render("#list_warp",false);
         var num_jia = document.getElementById("num-jia");
@@ -64,6 +64,13 @@ $(function (){
 
         }},1000);
 
+    //设置列表的每一项监听
+    $( document ).on( "click", ".uiclass", function(){
+        //你的事件处理过程
+        window.location.href='/wx/orderInfo';
+    });
+
+
 })
 
 
@@ -81,6 +88,7 @@ function render(selector, tpl ,type) {
     var html = template("info", {data:data});
 
     $("#list_warp").html(html);
+
 }
 
 
