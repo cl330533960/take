@@ -1,25 +1,22 @@
 package xin.cymall.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.utils.*;
-import xin.cymall.entity.wchart.HealthOrderRequest;
-import xin.cymall.entity.SrvBaseSet;
-import xin.cymall.entity.SrvFood;
-import xin.cymall.entity.SrvOrder;
-import xin.cymall.entity.wchart.AssessOne;
-import xin.cymall.entity.wchart.WxOrder;
-import xin.cymall.service.SrvBaseSetService;
-import xin.cymall.service.SrvFoodService;
-import xin.cymall.service.SrvOrderService;
+import xin.cymall.entity.*;
+import xin.cymall.entity.wchart.*;
+import xin.cymall.service.*;
 
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +30,16 @@ public class WchartController {
     private SrvFoodService srvFoodService;
     @Autowired
     private SrvOrderService srvOrderService;
+    @Autowired
+    private SrvUserAddrService srvUserAddrService;
+    @Autowired
+    private SrvWxUserService srvWxUserService;
+    @Autowired
+    private SrvOrderFoodService srvOrderFoodService;
+    @Autowired
+    private SrvCouponService srvCouponService;
+    @Autowired
+    private SrvDiscounreserveService srvDiscounreserveService;
 
 
     @RequestMapping("/auth")
@@ -287,10 +294,22 @@ public class WchartController {
         return "wchat/healthyfood";
     }
 
+    @RequestMapping(value = "/couponList",method = { RequestMethod.GET, RequestMethod.POST })
+    public String couponList(){
+
+        return "wchat/couponlist";
+    }
+
 
     @RequestMapping(value = "/editLocation",method = { RequestMethod.GET, RequestMethod.POST })
     public String editLocation(){
         return "wchat/location";
+    }
+
+    @RequestMapping(value = "modifyLocation")
+    public R modifyLocation(SrvUserAddr srvUserAddr) {
+        srvUserAddrService.modifyLocation(srvUserAddr);
+        return R.ok();
     }
 
     public R assessOne(AssessOne assessOne) throws ScriptException {
@@ -320,6 +339,24 @@ public class WchartController {
 
         return R.ok();
     }
+
+
+    /**
+     * 优惠预定
+     * @param
+     * @return
+     */
+    @RequestMapping("/saveWxUser")
+    @ResponseBody
+    public R saveWxUser(BaseWx baseWx){
+        SrvWxUser srvWxUser = new SrvWxUser();
+        srvWxUser.setWxId(baseWx.getWxId());
+        srvWxUser.setWxName(baseWx.getWxName());
+        srvWxUser.setId(UUID.generateId());
+        srvWxUserService.save(srvWxUser);
+        return R.ok();
+    }
+
     @RequestMapping(value = "/getRecommendFood")
     @ResponseBody
     public R getRecommendFood(HealthOrderRequest healthOrderRequest){
@@ -330,12 +367,109 @@ public class WchartController {
     @RequestMapping(value = "/saveOrder")
     @ResponseBody
     public R saveOrder(WxOrder wxOrder){
-        SrvOrder order = new SrvOrder();
-        order.setId(UUID.generateId());
-        order.setOrderNo(OrderUtil.generateOrderNo(wxOrder.getWxId(), ""));
-        srvOrderService.save(order);
+        srvOrderService.save(wxOrder);
         return R.ok();
     }
+
+    /**
+     * 查询订单列表
+     * @param
+     * @return
+     */
+    @RequestMapping("/queryOrderList")
+    @ResponseBody
+    public R queryOrderList(@RequestParam String wxId,@RequestParam Integer page,@RequestParam Integer limit,String status){
+        Map<String,Object> params = new HashMap<>();
+        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxId);
+        String userId = srvWxUser != null ? srvWxUser.getId() : "userId";
+        params.put("userId",userId);
+        params.put("status",status);
+        params.put("page",page);
+        params.put("limit",limit);
+        params.put("sidx","orderTime");
+        params.put("order","asc");
+        Query query = new Query(params);
+        List<SrvOrder> orderList = srvOrderService.getList(query);
+        Map<String,Object> map = new HashMap<>();
+        for(SrvOrder srvOrder : orderList){
+            map.put("orderId", srvOrder.getId());
+            srvOrder.setStatusText(OrderStatusEnum.getValue(srvOrder.getStatus()));
+            List<SrvOrderFood> list = srvOrderFoodService.getList(map);
+            srvOrder.setFoodList(list);
+        }
+        int total = srvOrderService.getCount(query);
+        PageUtils pageUtil = new PageUtils(orderList, total, query.getLimit(), query.getPage());
+        return R.ok().put("page", pageUtil);
+    }
+
+    /**
+     * 取消订单
+     * @param
+     * @return
+     */
+    @RequestMapping("/cancelOrder")
+    @ResponseBody
+    public R cancelOrder(@RequestParam String wxId,@RequestParam String orderId){
+        SrvOrder srvOrder = srvOrderService.get(orderId);
+        if(OrderStatusEnum.ORDRT_STATUS2.getCode().equals(srvOrder.getStatus())){
+            srvOrder.setStatus(OrderStatusEnum.ORDRT_STATUS8.getCode());
+            srvOrderService.update(srvOrder);
+            return R.ok();
+        }
+        return R.error("该订单不能取消");
+    }
+
+    /**
+     * 查询优惠券
+     * @param
+     * @return
+     */
+    @RequestMapping("/queryCoupon")
+    @ResponseBody
+    public R queryCoupon(@RequestParam String wxId,@RequestParam String orderId){
+        Map<String,Object> params = new HashMap<>();
+        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxId);
+        String userId = srvWxUser != null ? srvWxUser.getId() : "userId";
+        params.put("userId", userId);
+        List<SrvCoupon> list = srvCouponService.getList(params);
+        for(SrvCoupon srvCoupon : list){
+            Date now = new Date();
+            Integer res1 = DateUtil.compareDate(now, srvCoupon.getStartTime());
+            Integer res2 = DateUtil.compareDate(srvCoupon.getEndTime(), now);
+            if(res1 == res2 && res1 == 1)
+                srvCoupon.setIsValid("1");
+            else
+                srvCoupon.setIsValid("0");
+        }
+        return R.ok().put("data", list);
+    }
+
+    /**
+     * 优惠预定
+     * @param
+     * @return
+     */
+    @RequestMapping("/discountReserve")
+    @ResponseBody
+    public R discountReserve(WxDiscounreserve wxDiscounreserve){
+        SrvDiscounreserve srvDiscounreserve = new SrvDiscounreserve();
+        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxDiscounreserve.getWxId());
+        srvDiscounreserve.setUserId(srvWxUser.getId());
+        srvDiscounreserve.setDiscountStart(new Date());
+        if(wxDiscounreserve.equals("1")){
+            srvDiscounreserve.setDiscountEnd(DateUtil.getLaterWeek());
+            srvDiscounreserve.setDiscount(0.9);
+
+        }else if(wxDiscounreserve.equals("2")){
+            srvDiscounreserve.setDiscountEnd(DateUtil.getLaterMonth());
+            srvDiscounreserve.setDiscount(0.8);
+        }
+        srvDiscounreserve.setStatus("2");
+        srvDiscounreserve.setRemark(wxDiscounreserve.getRemark());
+        srvDiscounreserveService.save(srvDiscounreserve);
+        return R.ok();
+    }
+
 
     public String calcBmi(double bmi,SrvBaseSet srvBaseSet,String repalce) throws ScriptException{
         String thin = srvBaseSet.getThin();

@@ -30,7 +30,9 @@ public class SrvDiscounreserve implements Serializable {
 	/**用户ID**/
 	private String userId;
 	/**折扣比**/
-	private String discount;
+	private Double discount;
+
+	private String remark;
 
 	/**
 	 * 设置：
@@ -95,13 +97,21 @@ public class SrvDiscounreserve implements Serializable {
 	/**
 	 * 设置：折扣比
 	 */
-	public void setDiscount(String discount) {
+	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
 	/**
 	 * 获取：折扣比
 	 */
-	public String getDiscount() {
+	public Double getDiscount() {
 		return discount;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 }

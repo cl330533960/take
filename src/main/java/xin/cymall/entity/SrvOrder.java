@@ -38,21 +38,21 @@ public class SrvOrder implements Serializable {
 	/**订单状态**/
 	private String status;
 	/**总金额**/
-	private String orderTotal;
+	private Double orderTotal;
 	/**评论**/
 	private String remark;
 	/**外卖类型**/
 	private String orderType;
 	/**用户支付费用**/
-	private String userPayFee;
+	private Double userPayFee;
 	/**运费**/
-	private String wayFee;
+	private Integer wayFee;
 	/**包装费**/
-	private String packFee;
+	private Integer packFee;
 	/**优惠券ID**/
 	private String couponId;
 	/**折扣**/
-	private String discount;
+	private Double discount;
 	/**下单时间**/
 	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date orderTime;
@@ -192,13 +192,13 @@ public class SrvOrder implements Serializable {
 	/**
 	 * 设置：总金额
 	 */
-	public void setOrderTotal(String orderTotal) {
+	public void setOrderTotal(Double orderTotal) {
 		this.orderTotal = orderTotal;
 	}
 	/**
 	 * 获取：总金额
 	 */
-	public String getOrderTotal() {
+	public Double getOrderTotal() {
 		return orderTotal;
 	}
 	/**
@@ -228,37 +228,37 @@ public class SrvOrder implements Serializable {
 	/**
 	 * 设置：用户支付费用
 	 */
-	public void setUserPayFee(String userPayFee) {
+	public void setUserPayFee(Double userPayFee) {
 		this.userPayFee = userPayFee;
 	}
 	/**
 	 * 获取：用户支付费用
 	 */
-	public String getUserPayFee() {
+	public Double getUserPayFee() {
 		return userPayFee;
 	}
 	/**
 	 * 设置：运费
 	 */
-	public void setWayFee(String wayFee) {
+	public void setWayFee(Integer wayFee) {
 		this.wayFee = wayFee;
 	}
 	/**
 	 * 获取：运费
 	 */
-	public String getWayFee() {
+	public Integer getWayFee() {
 		return wayFee;
 	}
 	/**
 	 * 设置：包装费
 	 */
-	public void setPackFee(String packFee) {
+	public void setPackFee(Integer packFee) {
 		this.packFee = packFee;
 	}
 	/**
 	 * 获取：包装费
 	 */
-	public String getPackFee() {
+	public Integer getPackFee() {
 		return packFee;
 	}
 	/**
@@ -276,13 +276,13 @@ public class SrvOrder implements Serializable {
 	/**
 	 * 设置：折扣
 	 */
-	public void setDiscount(String discount) {
+	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
 	/**
 	 * 获取：折扣
 	 */
-	public String getDiscount() {
+	public Double getDiscount() {
 		return discount;
 	}
 

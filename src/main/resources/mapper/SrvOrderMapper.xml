@@ -41,6 +41,11 @@
 		where t.id = #{value}
 	</select>
 
+	<select id="getByOderNo" resultType="xin.cymall.entity.SrvOrder">
+		select t.id from srv_order t
+		where t.order_no = #{value}
+	</select>
+
 	<select id="getList" resultType="xin.cymall.entity.SrvOrder">
 		select t.*,u.wx_name,u.phone,r.name as restaurantName,ua.receive_name,ua.receive_phone,ua.receive_addr from srv_order t
 		left join srv_user u on t.user_id = u.id

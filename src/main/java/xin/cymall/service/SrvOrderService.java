@@ -1,6 +1,7 @@
 package xin.cymall.service;
 
 import xin.cymall.entity.SrvOrder;
+import xin.cymall.entity.wchart.WxOrder;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface SrvOrderService {
 	
 	int getCount(Map<String, Object> map);
 	
-	void save(SrvOrder srvOrder);
+	void save(WxOrder wxOrder);
 	
 	void update(SrvOrder srvOrder);
 	
@@ -31,4 +32,6 @@ public interface SrvOrderService {
     void updateState(String[] ids, String stateValue);
 
 	SrvOrder receiptOrder(SrvOrder srvOrder);
+
+
 }

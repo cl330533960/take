@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvWxUserDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.wchart.SrvWxUser" id="srvWxUserMap">
+        <result property="id" column="id"/>
+        <result property="wxId" column="openid"/>
+        <result property="phone" column="phone"/>
+        <result property="wxName" column="wx_name"/>
+        <result property="sex" column="sex"/>
+        <result property="height" column="height"/>
+        <result property="weight" column="weight"/>
+        <result property="useDate" column="use_date"/>
+        <result property="bodyMassIndex" column="body_mass_index"/>
+        <result property="shape" column="shape"/>
+        <result property="centralObesity" column="central_obesity"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.wchart.SrvWxUser">
+		select * from srv_wx_user where id = #{value}
+	</select>
+
+
+	<select id="getByOpenId" resultType="xin.cymall.entity.wchart.SrvWxUser">
+		select * from srv_user_addr where openid = #{value}
+	</select>
+
+
+	<select id="getList" resultType="xin.cymall.entity.wchart.SrvWxUser">
+		select * from srv_wx_user t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_wx_user t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="wxId != null and wxId != ''"> and t.openid = #{wxId} </if>
+    		<if test="openidVague != null and openidVague != ''"> and t.openid like concat('%',#{openidVague},'%') </if>
+            <if test="phone != null and phone != ''"> and t.phone = #{phone} </if>
+    		<if test="phoneVague != null and phoneVague != ''"> and t.phone like concat('%',#{phoneVague},'%') </if>
+            <if test="wxName != null and wxName != ''"> and t.wx_name = #{wxName} </if>
+    		<if test="wxNameVague != null and wxNameVague != ''"> and t.wx_name like concat('%',#{wxNameVague},'%') </if>
+            <if test="sex != null and sex != ''"> and t.sex = #{sex} </if>
+    		<if test="sexVague != null and sexVague != ''"> and t.sex like concat('%',#{sexVague},'%') </if>
+            <if test="height != null and height != ''"> and t.height = #{height} </if>
+    		<if test="heightVague != null and heightVague != ''"> and t.height like concat('%',#{heightVague},'%') </if>
+            <if test="weight != null and weight != ''"> and t.weight = #{weight} </if>
+    		<if test="weightVague != null and weightVague != ''"> and t.weight like concat('%',#{weightVague},'%') </if>
+            <if test="useDate != null and useDate != ''"> and t.use_date = #{useDate} </if>
+    		<if test="useDateVague != null and useDateVague != ''"> and t.use_date like concat('%',#{useDateVague},'%') </if>
+            <if test="bodyMassIndex != null and bodyMassIndex != ''"> and t.body_mass_index = #{bodyMassIndex} </if>
+    		<if test="bodyMassIndexVague != null and bodyMassIndexVague != ''"> and t.body_mass_index like concat('%',#{bodyMassIndexVague},'%') </if>
+            <if test="shape != null and shape != ''"> and t.shape = #{shape} </if>
+    		<if test="shapeVague != null and shapeVague != ''"> and t.shape like concat('%',#{shapeVague},'%') </if>
+            <if test="centralObesity != null and centralObesity != ''"> and t.central_obesity = #{centralObesity} </if>
+    		<if test="centralObesityVague != null and centralObesityVague != ''"> and t.central_obesity like concat('%',#{centralObesityVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.wchart.SrvWxUser">
+		insert into srv_wx_user
+		(
+			`id`, 
+			`openid`, 
+			`phone`, 
+			`wx_name`, 
+			`sex`, 
+			`height`, 
+			`weight`, 
+			`use_date`, 
+			`body_mass_index`, 
+			`shape`, 
+			`central_obesity`
+		)
+		values
+		(
+			#{id}, 
+			#{wxId},
+			#{phone}, 
+			#{wxName}, 
+			#{sex}, 
+			#{height}, 
+			#{weight}, 
+			#{useDate}, 
+			#{bodyMassIndex}, 
+			#{shape}, 
+			#{centralObesity}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.wchart.SrvWxUser">
+		update srv_wx_user 
+		<set>
+			<if test="wxId != null">`openid` = #{wxId}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="wxName != null">`wx_name` = #{wxName}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="height != null">`height` = #{height}, </if>
+			<if test="weight != null">`weight` = #{weight}, </if>
+			<if test="useDate != null">`use_date` = #{useDate}, </if>
+			<if test="bodyMassIndex != null">`body_mass_index` = #{bodyMassIndex}, </if>
+			<if test="shape != null">`shape` = #{shape}, </if>
+			<if test="centralObesity != null">`central_obesity` = #{centralObesity}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_wx_user where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_wx_user where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

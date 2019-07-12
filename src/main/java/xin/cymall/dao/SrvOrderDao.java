@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface SrvOrderDao extends BaseDao<SrvOrder> {
 	SrvOrder receiptOrder(SrvOrder srvOrder);
+	SrvOrder getByOderNo(String orderNo);
 }

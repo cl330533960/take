@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xin.cymall.dao.SrvUserAddrDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="xin.cymall.entity.wchart.SrvUserAddr" id="srvUserAddrMap">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="receiveAddr" column="receive_addr"/>
+        <result property="lng" column="lng"/>
+        <result property="lat" column="lat"/>
+        <result property="defaultSelect" column="default_select"/>
+        <result property="receivePhone" column="receive_phone"/>
+        <result property="receiveName" column="receive_name"/>
+    </resultMap>
+
+	<select id="get" resultType="xin.cymall.entity.wchart.SrvUserAddr">
+		select * from srv_user_addr where id = #{value}
+	</select>
+
+	<select id="getList" resultType="xin.cymall.entity.wchart.SrvUserAddr">
+		select * from srv_user_addr t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from srv_user_addr t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.id = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.id like concat('%',#{idVague},'%') </if>
+            <if test="userId != null and userId != ''"> and t.user_id = #{userId} </if>
+    		<if test="userIdVague != null and userIdVague != ''"> and t.user_id like concat('%',#{userIdVague},'%') </if>
+            <if test="receiveAddr != null and receiveAddr != ''"> and t.receive_addr = #{receiveAddr} </if>
+    		<if test="receiveAddrVague != null and receiveAddrVague != ''"> and t.receive_addr like concat('%',#{receiveAddrVague},'%') </if>
+            <if test="lng != null and lng != ''"> and t.lng = #{lng} </if>
+    		<if test="lngVague != null and lngVague != ''"> and t.lng like concat('%',#{lngVague},'%') </if>
+            <if test="lat != null and lat != ''"> and t.lat = #{lat} </if>
+    		<if test="latVague != null and latVague != ''"> and t.lat like concat('%',#{latVague},'%') </if>
+            <if test="defaultSelect != null and defaultSelect != ''"> and t.default_select = #{defaultSelect} </if>
+    		<if test="defaultSelectVague != null and defaultSelectVague != ''"> and t.default_select like concat('%',#{defaultSelectVague},'%') </if>
+            <if test="receivePhone != null and receivePhone != ''"> and t.receive_phone = #{receivePhone} </if>
+    		<if test="receivePhoneVague != null and receivePhoneVague != ''"> and t.receive_phone like concat('%',#{receivePhoneVague},'%') </if>
+            <if test="receiveName != null and receiveName != ''"> and t.receive_name = #{receiveName} </if>
+    		<if test="receiveNameVague != null and receiveNameVague != ''"> and t.receive_name like concat('%',#{receiveNameVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="save" parameterType="xin.cymall.entity.wchart.SrvUserAddr">
+		insert into srv_user_addr
+		(
+			`id`, 
+			`user_id`, 
+			`receive_addr`, 
+			`lng`, 
+			`lat`, 
+			`default_select`, 
+			`receive_phone`, 
+			`receive_name`
+		)
+		values
+		(
+			#{id}, 
+			#{userId}, 
+			#{receiveAddr}, 
+			#{lng}, 
+			#{lat}, 
+			#{defaultSelect}, 
+			#{receivePhone}, 
+			#{receiveName}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="xin.cymall.entity.wchart.SrvUserAddr">
+		update srv_user_addr 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="receiveAddr != null">`receive_addr` = #{receiveAddr}, </if>
+			<if test="lng != null">`lng` = #{lng}, </if>
+			<if test="lat != null">`lat` = #{lat}, </if>
+			<if test="defaultSelect != null">`default_select` = #{defaultSelect}, </if>
+			<if test="receivePhone != null">`receive_phone` = #{receivePhone}, </if>
+			<if test="receiveName != null">`receive_name` = #{receiveName}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from srv_user_addr where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from srv_user_addr where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

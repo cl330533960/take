@@ -7,11 +7,10 @@ import java.util.List;
 /**
  * Created by Administrator on 2019/7/10.
  */
-public class WxOrder {
+public class WxOrder extends BaseWx {
     private String restaurantId;
-    private List<SrvFood> foodList;
+    private List<OrderFood> foodList;
     private String orderType;
-    private String wxId;
     private String remark;
     /**运费**/
     private Integer wayFee;
@@ -21,6 +20,10 @@ public class WxOrder {
     private String couponId;
     /**折扣**/
     private double discount;
+    /**订单总金额*/
+    private Double totalAmount;
+    /**用户支付金额*/
+    private Double userPayAmount;
 
     public String getRestaurantId() {
         return restaurantId;
@@ -30,11 +33,11 @@ public class WxOrder {
         this.restaurantId = restaurantId;
     }
 
-    public List<SrvFood> getFoodList() {
+    public List<OrderFood> getFoodList() {
         return foodList;
     }
 
-    public void setFoodList(List<SrvFood> foodList) {
+    public void setFoodList(List<OrderFood> foodList) {
         this.foodList = foodList;
     }
 
@@ -44,14 +47,6 @@ public class WxOrder {
 
     public void setOrderType(String orderType) {
         this.orderType = orderType;
-    }
-
-    public String getWxId() {
-        return wxId;
-    }
-
-    public void setWxId(String wxId) {
-        this.wxId = wxId;
     }
 
     public String getRemark() {
@@ -92,5 +87,21 @@ public class WxOrder {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public Double getUserPayAmount() {
+        return userPayAmount;
+    }
+
+    public void setUserPayAmount(Double userPayAmount) {
+        this.userPayAmount = userPayAmount;
     }
 }

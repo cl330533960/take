@@ -31,6 +31,7 @@ public class SrvCoupon implements Serializable {
 	private Date sendTime;
 	private Date useTime;
 	private String type;
+	private String isValid;
 
 	/**
 	 * 设置：主键ID
@@ -127,5 +128,13 @@ public class SrvCoupon implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getIsValid() {
+		return isValid;
+	}
+
+	public void setIsValid(String isValid) {
+		this.isValid = isValid;
 	}
 }

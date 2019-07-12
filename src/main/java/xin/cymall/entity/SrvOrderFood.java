@@ -20,11 +20,11 @@ public class SrvOrderFood implements Serializable {
 	/****/
 	private String foodId;
 	/****/
-	private String number;
+	private Integer number;
 	/****/
-	private String totalPrice;
+	private Double totalPrice;
 
-	private String price;
+	private Double price;
 
 	private String orderId;
 
@@ -57,25 +57,25 @@ public class SrvOrderFood implements Serializable {
 	/**
 	 * 设置：
 	 */
-	public void setNumber(String number) {
+	public void setNumber(Integer number) {
 		this.number = number;
 	}
 	/**
 	 * 获取：
 	 */
-	public String getNumber() {
+	public Integer getNumber() {
 		return number;
 	}
 	/**
 	 * 设置：
 	 */
-	public void setTotalPrice(String totalPrice) {
+	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 	/**
 	 * 获取：
 	 */
-	public String getTotalPrice() {
+	public Double getTotalPrice() {
 		return totalPrice;
 	}
 
@@ -87,11 +87,11 @@ public class SrvOrderFood implements Serializable {
 		this.orderId = orderId;
 	}
 
-	public String getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

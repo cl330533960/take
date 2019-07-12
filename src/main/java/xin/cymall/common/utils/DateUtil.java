@@ -277,7 +277,23 @@ public class DateUtil {
 		// System.out.println(getDateByDay(5));
 		// System.out.println(compareDate("2017-03-15"));
 		// System.out.println(getYmd("2017-03-06 14:59:57"));
-		System.out.println( changeDate(new Date()));
+		System.out.println( getLaterMonth());
 	}
+
+	public static Date getLaterWeek() {
+		Calendar curr = Calendar.getInstance(); //获取当前时间
+		curr.set(Calendar.DAY_OF_MONTH, curr.get(Calendar.DAY_OF_MONTH) + 7); //给当前时间增加一周
+		Date date = curr.getTime();//获取新的时间
+		return date;
+	}
+
+	public static Date getLaterMonth() {
+		Calendar curr = Calendar.getInstance();
+		curr.set(Calendar.MONTH,curr.get(Calendar.MONTH)+1); //增加一月
+		Date date=curr.getTime();
+		return date;
+	}
+
+
 
 }

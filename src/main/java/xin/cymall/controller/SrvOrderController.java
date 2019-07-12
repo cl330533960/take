@@ -102,18 +102,7 @@ public class SrvOrderController {
         return "srvorder/info";
     }
 
-    /**
-	 * 保存
-	 */
-    @ResponseBody
-    @SysLog("保存")
-	@RequestMapping("/save")
-	@RequiresPermissions("srvorder:save")
-	public R save(@RequestBody SrvOrder srvOrder){
-		srvOrderService.save(srvOrder);
-		
-		return R.ok();
-	}
+
 	
 	/**
 	 * 修改
