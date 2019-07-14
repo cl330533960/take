@@ -1,12 +1,19 @@
 package xin.cymall.controller;
 
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.WxMpUserService;
+import me.chanjar.weixin.mp.api.impl.WxMpUserServiceImpl;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import xin.cymall.common.config.WxConfig;
+import xin.cymall.common.enumresource.CouponTypeEnum;
 import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.utils.*;
 import xin.cymall.entity.*;
@@ -40,6 +47,8 @@ public class WchartController {
     private SrvCouponService srvCouponService;
     @Autowired
     private SrvDiscounreserveService srvDiscounreserveService;
+    @Autowired
+    private WxConfig wxConfig;
 
 
     @RequestMapping("/auth")
@@ -49,107 +58,6 @@ public class WchartController {
                       @RequestParam(value ="nonce" ,required = false)  String nonce,
                       @RequestParam(value ="echostr" ,required = false)  String echostr,
                       HttpServletRequest request) {
-//        signature	微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。
-//        timestamp	时间戳
-//        nonce	随机数
-//        echostr
-//        String respMessage = null;
-//        try {
-//            // 默认返回的文本消息内容
-//            String respContent = "请求处理异常，请稍候尝试！";
-//
-//            // xml请求解析
-//            Map<String, String> requestMap = MessageUtil.parseXml(request);
-//
-//            // 发送方帐号（open_id）
-//            String fromUserName = requestMap.get("FromUserName");
-//            // 公众帐号
-//            String toUserName = requestMap.get("ToUserName");
-//            // 消息类型
-//            String msgType = requestMap.get("MsgType");
-//
-//            // 回复文本消息
-//            TextMessage textMessage = new TextMessage();
-//            textMessage.setToUserName(fromUserName);
-//            textMessage.setFromUserName(toUserName);
-//            textMessage.setCreateTime(new Date().getTime());
-//            textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
-//            textMessage.setFuncFlag(0);
-//
-//            // 文本消息
-//            if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
-//                respContent = "您发送的是文本消息！";
-//            }
-//            // 图片消息
-//            else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
-//                respContent = "您发送的是图片消息！";
-//            }
-//            // 地理位置消息
-//            else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
-//                respContent = "您发送的是地理位置消息！";
-//            }
-//            // 链接消息
-//            else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
-//                respContent = "您发送的是链接消息！";
-//            }
-//            // 音频消息
-//            else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
-//                respContent = "您发送的是音频消息！";
-//            }
-//            // 事件推送
-//            else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
-//                // 事件类型
-//                String eventType = requestMap.get("Event");
-//                // 订阅
-//                if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
-//                    respContent = "谢谢您的关注！";
-//                }
-//                // 取消订阅
-//                else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
-//                    // TODO 取消订阅后用户再收不到公众号发送的消息，因此不需要回复消息
-//                }
-//                // 自定义菜单点击事件
-//                else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
-//                    // 事件KEY值，与创建自定义菜单时指定的KEY值对应
-//                    String eventKey = requestMap.get("EventKey");
-//
-//                    if (eventKey.equals("11")) {
-//                        respContent = "天气预报菜单项被点击！";
-//                    } else if (eventKey.equals("12")) {
-//                        respContent = "公交查询菜单项被点击！";
-//                    } else if (eventKey.equals("13")) {
-//                        respContent = "周边搜索菜单项被点击！";
-//                    } else if (eventKey.equals("14")) {
-//                        respContent = "历史上的今天菜单项被点击！";
-//                    } else if (eventKey.equals("21")) {
-//                        respContent = "歌曲点播菜单项被点击！";
-//                    } else if (eventKey.equals("22")) {
-//                        respContent = "经典游戏菜单项被点击！";
-//                    } else if (eventKey.equals("23")) {
-//                        respContent = "美女电台菜单项被点击！";
-//                    } else if (eventKey.equals("24")) {
-//                        respContent = "人脸识别菜单项被点击！";
-//                    } else if (eventKey.equals("25")) {
-//                        respContent = "聊天唠嗑菜单项被点击！";
-//                    } else if (eventKey.equals("31")) {
-//                        respContent = "Q友圈菜单项被点击！";
-//                    } else if (eventKey.equals("32")) {
-//                        respContent = "电影排行榜菜单项被点击！";
-//                    } else if (eventKey.equals("33")) {
-//                        respContent = "幽默笑话菜单项被点击！";
-//                    }
-//                }
-//            }
-//
-//            textMessage.setContent(respContent);
-//            respMessage = MessageUtil.textMessageToXml(textMessage);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return respMessage;
-//    }
-
 
         System.out.println("Hello springboot" + signature + "echostr:" + echostr);
         if (echostr!=null) {
@@ -168,6 +76,20 @@ public class WchartController {
                 String fromUserName = requestMap.get("FromUserName");
                 // 公众帐号
                 String toUserName = requestMap.get("ToUserName");
+
+                String event = requestMap.get("Event");
+                if(event.equals("subscribe")){
+                    if(srvWxUserService.getByOpenId(fromUserName)==null) {
+                        WxMpUser wxMpUser = wxConfig.wxMpUserService().userInfo(fromUserName);
+                        SrvWxUser srvWxUser = new SrvWxUser();
+                        srvWxUser.setId(UUID.generateId());
+                        srvWxUser.setWxId(wxMpUser.getOpenId());
+                        srvWxUser.setWxName(wxMpUser.getNickname());
+                        srvWxUserService.save(srvWxUser);
+                    }
+                }
+
+
                 // 消息类型
                 String msgType = requestMap.get("MsgType");
                 String eventKey = requestMap.get("EventKey");
@@ -220,7 +142,7 @@ public class WchartController {
                 textMessage.setMsgType("text");
                 textMessage.setCreateTime(new Date().getTime());
                 String  respMessage = MessageUtil.messageToXml(textMessage);
-                System.out.println("respMessage" + respMessage+"\n    ");
+//                System.out.println("respMessage" + respMessage+"\n    ");
 //                return MessageUtil.getXml(fromUserName,toUserName );
                 return respMessage;
             }catch (Exception e){
@@ -277,10 +199,15 @@ public class WchartController {
     }
 
     @RequestMapping(value = "/locationManage",method = { RequestMethod.GET, RequestMethod.POST })
-    public String locationManage(){
-
+    public String locationManage(Model model,@RequestParam String wxId){
+        Map<String,Object> map = new HashMap<>();
+        map.put("userId", "ea0891f465c94367b7607ad1834e715b");
+        List list = srvUserAddrService.getList(map);
+        model.addAttribute("model",list);
         return "wchat/locationlist";
     }
+
+
 
     @RequestMapping(value = "/orderInfo",method = { RequestMethod.GET, RequestMethod.POST })
     public String orderInfo(){
@@ -294,19 +221,28 @@ public class WchartController {
         return "wchat/healthyfood";
     }
 
-    @RequestMapping(value = "/couponList",method = { RequestMethod.GET, RequestMethod.POST })
-    public String couponList(){
 
+
+
+    @RequestMapping(value = "/couponList",method = { RequestMethod.GET, RequestMethod.POST })
+    public String couponList(Model model,@RequestParam String wxId,@RequestParam String isValid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("userId", "ea0891f465c94367b7607ad1834e715b");
+        map.put("isValid",isValid);
+        map.put("sidx","start_time");
+
+        List<SrvCoupon> list = srvCouponService.getList(map);
+        for(SrvCoupon srvCoupon : list){
+            srvCoupon.setType(CouponTypeEnum.getValue(srvCoupon.getType()));
+        }
+        model.addAttribute("model",list);
         return "wchat/couponlist";
     }
 
 
-    @RequestMapping(value = "/editLocation",method = { RequestMethod.GET, RequestMethod.POST })
-    public String editLocation(){
-        return "wchat/location";
-    }
 
     @RequestMapping(value = "modifyLocation")
+    @ResponseBody
     public R modifyLocation(SrvUserAddr srvUserAddr) {
         srvUserAddrService.modifyLocation(srvUserAddr);
         return R.ok();

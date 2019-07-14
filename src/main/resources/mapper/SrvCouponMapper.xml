@@ -19,6 +19,12 @@
 
 	<select id="getList" resultType="xin.cymall.entity.SrvCoupon">
 		select * from srv_coupon t <include refid="where_clause" />
+		<if test="isValid == '0'.toString()">
+			and  current_date  between  start_time and  end_time
+		</if>
+		<if test="isValid == '1'.toString()">
+			and  current_date not  between  start_time and  end_time
+		</if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}

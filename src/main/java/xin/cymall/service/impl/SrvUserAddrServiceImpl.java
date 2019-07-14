@@ -64,19 +64,13 @@ public class SrvUserAddrServiceImpl implements SrvUserAddrService {
 	@Override
 	public void modifyLocation(SrvUserAddr srvUserAddr) {
 		SrvWxUser srvWxUser = srvWxUserDao.getByOpenId(srvUserAddr.getWxId());
-		if(srvUserAddr!=null){
-			srvUserAddr.setUserId(srvWxUser.getId());
-		}else{
-			SrvWxUser wxUser = new SrvWxUser();
-			wxUser.setId(UUID.generateId());
-			wxUser.setWxId(srvUserAddr.getWxId());
-			srvWxUserDao.save(wxUser);
-			srvUserAddr.setUserId(wxUser.getId());
-		}
-		if(StringUtil.isEmpty(srvUserAddr.getId()))
+		srvUserAddr.setUserId(srvWxUser.getId());
+		if(StringUtil.isEmpty(srvUserAddr.getId())) {
+			srvUserAddr.setId(UUID.generateId());
 			srvUserAddrDao.save(srvUserAddr);
-		else
+		} else{
 			srvUserAddrDao.update(srvUserAddr);
+		}
 	}
 
 }

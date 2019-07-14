@@ -73,6 +73,10 @@ $(function (){
 
 })
 
+function bindUser(){
+
+}
+
 
 /**
  * @description 根据模板渲染指定节点

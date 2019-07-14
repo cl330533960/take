@@ -3,8 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
     <title>收件地址</title>
-<#include "../resource.ftl"/>
+<#include "../wx.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
     <style type="text/css">
         .button {
@@ -22,58 +24,24 @@
 </head>
 <body>
 <div class="weui-cells weui-cells_radio">
-    <label class="weui-cell weui-check__label" for="x11">
-        <div class="weui-cell__bd">
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <p>张三 13512345678</p>
 
-                <p>山东省青岛市市北区黄河路18号1号楼3层301室</p>
-
-                <div class="weui-cell__ft">编辑</div>
-            </a>
-        </div>
-        <div class="weui-cell__ft">
-            <input type="radio" class="weui-check" name="radio1" id="x11" checked="checked">
-            <span class="weui-icon-checked"></span>
-        </div>
-    </label>
-    <label class="weui-cell weui-check__label" for="x12">
+<#list model! as emp>
+    <label class="weui-cell weui-check__label" for="${emp.id!}">
         <div class="weui-cell__bd">
-            <a class="weui-cell weui-cell_access" href="javascript:;">
+            <#--<a class="weui-cell weui-cell_access" href="/wx/editLocation?addrId=${emp.id!}">-->
                 <div class="weui-cell__bd">
-                    <p>张三 13512345678</p>
-
-                    <p>山东省青岛市市北区黄河路18号1号楼3层301室</p>
+                    <p>${emp.receiveName!}${emp.receivePhone!}</p>
+                    <p>${emp.receiveAddr!}</p>
                 </div>
-                <div class="weui-cell__ft">编辑</div>
-            </a>
+            <#--</a>-->
         </div>
         <div class="weui-cell__ft">
-            <input type="radio" class="weui-check" name="radio1" id="x12">
+            <input type="radio" class="weui-check" name="radio1" id="${emp.id!}">
             <span class="weui-icon-checked"></span>
         </div>
     </label>
-    <label class="weui-cell weui-check__label" for="x13">
-        <div class="weui-cell__bd">
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <div class="weui-cell__bd">
-                    <p>张三 13512345678</p>
-
-                    <p>山东省青岛市市北区黄河路18号1号楼3层301室</p>
-                </div>
-                <div class="weui-cell__ft">编辑</div>
-            </a>
-        </div>
-        <div class="weui-cell__ft">
-            <input type="radio" class="weui-check" name="radio1" id="x13">
-            <span class="weui-icon-checked"></span>
-        </div>
-    </label>
-    <#--<a href="javascript:void(0);" class="weui-cell weui-cell_link">-->
-        <#--<div class="weui-cell__bd">添加收货地址</div>-->
-    <#--</a>-->
-
+</#list>
 </div>
-<a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 10px;">添加收货地址</a>
+<a href="/wx/editLocation" class="weui-btn weui-btn_primary" style="margin-top: 10px;">添加收货地址</a>
 </body>
 </html>

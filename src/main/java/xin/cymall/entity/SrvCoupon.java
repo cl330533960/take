@@ -27,6 +27,7 @@ public class SrvCoupon implements Serializable {
 	private String userId;
 	/**是否使用**/
 	private String isUse;
+	private String source;
 
 	private Date sendTime;
 	private Date useTime;
@@ -136,5 +137,13 @@ public class SrvCoupon implements Serializable {
 
 	public void setIsValid(String isValid) {
 		this.isValid = isValid;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 }
