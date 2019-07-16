@@ -27,7 +27,7 @@ public class DaDaExpressUtil {
  *
  * url:  https://newopen.imdada.cn/
  * username：  youpinyouwei
- * password:   Dada123
+ * password:
  * **/
 
 
