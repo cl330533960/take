@@ -168,6 +168,7 @@
 		LEFT JOIN srv_food_up_down fud on f.id = fud.food_id
 		LEFT JOIN srv_restaurant r on fud.restaurant_id = r.id
 		where f.cal &lt;= #{param2} AND Spherical_Distance(r.lng,r.lat,a.lng,a.lat) &lt; 5000
+		AND f.status = 1
 		ORDER by Spherical_Distance(r.lng,r.lat,a.lng,a.lat) ASC LIMIT 10
 	</select>
 

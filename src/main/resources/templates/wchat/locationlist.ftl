@@ -24,7 +24,6 @@
 </head>
 <body>
 <div class="weui-cells weui-cells_radio">
-
 <#list model! as emp>
     <label class="weui-cell weui-check__label" for="${emp.id!}">
         <div class="weui-cell__bd">
@@ -36,7 +35,7 @@
             <#--</a>-->
         </div>
         <div class="weui-cell__ft">
-            <input type="radio" class="weui-check" name="radio1" id="${emp.id!}">
+            <input type="radio" class="weui-check" value="${emp.id!}"  <#if emp.defaultSelect == "1"> checked="checked" </#if>  name="radio1" id="${emp.id!}">
             <span class="weui-icon-checked"></span>
         </div>
     </label>
@@ -44,4 +43,11 @@
 </div>
 <a href="/wx/editLocation" class="weui-btn weui-btn_primary" style="margin-top: 10px;">添加收货地址</a>
 </body>
+<script type="text/javascript">
+    $(function(){
+        $(".weui-check").on('click',function(){
+           val selectId = $(this).val();
+        })
+    })
+</script>
 </html>

@@ -193,17 +193,21 @@ public class WchartController {
     }
 
     @RequestMapping(value = "/rationorderFood",method = { RequestMethod.GET, RequestMethod.POST })
-    public String rationorderFood(){
-
+    public String rationorderFood(Model model,@RequestParam String wxId,String userAddrId){
+        Map<String,Object> map = new HashMap<>();
+        map.put("userId", "ea0891f465c94367b7607ad1834e715b");
+        List<SrvUserAddr> list = srvUserAddrService.getList(map);
+        if(list.size()>0){
+            SrvUserAddr srvUserAddr = list.get(0);
+            model.addAttribute("model",srvUserAddr);
+            model.addAttribute("locs",list);
+        }
         return "wchat/rationorderfood";
     }
 
     @RequestMapping(value = "/locationManage",method = { RequestMethod.GET, RequestMethod.POST })
-    public String locationManage(Model model,@RequestParam String wxId){
-        Map<String,Object> map = new HashMap<>();
-        map.put("userId", "ea0891f465c94367b7607ad1834e715b");
-        List list = srvUserAddrService.getList(map);
-        model.addAttribute("model",list);
+    public String locationManage(Model model,@RequestParam String wxId,@RequestParam String userAddrId){
+
         return "wchat/locationlist";
     }
 
@@ -216,8 +220,13 @@ public class WchartController {
     }
 
     @RequestMapping(value = "/healthyFood",method = { RequestMethod.GET, RequestMethod.POST })
-    public String healthyFood(){
+    public String healthyFood(Model model,HealthOrderRequest healthOrderRequest){
 
+        SrvUserAddr srvUserAddr = srvUserAddrService.get(healthOrderRequest.getUserAddrId());
+        model.addAttribute("model",srvUserAddr);
+        model.addAttribute("orderType",healthOrderRequest.getOrderType());
+        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(),healthOrderRequest.getCal());
+        model.addAttribute("foodList",list);
         return "wchat/healthyfood";
     }
 
