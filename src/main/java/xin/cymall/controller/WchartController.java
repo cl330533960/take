@@ -211,6 +211,11 @@ public class WchartController {
         return "wchat/locationlist";
     }
 
+    @RequestMapping(value = "/editLocation",method = { RequestMethod.GET, RequestMethod.POST })
+    public String editLocation(){
+
+        return "wchat/location";
+    }
 
 
     @RequestMapping(value = "/orderInfo",method = { RequestMethod.GET, RequestMethod.POST })

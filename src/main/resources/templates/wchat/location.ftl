@@ -7,6 +7,7 @@
 
     <title>收件地址详细</title>
     <#include "../wx.ftl"/>
+
     <script type="text/javascript" src="/wchat/js/index.js"></script>
     <style type="text/css">
         .button {
@@ -48,19 +49,44 @@
                 <#--</a>-->
         <#--</div>-->
     <#--</div>-->
+
+
     <div class="weui-cell">
+
         <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
         <div class="weui-cell__bd">
             <input class="weui-input" name="receiveAddr" id="receiveAddr" value="${(model.receiveAddr)!""}" placeholder="请输入详细地址">
         </div>
     </div>
+
 </div>
 <a href="javascript:;" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;">保存</a>
 </body>
 <script>
     $(function () {
         $("#locSubmit").click(submit);
+        getLoaction("盐亭县");
     })
+
+
+    //根据地址获取经纬度
+    function getLoaction(add) {
+        var myGeo = new BMap.Geocoder();
+        myGeo.getPoint(add, function(point){
+            if (point) {
+                console.log("->"+point.lng) //经度
+                console.log("->"+point.lat) //纬度
+                alert(add+".lng:"+ point.lng);
+            }else{
+                alert("您输入的地址有误请检查后重新输入");
+            }
+        }, "北京市")
+
+    }
+
+
+
+
     function submit() {
         $.ajax({
             //请求方式
@@ -82,6 +108,7 @@
             }
         });
     }
+
 
 </script>
 </html>
