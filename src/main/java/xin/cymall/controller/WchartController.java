@@ -529,15 +529,15 @@ public class WchartController {
         String orderId = String.valueOf(WXPayUtil.generateUUID());
         String noncestr = WXPayUtil.generateNonceStr();
         Map<String,String> requestMap = new HashMap<String, String>();
-        requestMap.put("appId", "wx3fda6310becfe801");
+        requestMap.put("appId", "wx688906a5f5df8b37");
         requestMap.put("userWeixinOpenId",userWeixinOpenId);
         requestMap.put("out_trade_no",orderId);
-        requestMap.put("mch_id", "商家号");
+        requestMap.put("mch_id", "1542729801");//商家号
         requestMap.put("payMoney",payMoney);
         requestMap.put("spbill_create_ip", getIpAddr(request));
-        requestMap.put("notify_url", "支付结果回调通知路径");
+        requestMap.put("notify_url", "9ndb43.natappfree.cc/wx/paymentNotice");// 这个回调url
         requestMap.put("noncestr", noncestr);
-        requestMap.put("body","一元联系");
+        requestMap.put("body","订单名称");
         requestMap.put("detail","获取电站用户的联系方式");
         Map<String,Object> requestInfo = WXPayUtil.createOrderInfo(requestMap);
         String orderInfo_toString = (String) requestInfo.get("orderInfo_toString");
@@ -551,7 +551,7 @@ public class WchartController {
             UnifiedOrderRequest unifiedOrderRequest = (UnifiedOrderRequest) requestInfo.get("unifiedOrderRequest");
             map.put("unifiedOrderRequest",unifiedOrderRequest);
             SortedMap<String, String> packageParams = new TreeMap<String, String>();
-            packageParams.put("appId","你的appId");
+            packageParams.put("appId","wx688906a5f5df8b37");//你的appId
             packageParams.put("signType","MD5");
             packageParams.put("nonceStr", noncestr);
             packageParams.put("timeStamp", timestamp);
@@ -559,7 +559,7 @@ public class WchartController {
             packageParams.put("package",packages);
             String sign = null;//这个梗，就是开头说的，弄了半天才弄出来的
             try {
-                sign = WXPayUtil.generateSignature(packageParams,"你的密匙");
+                sign = WXPayUtil.generateSignature(packageParams,"bdf827933371387b5bfad9713e775c3e");//秘钥
             } catch (Exception e) {
                 map.put("result",-1);
                 e.printStackTrace();

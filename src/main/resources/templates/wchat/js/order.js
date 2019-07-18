@@ -1,10 +1,6 @@
 
 function initPay(powerStationId,userId){
-    if(!is_weixin()){
-        alert("请在微信客户端打开该链接");
-    }else if(!weixin_version()){
-        alert("你微信版本太低，不支持微信支付功能，请先更新你的微信");
-    }else{
+
         if(typeof WeixinJSBridge == "undefined"){
             if( document.addEventListener ){
                 document.addEventListener('WeixinJSBridgeReady', initPay, false);
@@ -15,20 +11,21 @@ function initPay(powerStationId,userId){
         }else{
             toPay(powerStationId,userId);
         }
-    }
+
 }
 
 function toPay(powerStationId,userId){
+    alert("toPay");
     $.ajax({
-        url : "/wx/toPayInit",
+        url : "/wx/toPayInit", //TODO 预下单 就是这里一直签名报错 我估计是openID有问题
         type:"POST",
         dataType : 'json', // 服务器返回的格式,可以是json或xml等
         data:{
             payMoney:1,
-            userWeixinOpenId:'用户operId'
+            userWeixinOpenId:'ea0891f465c94367b7607ad1834e715b' //TODO 这里的openID需要动态去取真实的 
         },
         success : function(result) { // 服务器响应成功时的处理函数
-            if(result.result==1){//插入支付记录
+            if(result.result==1){  //TODO 插入支付记录 是我们自己的业务代码
                 var paySign = result.paySign;
                 var prepay_id = result.prepay_id;
                 var nonceStr = result.noncestr;
@@ -38,7 +35,7 @@ function toPay(powerStationId,userId){
                 var detail = unifiedOrderRequest.detail;
                 var out_trade_no = unifiedOrderRequest.out_trade_no;
                 $.ajax({
-                    url :  "/wx/toSavePayInfo",
+                    url : "/wx/toSavePayInfo",
                     type:"POST",
                     dataType : 'json', // 服务器返回的格式,可以是json或xml等
                     data:{
