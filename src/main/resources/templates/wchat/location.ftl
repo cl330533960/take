@@ -9,6 +9,7 @@
     <#include "../wx.ftl"/>
 
     <script type="text/javascript" src="/wchat/js/index.js"></script>
+    <script type="text/javascript" src="/wchat/js/order.js"></script>
     <style type="text/css">
         .button {
             border-radius: 12px;
@@ -88,25 +89,27 @@
 
 
     function submit() {
-        $.ajax({
-            //请求方式
-            type: "POST",
-            //请求的媒体类型
-            //请求地址
-            url: "/wx/modifyLocation",
-            //数据，json字符串
-            data: {wxId:"oQ3Fp6Rd0oGRUbtBaGv-sOekF5_E",receiveName:$("#receiveName").val(),receiveAddr:$("#receiveAddr").val(),receivePhone:$("#receivePhone").val()},
-            //请求成功
-            success: function (result) {
-                $.toast("操作成功");
-                setTimeout( window.location.href="/wx/locationManage",1000);
 
-            },
-            //请求失败，包含具体的错误信息
-            error: function (e) {
-                $.toast("操作失败", "cancel");
-            }
-        });
+        initPay(1,1);
+        // $.ajax({
+        //     //请求方式
+        //     type: "POST",
+        //     //请求的媒体类型
+        //     //请求地址
+        //     url: "/wx/modifyLocation",
+        //     //数据，json字符串
+        //     data: {wxId:"oQ3Fp6Rd0oGRUbtBaGv-sOekF5_E",receiveName:$("#receiveName").val(),receiveAddr:$("#receiveAddr").val(),receivePhone:$("#receivePhone").val()},
+        //     //请求成功
+        //     success: function (result) {
+        //         $.toast("操作成功");
+        //         setTimeout( window.location.href="/wx/locationManage",1000);
+        //
+        //     },
+        //     //请求失败，包含具体的错误信息
+        //     error: function (e) {
+        //         $.toast("操作失败", "cancel");
+        //     }
+        // });
     }
 
 
