@@ -30,6 +30,7 @@
 		<result property="receiveName" column="receive_name"/>
 		<result property="receivePhone" column="receive_phone"/>
 		<result property="receiveAddr" column="receive_addr"/>
+		<result property="restaurantTotal" column="restaurant_total"/>
 
 	</resultMap>
 
@@ -50,7 +51,8 @@
 		select t.*,u.wx_name,u.phone,r.name as restaurantName,ua.receive_name,ua.receive_phone,ua.receive_addr from srv_order t
 		left join srv_user u on t.user_id = u.id
 		left join srv_restaurant r on t.restaurant_id = r.id
-		left join srv_user_addr ua on t.user_addr_id = ua.id and ua.default_select = 1
+		left join srv_user_addr ua on t.user_addr_id = ua.id
+-- 		and ua.default_select = 1
 		<include refid="where_clause" />
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -133,7 +135,8 @@
 			`pack_fee`, 
 			`coupon_id`, 
 			`discount`,
-			order_time
+			order_time,
+			restaurant_total
 		)
 		values
 		(
@@ -155,7 +158,8 @@
 			#{packFee}, 
 			#{couponId}, 
 			#{discount},
-			#now()
+			now(),
+			#{restaurantTotal}
 		)
 	</insert>
 	 

@@ -11,5 +11,5 @@
 
   <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <#--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=MBGPZFWMZivzdW1ZVKPkUGsPIvvTRxgj"></script>-->
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=MBGPZFWMZivzdW1ZVKPkUGsPIvvTRxgj"></script>
+<#--<script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=MBGPZFWMZivzdW1ZVKPkUGsPIvvTRxgj"></script>-->
 

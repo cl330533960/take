@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>订单详情</title>
-<#include "../resource.ftl"/>
+<#include "../wx.ftl"/>
 
     <script type="text/javascript" src="/wchat/js/template.js"></script>
     <script type="text/javascript" src="/wchat/js/home.js"></script>

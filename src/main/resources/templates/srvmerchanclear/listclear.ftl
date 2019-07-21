@@ -50,7 +50,7 @@
             <th width="10%" param="{name:'phone'}">手机号</th>
 
             <th width="10%" param="{name:'orderNo'}">订单号</th>
-            <th width="10%" param="{name:'userPayFee'}">订单金额</th>
+            <th width="10%" param="{name:'restaurantTotal'}">订单金额</th>
 
             <th width="10%" param="{name:'orderTime'}">下单时间</th>
             <th width="10%" param="{name:'expressName'}">配送员</th>

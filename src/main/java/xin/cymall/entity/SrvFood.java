@@ -58,6 +58,8 @@ public class SrvFood implements Serializable {
 	private String isUpDown;
 	private String rid;
 	private String rname;
+	private Double packFee;
+	private String fudId;
 
 	/**
 	 * 设置：
@@ -277,5 +279,21 @@ public class SrvFood implements Serializable {
 
 	public void setRid(String rid) {
 		this.rid = rid;
+	}
+
+	public String getFudId() {
+		return fudId;
+	}
+
+	public void setFudId(String fudId) {
+		this.fudId = fudId;
+	}
+
+	public Double getPackFee() {
+		return packFee;
+	}
+
+	public void setPackFee(Double packFee) {
+		this.packFee = packFee;
 	}
 }

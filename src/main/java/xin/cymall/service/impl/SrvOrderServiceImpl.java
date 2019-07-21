@@ -1,8 +1,14 @@
 package xin.cymall.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +16,7 @@ import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.utils.OrderUtil;
 import xin.cymall.common.utils.UUID;
 import xin.cymall.dao.SrvOrderDao;
+import xin.cymall.dao.SrvOrderFoodDao;
 import xin.cymall.dao.SrvWxUserDao;
 import xin.cymall.entity.SrvOrder;
 import xin.cymall.entity.SrvOrderFood;
@@ -28,6 +35,8 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 	private SrvOrderDao srvOrderDao;
 	@Autowired
 	private SrvWxUserDao srvWxUserDao;
+	@Autowired
+	private SrvOrderFoodDao srvOrderFoodDao;
 
 	@Override
 	public SrvOrder get(String id){
@@ -46,7 +55,7 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 
 	@Transactional
 	@Override
-	public void save(WxOrder wxOrder){
+	public void save(WxOrder wxOrder) throws IOException {
 		SrvOrder order = new SrvOrder();
 		order.setId(UUID.generateId());
 		SrvWxUser srvWxUser =srvWxUserDao.getByOpenId(wxOrder.getWxId());
@@ -54,23 +63,27 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 		order.setOrderType(wxOrder.getOrderType());
 		order.setUserId(srvWxUser.getId());
 		order.setRestaurantId(wxOrder.getRestaurantId());
-		if(wxOrder.getPackFee()>0)
+		if(wxOrder.getPackFee()!=null && wxOrder.getPackFee()>0)
 			order.setPackFee(wxOrder.getPackFee());
-		if(wxOrder.getWayFee()>0)
+		if(wxOrder.getWayFee()!=null && wxOrder.getWayFee()>0)
 			order.setWayFee(wxOrder.getWayFee());
 		order.setUserPayFee(wxOrder.getUserPayAmount());
 		order.setOrderTotal(wxOrder.getTotalAmount());
+		order.setRestaurantTotal(wxOrder.getRestaurantTotal());
 		order.setRemark(wxOrder.getRemark());
-		List<OrderFood> list = wxOrder.getFoodList();
+		ObjectMapper mapper = new ObjectMapper();
+		List<OrderFood> list = mapper.readValue(wxOrder.getFoodList(),new TypeReference<List<OrderFood>>() { });
 		for(OrderFood orderFood : list){
 			SrvOrderFood srvOrderFood = new SrvOrderFood();
 			srvOrderFood.setId(UUID.generateId());
-			srvOrderFood.setFoodId(orderFood.getFoodId());
+			srvOrderFood.setFoodId(orderFood.getId());
 			srvOrderFood.setOrderId(order.getId());
-			srvOrderFood.setPrice(orderFood.getPrice());
+			srvOrderFood.setPrice(orderFood.getSysPrice());
 			srvOrderFood.setTotalPrice(orderFood.getTotalPrice());
-			srvOrderFood.setFoodName(orderFood.getFoodName());
+			srvOrderFood.setFoodName(orderFood.getName());
 			srvOrderFood.setNumber(orderFood.getNumber());
+			order.setRestaurantId(orderFood.getRid());
+			srvOrderFoodDao.save(srvOrderFood);
 		}
 		order.setStatus(OrderStatusEnum.ORDRT_STATUS1.getCode());
 		srvOrderDao.save(order);

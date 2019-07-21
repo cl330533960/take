@@ -1,8 +1,10 @@
 package xin.cymall.service;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import xin.cymall.entity.SrvOrder;
 import xin.cymall.entity.wchart.WxOrder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +23,7 @@ public interface SrvOrderService {
 	
 	int getCount(Map<String, Object> map);
 	
-	void save(WxOrder wxOrder);
+	void save(WxOrder wxOrder) throws IOException;
 	
 	void update(SrvOrder srvOrder);
 	

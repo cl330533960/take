@@ -39,6 +39,8 @@ public class SrvOrder implements Serializable {
 	private String status;
 	/**总金额**/
 	private Double orderTotal;
+	/**餐厅收入*/
+	private Double restaurantTotal;
 	/**评论**/
 	private String remark;
 	/**外卖类型**/
@@ -366,4 +368,11 @@ public class SrvOrder implements Serializable {
 		this.receiptTime = receiptTime;
 	}
 
+	public Double getRestaurantTotal() {
+		return restaurantTotal;
+	}
+
+	public void setRestaurantTotal(Double restaurantTotal) {
+		this.restaurantTotal = restaurantTotal;
+	}
 }

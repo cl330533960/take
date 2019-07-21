@@ -1,8 +1,10 @@
 package xin.cymall.controller;
 
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
 import me.chanjar.weixin.mp.api.impl.WxMpUserServiceImpl;
+import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,11 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/wx")
@@ -198,15 +205,18 @@ public class WchartController {
     }
 
     @RequestMapping(value = "/rationorderFood",method = { RequestMethod.GET, RequestMethod.POST })
-    public String rationorderFood(Model model,@RequestParam String wxId,String userAddrId){
+    public String rationorderFood(Model model,String code) throws WxErrorException {
         Map<String,Object> map = new HashMap<>();
-        map.put("userId", "ea0891f465c94367b7607ad1834e715b");
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxMpOAuth2AccessToken.getOpenId());
+        map.put("userId", srvWxUser.getId());
         List<SrvUserAddr> list = srvUserAddrService.getList(map);
         if(list.size()>0){
             SrvUserAddr srvUserAddr = list.get(0);
             model.addAttribute("model",srvUserAddr);
             model.addAttribute("locs",list);
         }
+        model.addAttribute("wxId",wxMpOAuth2AccessToken.getOpenId());
         return "wchat/rationorderfood";
     }
 
@@ -216,6 +226,8 @@ public class WchartController {
         return "wchat/locationlist";
     }
 
+
+
     @RequestMapping(value = "/editLocation",method = { RequestMethod.GET, RequestMethod.POST })
     public String editLocation(){
 
@@ -223,19 +235,27 @@ public class WchartController {
     }
 
 
+    @RequestMapping(value = "/wchart",method = { RequestMethod.GET, RequestMethod.POST })
+    public String wchart(Model model,String state,String code) throws WxErrorException {
+        model.addAttribute("state", state);
+        model.addAttribute("code", code);
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+        System.out.println(wxMpOAuth2AccessToken.getOpenId());
+        return "wchat/wchart";
+    }
+
     @RequestMapping(value = "/orderInfo",method = { RequestMethod.GET, RequestMethod.POST })
     public String orderInfo(){
-
         return "wchat/orderinfo";
     }
 
     @RequestMapping(value = "/healthyFood",method = { RequestMethod.GET, RequestMethod.POST })
     public String healthyFood(Model model,HealthOrderRequest healthOrderRequest){
-
         SrvUserAddr srvUserAddr = srvUserAddrService.get(healthOrderRequest.getUserAddrId());
-        model.addAttribute("model",srvUserAddr);
-        model.addAttribute("orderType",healthOrderRequest.getOrderType());
-        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(),healthOrderRequest.getCal());
+        model.addAttribute("model", srvUserAddr);
+        model.addAttribute("wxId", healthOrderRequest.getWxId());
+        model.addAttribute("orderType", healthOrderRequest.getOrderType());
+        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(), healthOrderRequest.getCal());
         model.addAttribute("foodList",list);
         return "wchat/healthyfood";
     }
@@ -247,24 +267,30 @@ public class WchartController {
     public String couponList(Model model,@RequestParam String wxId,@RequestParam String isValid){
         Map<String,Object> map = new HashMap<>();
         map.put("userId", "ea0891f465c94367b7607ad1834e715b");
-        map.put("isValid",isValid);
-        map.put("sidx","start_time");
+        map.put("isValid", isValid);
+        map.put("sidx", "start_time");
 
         List<SrvCoupon> list = srvCouponService.getList(map);
         for(SrvCoupon srvCoupon : list){
             srvCoupon.setType(CouponTypeEnum.getValue(srvCoupon.getType()));
         }
-        model.addAttribute("model",list);
+        model.addAttribute("model", list);
         return "wchat/couponlist";
     }
 
+    @RequestMapping(value = "/orderList")
+    public String orderList(Model model,String code) throws WxErrorException {
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+        model.addAttribute("wxId",wxMpOAuth2AccessToken.getOpenId());
+        return "wchat/orderlist";
+    }
 
 
     @RequestMapping(value = "modifyLocation")
     @ResponseBody
     public R modifyLocation(SrvUserAddr srvUserAddr) {
         srvUserAddrService.modifyLocation(srvUserAddr);
-        return R.ok();
+        return R.ok().put("data",srvUserAddr);
     }
 
     public R assessOne(AssessOne assessOne) throws ScriptException {
@@ -316,12 +342,12 @@ public class WchartController {
     @ResponseBody
     public R getRecommendFood(HealthOrderRequest healthOrderRequest){
         List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(),healthOrderRequest.getCal());
-        return R.ok().put("data",list);
+        return R.ok().put("data", list);
     }
 
     @RequestMapping(value = "/saveOrder")
     @ResponseBody
-    public R saveOrder(WxOrder wxOrder){
+    public R saveOrder(WxOrder wxOrder) throws IOException {
         srvOrderService.save(wxOrder);
         return R.ok();
     }
@@ -356,6 +382,27 @@ public class WchartController {
         PageUtils pageUtil = new PageUtils(orderList, total, query.getLimit(), query.getPage());
         return R.ok().put("page", pageUtil);
     }
+
+    /**
+     * 查询订单列表
+     * @param
+     * @return
+     */
+    @RequestMapping("/myOrderList")
+    @ResponseBody
+    public R myOrderList(@RequestParam String wxId,String status){
+        Map<String,Object> params = new HashMap<>();
+        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxId);
+        params.put("userId",srvWxUser.getId());
+        params.put("status",status);
+        List<SrvOrder> orderList = srvOrderService.getList(params);
+        for(SrvOrder srvOrder : orderList){
+            srvOrder.setStatusText(OrderStatusEnum.getValue(srvOrder.getStatus()));
+        }
+        return R.ok().put("data",orderList);
+
+    }
+
 
     /**
      * 取消订单

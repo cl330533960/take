@@ -9,9 +9,10 @@ import java.util.List;
  */
 public class WxOrder extends BaseWx {
     private String restaurantId;
-    private List<OrderFood> foodList;
+    private String foodList;
     private String orderType;
     private String remark;
+    private String userAddrId;
     /**运费**/
     private Integer wayFee;
     /**包装费**/
@@ -24,6 +25,8 @@ public class WxOrder extends BaseWx {
     private Double totalAmount;
     /**用户支付金额*/
     private Double userPayAmount;
+    /**餐厅订单总额*/
+    private Double restaurantTotal;
 
     public String getRestaurantId() {
         return restaurantId;
@@ -33,11 +36,11 @@ public class WxOrder extends BaseWx {
         this.restaurantId = restaurantId;
     }
 
-    public List<OrderFood> getFoodList() {
+    public String getFoodList() {
         return foodList;
     }
 
-    public void setFoodList(List<OrderFood> foodList) {
+    public void setFoodList(String foodList) {
         this.foodList = foodList;
     }
 
@@ -103,5 +106,21 @@ public class WxOrder extends BaseWx {
 
     public void setUserPayAmount(Double userPayAmount) {
         this.userPayAmount = userPayAmount;
+    }
+
+    public String getUserAddrId() {
+        return userAddrId;
+    }
+
+    public void setUserAddrId(String userAddrId) {
+        this.userAddrId = userAddrId;
+    }
+
+    public Double getRestaurantTotal() {
+        return restaurantTotal;
+    }
+
+    public void setRestaurantTotal(Double restaurantTotal) {
+        this.restaurantTotal = restaurantTotal;
     }
 }

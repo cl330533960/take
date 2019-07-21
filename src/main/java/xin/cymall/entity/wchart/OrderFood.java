@@ -1,32 +1,70 @@
 package xin.cymall.entity.wchart;
 
+import java.io.Serializable;
+
 /**
  * @ClassName OrderFood
  * @Author cailei
  * @Description
  * @Date 2019/7/12 16:04
  **/
-public class OrderFood {
-    private String foodId;
-    private String foodName;
-    private Double price;
+public class OrderFood  implements Serializable {
+    private String id;
+    private String fudId;
+    private String name;
+    private String rid;
+    private Double sysPrice;
+    private Double packFee;
     private Integer number;
     private Double totalPrice;
+    private Double price;
 
-    public String getFoodId() {
-        return foodId;
+    public String getId() {
+        return id;
     }
 
-    public void setFoodId(String foodId) {
-        this.foodId = foodId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getFudId() {
+        return fudId;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setFudId(String fudId) {
+        this.fudId = fudId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRid() {
+        return rid;
+    }
+
+    public void setRid(String rid) {
+        this.rid = rid;
+    }
+
+    public Double getSysPrice() {
+        return sysPrice;
+    }
+
+    public void setSysPrice(Double sysPrice) {
+        this.sysPrice = sysPrice;
+    }
+
+    public Double getPackFee() {
+        return packFee;
+    }
+
+    public void setPackFee(Double packFee) {
+        this.packFee = packFee;
     }
 
     public Integer getNumber() {
@@ -45,11 +83,11 @@ public class OrderFood {
         this.totalPrice = totalPrice;
     }
 
-    public String getFoodName() {
-        return foodName;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setFoodName(String foodName) {
-        this.foodName = foodName;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }
