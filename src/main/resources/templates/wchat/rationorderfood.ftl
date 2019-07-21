@@ -57,11 +57,12 @@
 
         <#--<a class="weui-cell weui-cell_access open-popup" data-target="#locationList" href="javascript:;">-->
                 <div class="weui-cell__bd" id="showHtml">
-                    <input type="hidden" id="addrId" value="${model.id!}"/>
+                    <input type="hidden" id="addrId" value="${(model.id)!""}"/>
 
-                    <p id="nameAndPhone">${model.receiveName!}&nbsp;&nbsp;${model.receivePhone!}</p>
+                    <p id="nameAndPhone">${(model.receiveName)!""}&nbsp;&nbsp;${(model.receivePhone)!""}</p>
 
-                    <p id="addr">${model.receiveAddr!}</p>
+
+                    <p id="addr">${(model.receiveAddr)!""}</p>
                 </div>
                 <div class="weui-cell__ft"></div>
             </a>
