@@ -285,6 +285,16 @@ public class WchartController {
         return "wchat/orderlist";
     }
 
+    /**
+     *优惠预订
+     **/
+    @RequestMapping(value = "/discounreserve")
+    public String discounreserve(Model model,String code) throws WxErrorException {
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+        model.addAttribute("wxId",wxMpOAuth2AccessToken.getOpenId());
+        return "wchat/discounreserve";
+    }
+
 
     @RequestMapping(value = "modifyLocation")
     @ResponseBody
