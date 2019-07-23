@@ -14,7 +14,7 @@ public class DadaApiResponse {
 
     private String msg;
 
-    private Object result;
+    private Object result;  //这个result 根据不同的接口返回的是不同的
 
     public static DadaApiResponse except() {
         DadaApiResponse apiResponse = new DadaApiResponse();

@@ -7,11 +7,15 @@ import xin.cymall.common.dadaexpress.client.DadaRequestClient;
 import xin.cymall.common.dadaexpress.config.AppConfig;
 import xin.cymall.common.dadaexpress.domain.merchant.MerchantAddModel;
 import xin.cymall.common.dadaexpress.domain.merchant.ShopAddModel;
+import xin.cymall.common.dadaexpress.domain.order.AddAfterQueryModel;
 import xin.cymall.common.dadaexpress.domain.order.OrderAddModel;
+import xin.cymall.common.dadaexpress.domain.order.QueryDeliverFeeModel;
 import xin.cymall.common.dadaexpress.service.CityCodeService;
 import xin.cymall.common.dadaexpress.service.merchant.MerchantAddService;
 import xin.cymall.common.dadaexpress.service.merchant.ShopAddService;
+import xin.cymall.common.dadaexpress.service.order.AddAfterQueryService;
 import xin.cymall.common.dadaexpress.service.order.OrderAddService;
+import xin.cymall.common.dadaexpress.service.order.QueryDeliverFeeService;
 import xin.cymall.common.dadaexpress.utils.JSONUtil;
 
 import java.math.BigDecimal;
@@ -34,13 +38,13 @@ public class DaDaExpressUtil {
     /**
      * 添加一个订单
      * 城市code 要先请求城市code代码
-     *     上线的时候isonline 要改为true
-     *2019/07/15
-     *
+     * 上线的时候isonline 要改为true
+     * 2019/07/15
+     * <p>
      * 新增订单
      * 接口简介
      * 新增配送单接口
-     *
+     * <p>
      * (1) 接口调用URL地址：/api/order/addOrder。
      * (2) 在测试环境，使用统一商户和门店进行发单。其中，商户id：73753，门店编号：11047059。
      **/
@@ -74,16 +78,15 @@ public class DaDaExpressUtil {
     }
 
 
-
-/**
- *     新增门店
- *     接口简介
- *     批量新增门店接口,接口URL地址：/api/shop/add
- *
- * 1. 门店编码可自定义，但必须唯一，若不填写，则系统自动生成。发单时用于确认发单门店
- * 2. 如果需要使用达达商家App发单，请设置登陆达达商家App的账号（必须手机号）和密码
- * 3. 该接口为批量接口,业务参数为数组
- **/
+    /**
+     * 新增门店
+     * 接口简介
+     * 批量新增门店接口,接口URL地址：/api/shop/add
+     * <p>
+     * 1. 门店编码可自定义，但必须唯一，若不填写，则系统自动生成。发单时用于确认发单门店
+     * 2. 如果需要使用达达商家App发单，请设置登陆达达商家App的账号（必须手机号）和密码
+     * 3. 该接口为批量接口,业务参数为数组
+     **/
 
     private static DadaApiResponse addShop() {
 
@@ -114,13 +117,13 @@ public class DaDaExpressUtil {
         return dadaClient.callRpc();
     }
 
-/**
- *注册商户
- * 接口简介
- * 商户注册接口,并完成与该商户的绑定.生成的初始化密码会以短信形式发送给注册手机号
- *
- * 接口URL地址：/merchantApi/merchant/add
- **/
+    /**
+     * 注册商户
+     * 接口简介
+     * 商户注册接口,并完成与该商户的绑定.生成的初始化密码会以短信形式发送给注册手机号
+     * <p>
+     * 接口URL地址：/merchantApi/merchant/add
+     **/
     private static DadaApiResponse addMerchant() {
 
         // 1.初始化配置(isOnline表示是否测试环境)
@@ -145,12 +148,12 @@ public class DaDaExpressUtil {
         return dadaClient.callRpc();
     }
 
-   /**
-    *查询城市列表的
-    **/
-    private static DadaApiResponse queryCityCode(){
+    /**
+     * 查询城市列表的
+     **/
+    private static DadaApiResponse queryCityCode() {
         // 1.初始化配置(isOnline表示是否测试环境)
-        AppConfig appConfig = new AppConfig(false);
+        AppConfig appConfig = new AppConfig(true);
 
         // 2.初始化service
         CityCodeService cityCodeService = new CityCodeService("");
@@ -160,9 +163,75 @@ public class DaDaExpressUtil {
         return dadaClient.callRpc();
     }
 
-//    public static void main(String[] args) {
-//        DadaApiResponse resp = queryCityCode();
-//        System.out.println(JSONUtil.toJson(resp));
-//    }
+
+    /**
+     * 查询订单运费接口
+     **/
+    private static DadaApiResponse querydeliverfee() {
+
+        // 1.初始化配置(isOnline表示是否测试环境)
+        AppConfig appConfig = new AppConfig(false);
+
+        // 2.初始化model
+        QueryDeliverFeeModel queryDeliverFeeModel = new QueryDeliverFeeModel();
+        queryDeliverFeeModel.setShopNo("11664071");
+        queryDeliverFeeModel.setOriginId(String.valueOf(System.currentTimeMillis()));
+        queryDeliverFeeModel.setCityCode("021");
+        queryDeliverFeeModel.setCargoPrice(BigDecimal.valueOf(111));
+        queryDeliverFeeModel.setIsPrepay(0);
+        queryDeliverFeeModel.setReceiverName("测试达达");
+        queryDeliverFeeModel.setReceiverAddress("隆宇大厦");
+        queryDeliverFeeModel.setReceiverLat(BigDecimal.valueOf(31.228623));
+        queryDeliverFeeModel.setReceiverLng(BigDecimal.valueOf(121.587172));
+        queryDeliverFeeModel.setReceiverPhone("13622219090");
+        queryDeliverFeeModel.setCallback("http://newopen.qa.imdada.cn");
+
+        // 3.初始化service
+        QueryDeliverFeeService queryDeliverFeeService = new QueryDeliverFeeService(queryDeliverFeeModel.toJson());
+
+
+        // 4.初始化客户端
+        DadaRequestClient dadaClient = new DadaRequestClient(queryDeliverFeeService, appConfig);
+        return dadaClient.callRpc();
+
+//         返回示例
+//        {
+//            "status": "success",
+//            "result": {
+//                       "distance": 53459.98,
+//                       "fee": 51.0
+//                       "deliverFee": 51.0
+//                        "deliveryNo":"Ddada27000000001654"
+//            },
+//            "code": 0,
+//                "msg": "成功"
+//        }
+    }
+
+    /**
+     *预下单运费接口
+     **/
+    private static DadaApiResponse addAfterQuery() {
+
+        // 1.初始化配置(isOnline表示是否测试环境)
+        AppConfig appConfig = new AppConfig(false);
+
+        // 2.初始化model
+        AddAfterQueryModel addAfterQueryModel = new AddAfterQueryModel();
+        addAfterQueryModel.setDeliveryNo("");//上个接口返回的订单号
+
+        // 3.初始化service
+        AddAfterQueryService addAfterQueryService = new AddAfterQueryService(addAfterQueryModel.toJson());
+
+
+        // 4.初始化客户端
+        DadaRequestClient dadaClient = new DadaRequestClient(addAfterQueryService, appConfig);
+        return dadaClient.callRpc();
+    }
+
+    public static void main(String[] args) {
+        DadaApiResponse resp = queryCityCode();
+        System.out.println(JSONUtil.toJson(resp));
+    }
 
 }
