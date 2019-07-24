@@ -3,126 +3,77 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>HB热量评估</title>
-    <#include "../resource.ftl"/>
+<#include "../wx.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
-    <style type="text/css">
-        .bgback{
-            margin-left: 10%;
-            margin-right: 10%;
-            height: 12%;
-            display: flex;
-            align-items: center;
-            background-color: #ffffff;
-        }
-        .margintop{
-            margin-top: 10%;
-        }
-        .inputbg{
-            background: url("../../static/statics/img/down.png") no-repeat 20px 20px
-        }
-        .line{
-            margin-left: 5%;
-            margin-right: 5%;
-            height: 1px;
-            background: #0C0C0C;
-        }
-        .fontsize{
-            font-size: 34px;
-            margin-left: 10px;
-        }
-        .input{
-            margin-left: auto;
-            outline-style: none ;
-            border: 1px solid #ccc;
-            border-radius: 1px;
-            width: 100px;
-            font-size: 34px;
-            font-weight: 700;
-            font-family: "Microsoft soft";
-            /*background: url("../../static/statics/img/down.png") no-repeat 20px 20px*/
-        }
-        .selected{
-            margin-left: auto;
-            outline-style: none ;
-            border: 1px solid #ccc;
-            border-radius: 1px;
-            width: 200px;
-            font-size: 34px;
-            font-weight: 700;
-            font-family: "Microsoft soft";
-            /*background: url("../../static/statics/img/down.png") no-repeat 20px 20px*/
-        }
-        .button{
-            border-radius:12px;
-            margin-left: 5%;
-            margin-right: 5%;
-            height: 90px;
-            display: block;border: 14px solid #06CB06;
-            background: #06CB06;margin-top: 15%;text-align: center
-        }
-
-    </style>
-
 </head>
 <body>
 
 
-     <div >
-         <div style="background: #f0f0f0" class="margintop"></div>
-         <div class="bgback">
-             <label style="float:left; line-heighe:45px; font-size: 44px">身高</label>
-             <label style="float:left; line-heighe:45px; font-size: 34px;color: #ab1e1e">*</label>
-             <input type="text" maxlength="3"  type='number'class="input" placeholder=""  >  <span class="fontsize">厘米</span></input>
-         </div>
-         <div class="line"></div>
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">身高<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="height" type="number" pattern="[0-9]*" placeholder="请输入身高，单位cm">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">体重<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="weight" type="number"  placeholder="请输入体重，单位kg">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">腰围:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="waistline" type="number"  placeholder="请输入腰围，单位厘米">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">年龄<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="age" type="number"  placeholder="请输入年龄">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">性别<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input"  id="sex" placeholder="请选择性别">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">运动强度<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input"  id="sport" placeholder="请选择运动强度">
+        </div>
+    </div>
+    <br>
+    <a href="javascript:;" onclick="assessPage()" class="weui-btn weui-btn_primary">开始评估</a>
 
-         <div class="bgback margintop">
-             <label style="float:left; line-heighe:45px; font-size: 44px">体重</label>
-             <label style="float:left; line-heighe:45px; font-size: 34px;color: #ab1e1e">*</label>
-             <input type="text" maxlength="3" type='number'class="input" placeholder=""  >  <span class="fontsize">千克</span></input>
-         </div>
-         <div class="line"></div>
-
-         <div class="bgback margintop">
-             <label style="float:left; line-heighe:45px; font-size: 44px">腰围</label>
-             <input type="text" maxlength="3"class="input" placeholder=""  >  <span class="fontsize">厘米</span></input>
-         </div>
-         <div class="line"></div>
-
-         <div class="bgback margintop">
-             <label style="float:left; line-heighe:45px; font-size: 44px">年龄</label>
-             <label style="float:left; line-heighe:45px; font-size: 34px;color: #ab1e1e">*</label>
-             <input type="text" maxlength="3" type='number'class="input" placeholder=""  >  <span class="fontsize">&nbsp&nbsp&nbsp&nbsp&nbsp岁</span></input>
-         </div>
-         <div class="line"></div>
-
-         <div class="bgback margintop">
-             <label style="float:left; line-heighe:45px; font-size: 44px">性别</label>
-             <label style="float:left; line-heighe:45px; font-size: 34px;color: #ab1e1e">*</label>
-             <input type="text"maxlength="3" type='number' class="input" placeholder=""  >  <span class="fontsize">厘米</span></input>
-         </div>
-         <div class="line"></div>
-         <div style="background: #f0f0f0" class="margintop"></div>
-         <div class="bgback margintop">
-             <label style="float:left; line-heighe:45px; font-size: 44px">运动强度</label>
-             <label style="float:left; line-heighe:45px; font-size: 24px;color: #ab1e1e">*</label>
-             <select class="selected" id="numbers" >
-                    <option value="1"style="font-size: 33px">不运动</option>
-                    <option value="2" style="font-size: 33px" selected>偶尔运动</option>
-                     <option value="3" style="font-size: 33px"selected>经常运动</option>
-             </select>
-         </div>
+    <div>
 
 
-         <div  class="button">
-             <a href="javascript:;" onclick="getassessresult(1)"
-                style="font-size: 34px;padding: 2px 6px;
-            display: block;color: #ffffff;line-height:90px " >开始评估</a>
-         </div>
+        <script type="text/javascript">
+            $("#sex").select({
+                title: "选择性别",
+                items: [{title: "男性", value: "1"}, {title: "女性", value: "2"}]
+            });
+            $("#sport").select({
+                title: "运动强度",
+                items: [{title: "很少运动", value: 1.1}, {title: "每周走步2-3次，每次40分钟以上", value: 1.15},{title: "每周慢跑3次以上，每次40分钟以上", value: 1.2}]
+            });
 
-     </div>
-
+            function assessPage(){
+                var sex = $("#sex").attr("data-values");
+                var sport = parseFloat($("#sport").attr("data-values"));
+                var height = parseFloat($("#height").val());
+                var weight = parseFloat($("#weight").val());
+                var waistline = parseFloat($("#waistline").val());
+                var age =parseInt($("#age").val());
+                window.location.href = "/wx/assessOne?height="+height+"&weight="+weight+"&sex="+sex+"&waistline="+waistline+"&sportRatio="+sport+"&age="+age;
+            }
+        </script>
 
 </body>
 </html>

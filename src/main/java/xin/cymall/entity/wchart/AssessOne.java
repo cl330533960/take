@@ -3,7 +3,7 @@ package xin.cymall.entity.wchart;
 /**
  * Created by Administrator on 2019/7/6.
  */
-public class AssessOne {
+public class AssessOne extends BaseWx{
     /**身高*/
     private Double height;
     /**体重*/

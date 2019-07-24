@@ -36,10 +36,12 @@ public class WxConfig {
     }
 
 
+
     public WxMpUserService wxMpUserService(){
         WxMpUserService wxMpService = new WxMpUserServiceImpl(wxMpService());
         return wxMpService;
     }
+
 
 
 

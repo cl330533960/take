@@ -55,11 +55,11 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 
 	@Transactional
 	@Override
-	public void save(WxOrder wxOrder) throws IOException {
+	public String save(WxOrder wxOrder) throws IOException {
 		SrvOrder order = new SrvOrder();
 		order.setId(UUID.generateId());
 		SrvWxUser srvWxUser =srvWxUserDao.getByOpenId(wxOrder.getWxId());
-		order.setOrderNo(OrderUtil.generateOrderNo(srvWxUser.getId(), wxOrder.getOrderType()));
+		order.setOrderNo(OrderUtil.generateOrderNo(wxOrder.getOrderType()));
 		order.setOrderType(wxOrder.getOrderType());
 		order.setUserId(srvWxUser.getId());
 		order.setRestaurantId(wxOrder.getRestaurantId());
@@ -87,6 +87,7 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 		}
 		order.setStatus(OrderStatusEnum.ORDRT_STATUS1.getCode());
 		srvOrderDao.save(order);
+		return order.getOrderNo();
 	}
 
 	public void updateOrderSuccessCallback(String orderNo){
@@ -113,14 +114,14 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 		srvOrderDao.deleteBatch(ids);
 	}
 
-    @Override
-    public void updateState(String[] ids,String stateValue) {
-        for (String id:ids){
+	@Override
+	public void updateState(String[] ids,String stateValue) {
+		for (String id:ids){
 			SrvOrder srvOrder=get(id);
 			srvOrder.setStatus(stateValue);
-            update(srvOrder);
-        }
-    }
+			update(srvOrder);
+		}
+	}
 
 	@Override
 	public SrvOrder receiptOrder(SrvOrder srvOrder) {

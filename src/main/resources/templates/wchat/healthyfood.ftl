@@ -46,13 +46,15 @@
                             alt="" style="width:80px;height:80px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>${food.rname!}</p>
+
                         <p>${food.name!}</p>
                         <span class="price">￥${food.sysPrice!}</span>
                     </div>
                     <div class="weui-cell__ft">
                         <div class="weui-count">
                             <a class="weui-count__btn weui-count__decrease"></a>
-                            <input id="${food.fudId!}" rid="${food.rid!}" class="weui-count__number" disabled="disabled" type="number"
+                            <input id="${food.fudId!}" rid="${food.rid!}" class="weui-count__number" disabled="disabled"
+                                   type="number"
                                    value="0">
                             <a class="weui-count__btn weui-count__increase"></a>
                         </div>
@@ -85,6 +87,7 @@
     <div class="weui-cell">
         <div class="weui-cell__bd">
             <p>包装费 <span id="packFee"> 0</span>元</p>
+
             <p>配送费 6元</p>
         </div>
     </div>
@@ -114,7 +117,7 @@
     var restaurantTotal = 0;
     var orderType = '';
     $(function () {
-    orderType = $("#orderType").val();
+        orderType = $("#orderType").val();
     <#list foodList! as food>
         var food = '{"id":"${food.id!}","fudId":"${food.fudId!}","name":"${food.name!}","rid":"${food.rid!}","sysPrice":${food.sysPrice!},"packFee":${food.packFee!},"price":${food.price!}}';
         foodList.push($.parseJSON(food));
@@ -135,7 +138,7 @@
         var foodId = $input.attr("id");
         var rId = $input.attr("rid");
         var flag = checkOnlyFood(rId);
-        if(!flag){
+        if (!flag) {
             return;
         }
         var number = parseInt($input.val() || "0") + 1
@@ -146,7 +149,7 @@
 
     })
 
-    function checkOnlyFood(id){
+    function checkOnlyFood(id) {
         var flag = true;
         $.each(sumbitFoodList, function (index, item) {
             if (item.rid != id) {
@@ -172,8 +175,8 @@
     function reducePrice(id, num) {
         if (num >= 0) {
             $.each(foodList, function (index, item) {
-                if(num == 0){
-                    sumbitFoodList.splice($.inArray(item,sumbitFoodList),1);
+                if (num == 0) {
+                    sumbitFoodList.splice($.inArray(item, sumbitFoodList), 1);
                 }
                 if (item.fudId == id) {
                     totalFoodPrice = totalFoodPrice - item.sysPrice;
@@ -183,19 +186,19 @@
         }
     }
 
-    function calcTotal(){
+    function calcTotal() {
         var packFee = 0;
-        if(orderType == "1" || orderType == "3"){
+        if (orderType == "1" || orderType == "3") {
             $.each(sumbitFoodList, function (index, item) {
                 packFee = item.packFee;
             });
         }
         $("#packFee").text(packFee);
         $("#totalAmount").text(totalFoodPrice + packFee);
-        restaurantTotal = restaurantFoodPrice +packFee;
+        restaurantTotal = restaurantFoodPrice + packFee;
     }
 
-    function submitOrder(){
+    function submitOrder() {
         $.ajax({
             //请求方式
             type: "POST",
@@ -203,11 +206,21 @@
             //请求地址
             url: "/wx/saveOrder",
             //数据，json字符串
-            data: {wxId:$("#wxId").val(),foodList:JSON.stringify(sumbitFoodList),orderType:orderType,userAddrId:$("#addrId").val(),packFee:parseInt($("#packFee").text()),totalAmount: parseInt($("#totalAmount").text()),userPayAmount: parseInt($("#totalAmount").text()),restaurantTotal: restaurantTotal,remark:$("#remark").val()},
+            data: {
+                wxId: $("#wxId").val(),
+                foodList: JSON.stringify(sumbitFoodList),
+                orderType: orderType,
+                userAddrId: $("#addrId").val(),
+                packFee: parseInt($("#packFee").text()),
+                totalAmount: parseInt($("#totalAmount").text()),
+                userPayAmount: parseInt($("#totalAmount").text()),
+                restaurantTotal: restaurantTotal,
+                remark: $("#remark").val()
+            },
             //请求成功
             success: function (result) {
-                $.toast("操作成功");
-
+//                $.toast("操作成功");
+//                payInit(result.orderNo);
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
@@ -215,5 +228,70 @@
             }
         });
     }
+
+    function payInit(orderNo) {
+        $.ajax({
+            //请求方式
+            type: "POST",
+            //请求的媒体类型
+            //请求地址
+            url: "/wx/toPayInit",
+            //数据，json字符串
+            data: {wxId: $("#wxId").val(), payMoney: 1, orderNo: orderNo},
+            //请求成功
+            success: function (result) {
+                var appId = result.appId;
+                var packageStr = result.prepay_id;
+                var paySign = result.paySign;
+                var signType = result.signType;
+                var noncestr = result.noncestr;
+                var timestamp = result.timestamp;
+                console.log(packageStr);
+                onBridgeReady(appId, packageStr, paySign, signType, noncestr, timestamp);
+            },
+            //请求失败，包含具体的错误信息
+            error: function (e) {
+                $.toast("操作失败", "cancel");
+            }
+        });
+    }
+
+    function onBridgeReady(appId, packageStr, paySign, signType, noncestr, timestamp) {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                {
+                    "appId": appId,     //公众号名称，由商户传入
+                    "timeStamp": timestamp,         //时间戳，自1970年以来的秒数
+                    "nonceStr": noncestr, //随机串
+                    "package": packageStr,
+                    "signType": signType, //微信签名方式：
+                    "paySign": paySign //微信签名
+                },
+                function (res) {
+                    // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                    if (res.err_msg == "get_brand_wcpay_request:ok") {//成功
+                        alert('支付成功')
+                    } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//取消
+                        alert("用户取消支付");
+                    } else if (res.err_msg == "get_brand_wcpay_request:fail") {//失败
+                        alert.text("支付失败");
+                    } else {
+                        alert(res.err_msg);
+                    }
+                });
+
+    }
+
+    //    if (typeof WeixinJSBridge == "undefined") {
+    //        if (document.addEventListener) {
+    //            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    //        } else if (document.attachEvent) {
+    //            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+    //            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    //        }
+    //    } else {
+    //        onBridgeReady();
+    //    }
+
 </script>
 </html>

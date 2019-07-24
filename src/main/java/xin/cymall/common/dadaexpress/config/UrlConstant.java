@@ -15,4 +15,6 @@ public class UrlConstant {
     public static String Query_DeliverFee_URL = "/api/order/queryDeliverFee";
 //    查询运费后yu发单接口，接口URL地址：/api/order/addAfterQuery。 deliveryNo
     public static String ADD_AfterQuery_URL = "/api/order/addAfterQuery";
+
+
 }

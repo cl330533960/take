@@ -42,7 +42,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/**/*.css", "anon");
         filterChainDefinitionMap.put("/**/*.js", "anon");
         filterChainDefinitionMap.put("/**/login.html", "anon");
-
         filterChainDefinitionMap.put("**/wchat/*.html", "anon");
         filterChainDefinitionMap.put("/**/img/**", "anon");
 
@@ -52,6 +51,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/swagger/**", "anon");
         filterChainDefinitionMap.put("/favicon.ico", "anon");
         filterChainDefinitionMap.put("/captcha.jpg", "anon");
+        filterChainDefinitionMap.put("/captcha.jpg", "anon");
+        filterChainDefinitionMap.put("/MP_verify_WJQPqHT0Gtmm3CO2.txt", "anon");
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/api/**", "anon");
         filterChainDefinitionMap.put("/wx/**", "anon");

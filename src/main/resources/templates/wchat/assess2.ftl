@@ -4,96 +4,51 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>瘦体重法热量评估</title>
-    <#include "../resource.ftl"/>
+<#include "../wx.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
-    <style type="text/css">
-        .bgback{
-            margin-left: 10%;
-            margin-right: 10%;
-            height: 12%;
-            display: flex;
-            align-items: center;
-            background-color: #ffffff
-        }
-        .margintop{
-            margin-top: 10%;
-        }
-        .inputbg{
-            background: url("../../static/statics/img/down.png") no-repeat 20px 20px
-        }
-        .line{
-            margin-left: 5%;
-            margin-right: 5%;
-            height: 1px;
-            background: #0C0C0C;
-        }
-        .fontsize{
-            font-size: 34px;
-            margin-left: 10px;
-        }
-        .input{
-            margin-left: auto;
-            outline-style: none ;
-            border: 1px solid #ccc;
-            border-radius: 1px;
-            width: 100px;
-            font-size: 34px;
-            font-weight: 700;
-            font-family: "Microsoft soft";
-            /*background: url("../../static/statics/img/down.png") no-repeat 20px 20px*/
-        }
-        .selected{
-            margin-left: auto;
-            outline-style: none ;
-            border: 1px solid #ccc;
-            border-radius: 1px;
-            width: 200px;
-            font-size: 34px;
-            font-weight: 700;
-            font-family: "Microsoft soft";
-            /*background: url("../../static/statics/img/down.png") no-repeat 20px 20px*/
-        }
-        .button{
-            border-radius:12px;
-            margin-left: 5%;
-            margin-right: 5%;
-            height: 90px;
-            display: block;border: 14px solid #06CB06;
-            background: #06CB06;
-            margin-top: 55%;
-            text-align: center
-        }
-
-    </style>
-
 </head>
 <body>
 
 
-<div >
-    <div style="background: #f0f0f0" class="margintop"></div>
-    <div class="bgback">
-        <label style="float:left; line-heighe:45px; font-size: 44px">去脂体重</label>
-        <label style="float:left; line-heighe:45px; font-size: 34px;color: #ab1e1e">*</label>
-        <input type="text" maxlength="3"  type='number'class="input" placeholder=""  >  <span class="fontsize">千克</span></input>
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">体重<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="weight" type="number" placeholder="请输入体重，单位kg">
+        </div>
     </div>
-    <div class="line"></div>
-
-    <div class="bgback margintop">
-        <label style="float:left; line-heighe:45px; font-size: 44px">腰围</label>
-        <label style="float:left; line-heighe:45px; font-size: 34px;color: #ab1e1e">*</label>
-        <input type="text" maxlength="3"class="input" placeholder=""  >  <span class="fontsize">厘米</span></input>
-    </div>
-    <div class="line"></div>
-
-    <div  class="button">
-        <a href="javascript:;" onclick="getassessresult(2)"
-           style="font-size: 34px;padding: 2px 6px;
-            display: block;color: #ffffff;line-height:90px " >开始评估</a>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">腰围:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="waistline" type="number" placeholder="请输入腰围，单位厘米">
+        </div>
     </div>
 
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">性别<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="sex" placeholder="请选择性别">
+        </div>
+    </div>
+    <br>
+    <a href="javascript:;" onclick="assessPage()" class="weui-btn weui-btn_primary">开始评估</a>
 
-</div>
+    <div>
+
+
+        <script type="text/javascript">
+            $("#sex").select({
+                title: "选择性别",
+                items: [{title: "男性", value: "1"}, {title: "女性", value: "2"}]
+            });
+
+            function assessPage() {
+                var sex = $("#sex").attr("data-values");
+                var weight = parseFloat($("#weight").val());
+                var waistline = parseFloat($("#waistline").val());
+                window.location.href = "/wx/assessTwo?weight=" + weight +  "&sex=" + sex + "&waistline=" + waistline;
+            }
+        </script>
 
 
 </body>

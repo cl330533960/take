@@ -66,10 +66,10 @@ public class WchartController {
     @RequestMapping("/auth")
     @ResponseBody
     public String auth(@RequestParam(value ="signature" ,required = false)  String signature,
-                      @RequestParam(value ="timestamp" ,required = false)  String timestamp,
-                      @RequestParam(value ="nonce" ,required = false)  String nonce,
-                      @RequestParam(value ="echostr" ,required = false)  String echostr,
-                      HttpServletRequest request) {
+                       @RequestParam(value ="timestamp" ,required = false)  String timestamp,
+                       @RequestParam(value ="nonce" ,required = false)  String nonce,
+                       @RequestParam(value ="echostr" ,required = false)  String echostr,
+                       HttpServletRequest request) {
 
         System.out.println("Hello springboot" + signature + "echostr:" + echostr);
         if (echostr!=null) {
@@ -167,19 +167,25 @@ public class WchartController {
     /**
      * 跳转到新增页面
      **/
-    @RequestMapping(value = "/getindex",method = { RequestMethod.GET, RequestMethod.POST })
-    public String getindex(){
+    @RequestMapping(value = "calcAssess")
+    public String calcAssess(){
+        return "wchat/calcassess";
+    }
 
-        return "wchat/index";
+    /**
+     * 跳转到新增页面
+     **/
+    @RequestMapping(value = "getTxt")
+    public String getTxt(){
+        return "wchat/MP_verify_WJQPqHT0Gtmm3CO2.txt";
     }
 
     /**
      * 开始评估
      **/
-    @RequestMapping(value = "/start",method = { RequestMethod.GET, RequestMethod.POST })
-    public String start(int type){
-
-        if (type==1) {
+    @RequestMapping(value = "calcPage")
+    public String calcPage(String type){
+        if (type.equals("1")) {
             return "wchat/assess1";
         }else {
             return "wchat/assess2";
@@ -201,7 +207,7 @@ public class WchartController {
     @RequestMapping(value = "/gohome",method = { RequestMethod.GET, RequestMethod.POST })
     public String gohome(){
 
-            return "wchat/home";
+        return "wchat/home";
     }
 
     @RequestMapping(value = "/rationorderFood",method = { RequestMethod.GET, RequestMethod.POST })
@@ -216,7 +222,7 @@ public class WchartController {
             model.addAttribute("model",srvUserAddr);
             model.addAttribute("locs",list);
         }
-        model.addAttribute("wxId",wxMpOAuth2AccessToken.getOpenId());
+        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
         return "wchat/rationorderfood";
     }
 
@@ -264,8 +270,8 @@ public class WchartController {
 
 
     @RequestMapping(value = "/couponList",method = { RequestMethod.GET, RequestMethod.POST })
-    public String couponList(Model model,@RequestParam String wxId,@RequestParam String isValid){
-        Map<String,Object> map = new HashMap<>();
+    public String couponList(Model model,@RequestParam String wxId,@RequestParam String isValid) {
+        Map<String, Object> map = new HashMap<>();
         map.put("userId", "ea0891f465c94367b7607ad1834e715b");
         map.put("isValid", isValid);
         map.put("sidx", "start_time");
@@ -281,7 +287,7 @@ public class WchartController {
     @RequestMapping(value = "/orderList")
     public String orderList(Model model,String code) throws WxErrorException {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
-        model.addAttribute("wxId",wxMpOAuth2AccessToken.getOpenId());
+        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
         return "wchat/orderlist";
     }
 
@@ -303,32 +309,55 @@ public class WchartController {
         return R.ok().put("data",srvUserAddr);
     }
 
-    public R assessOne(AssessOne assessOne) throws ScriptException {
+    @RequestMapping(value = "assessOne")
+    public String assessOne(Model model,AssessOne assessOne) throws ScriptException {
         String repalce = "BMI";
-        double bmi = CalcBmiUtil.round(assessOne.getWeight() / (assessOne.getHeight() * assessOne.getHeight()), 1);
         List<SrvBaseSet> list = srvBaseSetService.getList(null);
         SrvBaseSet srvBaseSet = list.get(0);
+        double bmi = CalcBmiUtil.round(CalcBmiUtil.calcRes(srvBaseSet.getBmi(), new Double[]{assessOne.getWeight(), assessOne.getHeight() / 100, assessOne.getHeight() / 100}, new String[]{"W", "H", "H"}), 1);
         String bmiRes = calcBmi(bmi, srvBaseSet, repalce);
-        String centerObesityRes = calcCenterObesity(assessOne);
+        String centerObesityRes = calcCenterObesity(assessOne.getSex(),assessOne.getWaistline());
         Double upRes = CalcBmiUtil.calcRes(srvBaseSet.getNormalWeightUp(), new Double[]{assessOne.getHeight() / 100, assessOne.getHeight() / 100}, new String[]{"H", "H"});
-        Double normalWeightUp = CalcBmiUtil.round(upRes, 0);
+        Double normalWeightUp = CalcBmiUtil.round(upRes, 1);
         Double downRes = CalcBmiUtil.calcRes(srvBaseSet.getNormalWeightDown(), new Double[]{assessOne.getHeight() / 100, assessOne.getHeight() / 100}, new String[]{"H", "H"});
-        Double normalWeightDown = CalcBmiUtil.round(downRes, 0);
+        Double normalWeightDown = CalcBmiUtil.round(downRes, 1);
         String overWeight = "";
         if(assessOne.getWeight() - normalWeightUp  > 0){
             overWeight = String.valueOf(assessOne.getWeight() - normalWeightUp);
         }
         Double bee = calcBee(assessOne,srvBaseSet);
-        String cal = "";
+        Double zrl = bee * assessOne.getSportRatio();
+        Double cal = 0d;
         if(bmiRes.equals("超重")){
-
+            cal = CalcBmiUtil.calcRes(srvBaseSet.getObesityHeatUp(),new Double[]{zrl},new String[]{"ZRL"});
         }else  if(bmiRes.equals("肥胖")){
-            cal = String.valueOf(bee * 1.0) + "-";
+            cal = CalcBmiUtil.calcRes(srvBaseSet.getObesityHeatUp(),new Double[]{zrl},new String[]{"ZRL"});
         }else{
-            cal = String.valueOf(bee * assessOne.getSportRatio());
+            srvBaseSet.getObesityHeatUp();
+            cal = zrl;
         }
+        Map<String,Object> assessMap = new HashMap<>();
+        assessMap.put("bmi",bmi);
+        assessMap.put("bmiRes",bmiRes);
+        assessMap.put("centerObesityRes",centerObesityRes);
+        assessMap.put("upRes",normalWeightUp);
+        assessMap.put("downRes",normalWeightDown);
+        assessMap.put("overWeight", overWeight);
+        assessMap.put("cal",cal);
+        model.addAttribute("model",assessMap);
+        return "wchat/assessresult";
+    }
 
-        return R.ok();
+    @RequestMapping(value = "assessTwo")
+    public String assessTwo(Model model,AssessTwo assessTwo) throws ScriptException {
+        String repalce = "BMI";
+        String centerObesityRes = calcCenterObesity(assessTwo.getSex(),assessTwo.getWaistline());
+        Map<String,Object> assessMap = new HashMap<>();
+        assessMap.put("centerObesityRes", centerObesityRes);
+        Double cal = (assessTwo.getWeight() * 21.6 + 370) * 1.2 - 500;
+        assessMap.put("cal", cal);
+        model.addAttribute("model", assessMap);
+        return "wchat/assessresult2";
     }
 
 
@@ -350,16 +379,16 @@ public class WchartController {
 
     @RequestMapping(value = "/getRecommendFood")
     @ResponseBody
-    public R getRecommendFood(HealthOrderRequest healthOrderRequest){
-        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(),healthOrderRequest.getCal());
+    public R getRecommendFood(HealthOrderRequest healthOrderRequest) {
+        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(), healthOrderRequest.getCal());
         return R.ok().put("data", list);
     }
 
     @RequestMapping(value = "/saveOrder")
     @ResponseBody
     public R saveOrder(WxOrder wxOrder) throws IOException {
-        srvOrderService.save(wxOrder);
-        return R.ok();
+        String orderNo = srvOrderService.save(wxOrder);
+        return R.ok().put("orderNo",orderNo);
     }
 
     /**
@@ -409,7 +438,7 @@ public class WchartController {
         for(SrvOrder srvOrder : orderList){
             srvOrder.setStatusText(OrderStatusEnum.getValue(srvOrder.getStatus()));
         }
-        return R.ok().put("data",orderList);
+        return R.ok().put("data", orderList);
 
     }
 
@@ -508,19 +537,21 @@ public class WchartController {
         return bmiRes;
     }
 
-    public String calcCenterObesity(AssessOne assessOne){
+    public String calcCenterObesity(String sex,Double waistline ){
         // 中心型肥胖： 中心型肥胖前期，85	<=	男性腰围 <90 ，80	<=	 女性腰围 <85 ，中心型肥胖，男性腰围>=90，女性腰围>=85
-        String centerObesityRes = "";
-        if(assessOne.getSex().equals("男")){
-            if(assessOne.getWaistline()>=90){
+        String centerObesityRes = "因您未填写腰围数据，未能判定是否为中心型肥胖";
+        if("1".equals(sex) && waistline>0){
+            if(waistline>=90){
                 centerObesityRes = "中心型肥胖";
-            }else if (assessOne.getWaistline()>= 85 && assessOne.getWaistline()<90){
+            }else if (waistline >= 85 && waistline < 90){
                 centerObesityRes = "中心型肥胖前期";
+            }else{
+                centerObesityRes = "正常";
             }
-        }else  if(assessOne.getSex().equals("女")){
-            if(assessOne.getWaistline()>=85){
+        }else  if("1".equals(sex) && waistline > 0){
+            if(waistline>=85){
                 centerObesityRes = "中心型肥胖";
-            }else if (assessOne.getWaistline()>= 80 && assessOne.getWaistline()<85){
+            }else if (waistline >= 80 && waistline < 85){
                 centerObesityRes = "中心型肥胖前期";
             }
         }
@@ -528,7 +559,7 @@ public class WchartController {
     }
 
     public Double calcBee(AssessOne assessOne,SrvBaseSet srvBaseSet) throws ScriptException {
-        if(assessOne.getSex().equals("男")){
+        if(assessOne.getSex().equals("1")){
             Double beeRes = CalcBmiUtil.calcRes(srvBaseSet.getManBee(), new Double[]{assessOne.getWeight(), assessOne.getHeight() / 100, Double.valueOf(assessOne.getAge())}, new String[]{"W", "H", "A"});
             Double bee = CalcBmiUtil.round(beeRes, 0);
             return bee;
@@ -581,23 +612,25 @@ public class WchartController {
     @ResponseBody
     public Map<String,Object> toPay(HttpServletRequest request,
                                     @RequestParam(value="payMoney",required=true) String payMoney,
-                                    @RequestParam(value="userWeixinOpenId",required=true) String userWeixinOpenId){
+                                    @RequestParam(value="wxId",required=true) String wxId,
+                                    @RequestParam(value="orderNo",required=true) String orderNo){
         Map<String,Object> map = new HashMap<>();
-        String orderId = String.valueOf(WXPayUtil.generateUUID());
+//        String orderId = String.valueOf(WXPayUtil.generateUUID());
         String noncestr = WXPayUtil.generateNonceStr();
         Map<String,String> requestMap = new HashMap<String, String>();
         requestMap.put("appId", "wx688906a5f5df8b37");
-        requestMap.put("userWeixinOpenId",userWeixinOpenId);
-        requestMap.put("out_trade_no",orderId);
+        requestMap.put("userWeixinOpenId",wxId);
+        requestMap.put("out_trade_no",orderNo);
         requestMap.put("mch_id", "1542729801");//商家号
         requestMap.put("payMoney",payMoney);
         requestMap.put("spbill_create_ip", getIpAddr(request));
-        requestMap.put("notify_url", "9ndb43.natappfree.cc/wx/paymentNotice");// 这个回调url
+        requestMap.put("notify_url", "http://gazi.free.idcfengye.com/wx/paymentNotice");// 这个回调url
         requestMap.put("noncestr", noncestr);
-        requestMap.put("body","订单名称");
-        requestMap.put("detail","获取电站用户的联系方式");
+        requestMap.put("body","tt");
+        requestMap.put("detail","te");
         Map<String,Object> requestInfo = WXPayUtil.createOrderInfo(requestMap);
         String orderInfo_toString = (String) requestInfo.get("orderInfo_toString");
+
         //判断返回码
         UnifiedOrderRespose orderResponse = WXPayUtil.httpOrder(orderInfo_toString);// 调用统一下单接口
         //根据微信文档return_code 和result_code都为SUCCESS的时候才会返回code_url
@@ -682,6 +715,8 @@ public class WchartController {
             }else if(map.get("return_code").toString().equals("SUCCESS")){
                 String result_code = map.get("result_code").toString();
                 String out_trade_no = map.get("out_trade_no").toString();
+                srvOrderService.updateOrderSuccessCallback(out_trade_no);
+
                 //TODO 获得我们自己的的订单详情 做我们想做的事
 //				UserPayInfo payInfo = wxPayService.getUserPayInfo(out_trade_no);
 //				if(payInfo == null){
