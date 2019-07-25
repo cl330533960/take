@@ -220,7 +220,7 @@
             //请求成功
             success: function (result) {
 //                $.toast("操作成功");
-//                payInit(result.orderNo);
+                payInit(result.orderNo);
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
@@ -241,11 +241,11 @@
             //请求成功
             success: function (result) {
                 var appId = result.appId;
-                var packageStr = result.prepay_id;
+                var packageStr = result.package;
                 var paySign = result.paySign;
                 var signType = result.signType;
-                var noncestr = result.noncestr;
-                var timestamp = result.timestamp;
+                var noncestr = result.nonceStr;
+                var timestamp = result.timeStamp;
                 console.log(packageStr);
                 onBridgeReady(appId, packageStr, paySign, signType, noncestr, timestamp);
             },

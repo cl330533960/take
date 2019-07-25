@@ -1,10 +1,13 @@
 package xin.cymall.common.wxpay;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * 统一下单返回参数
  * @author lhao
  *
  */
+@XmlRootElement(name = "xml")
 public class UnifiedOrderRespose {
     private String return_code;             //返回状态码
     private String return_msg;              //返回信息

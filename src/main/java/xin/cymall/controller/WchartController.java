@@ -23,6 +23,7 @@ import xin.cymall.common.utils.*;
 import xin.cymall.common.utils.UUID;
 import xin.cymall.common.wxpay.UnifiedOrderRequest;
 import xin.cymall.common.wxpay.UnifiedOrderRespose;
+import xin.cymall.common.wxpay.WXPayConstants;
 import xin.cymall.common.wxpay.WXPayUtil;
 import xin.cymall.entity.*;
 import xin.cymall.entity.wchart.*;
@@ -262,7 +263,7 @@ public class WchartController {
         model.addAttribute("wxId", healthOrderRequest.getWxId());
         model.addAttribute("orderType", healthOrderRequest.getOrderType());
         List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(), healthOrderRequest.getCal());
-        model.addAttribute("foodList",list);
+        model.addAttribute("foodList", list);
         return "wchat/healthyfood";
     }
 
@@ -351,7 +352,7 @@ public class WchartController {
     @RequestMapping(value = "assessTwo")
     public String assessTwo(Model model,AssessTwo assessTwo) throws ScriptException {
         String repalce = "BMI";
-        String centerObesityRes = calcCenterObesity(assessTwo.getSex(),assessTwo.getWaistline());
+        String centerObesityRes = calcCenterObesity(assessTwo.getSex(), assessTwo.getWaistline());
         Map<String,Object> assessMap = new HashMap<>();
         assessMap.put("centerObesityRes", centerObesityRes);
         Double cal = (assessTwo.getWeight() * 21.6 + 370) * 1.2 - 500;
@@ -388,7 +389,7 @@ public class WchartController {
     @ResponseBody
     public R saveOrder(WxOrder wxOrder) throws IOException {
         String orderNo = srvOrderService.save(wxOrder);
-        return R.ok().put("orderNo",orderNo);
+        return R.ok().put("orderNo", orderNo);
     }
 
     /**
@@ -610,7 +611,7 @@ public class WchartController {
      */
     @RequestMapping("/toPayInit")
     @ResponseBody
-    public Map<String,Object> toPay(HttpServletRequest request,
+    public SortedMap<String,String> toPay(HttpServletRequest request,
                                     @RequestParam(value="payMoney",required=true) String payMoney,
                                     @RequestParam(value="wxId",required=true) String wxId,
                                     @RequestParam(value="orderNo",required=true) String orderNo){
@@ -637,31 +638,27 @@ public class WchartController {
         if(null!=orderResponse  && "SUCCESS".equals(orderResponse.getReturn_code()) && "SUCCESS".equals(orderResponse.getResult_code())){
             String timestamp = String.valueOf(WXPayUtil.getCurrentTimestamp());
             map.put("timestamp",timestamp);
-            map.put("noncestr",noncestr);
+            map.put("nonceStr",noncestr);
             UnifiedOrderRequest unifiedOrderRequest = (UnifiedOrderRequest) requestInfo.get("unifiedOrderRequest");
             map.put("unifiedOrderRequest",unifiedOrderRequest);
             SortedMap<String, String> packageParams = new TreeMap<String, String>();
             packageParams.put("appId","wx688906a5f5df8b37");//你的appId
-            packageParams.put("signType","MD5");
-            packageParams.put("nonceStr", noncestr);
             packageParams.put("timeStamp", timestamp);
+            packageParams.put("nonceStr",  noncestr);
             String packages = "prepay_id="+orderResponse.getPrepay_id();
             packageParams.put("package",packages);
             String sign = null;//这个梗，就是开头说的，弄了半天才弄出来的
             try {
-                sign = WXPayUtil.generateSignature(packageParams,"bdf827933371387b5bfad9713e775c3e");//秘钥
+                sign = WXPayUtil.generateSignature(packageParams,"sFG45KywyyiLsREWYZ3FRyWq84BG5z9b");//秘钥
             } catch (Exception e) {
                 map.put("result",-1);
                 e.printStackTrace();
             }
             if(sign!=null && !"".equals(sign)){
-                map.put("paySign",sign);
-                map.put("result",1);
-            }else{
-                map.put("result",-1);
+                packageParams.put("paySign",sign);
             }
-            map.put("prepay_id",orderResponse.getPrepay_id());
-            return map;
+            packageParams.put("signType",WXPayConstants.MD5);
+            return packageParams;
         }else{ //不成功
             String text = "调用微信支付出错，返回状态码："+orderResponse.getReturn_code()+"，返回信息："+orderResponse.getReturn_msg();
             if(orderResponse.getErr_code()!=null && !"".equals(orderResponse.getErr_code())){
@@ -669,7 +666,7 @@ public class WchartController {
             }
             log.error(text);
             map.put("result",-1);
-            return map;
+            return null;
         }
     }
 

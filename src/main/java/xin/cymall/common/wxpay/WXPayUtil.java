@@ -1,12 +1,6 @@
 package xin.cymall.common.wxpay;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
@@ -21,6 +15,9 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
 import xin.cymall.common.wxpay.WXPayConstants.SignType;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -80,12 +77,12 @@ public class WXPayUtil {
 	    packageParams.put("total_fee", unifiedOrderRequest.getTotal_fee());  
 	    packageParams.put("trade_type", unifiedOrderRequest.getTrade_type());  
 	    try {
-			unifiedOrderRequest.setSign(generateSignature(packageParams,"你的密匙"));//签名
+			unifiedOrderRequest.setSign(generateSignature(packageParams,"sFG45KywyyiLsREWYZ3FRyWq84BG5z9b"));//签名
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	    //将订单对象转为xml格式  
-	    xstream.alias("xml", UnifiedOrderRequest.class);//根元素名需要是xml  
+        xstream.alias("xml", UnifiedOrderRequest.class);//根元素名需要是xml
 	    System.out.println("封装好的统一下单请求数据："+xstream.toXML(unifiedOrderRequest).replace("__", "_"));
 	    Map<String,Object> responseMap = new HashMap<String,Object>();
 	    responseMap.put("orderInfo_toString", xstream.toXML(unifiedOrderRequest).replace("__", "_"));
@@ -133,37 +130,45 @@ public class WXPayUtil {
 	    //第二步拼接key，key设置路径：微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->密钥设置  
 	    sb.append("key="+"你的密匙");  
 	    String sign = MD5Util.MD5(sb.toString()).toUpperCase();//MD5加密  
-	    log.error("方式一生成的签名="+sign);
+	    log.error("方式一生成的签名=" + sign);
 	    return sign;  
 	}
-	
-	private static XStream xstream = new XStream(new XppDriver() {  
-        public HierarchicalStreamWriter createWriter(Writer out) {  
-            return new PrettyPrintWriter(out) {  
-                // 对所有xml节点的转换都增加CDATA标记  
-                boolean cdata = true;  
-                String NodeName = "";
-                @SuppressWarnings("unchecked")  
-                public void startNode(String name, Class clazz) {  
-                	NodeName = name;
-                    super.startNode(name, clazz);  
-                }  
-                protected void writeText(QuickWriter writer, String text) {  
-                    if (cdata) {  
-                    	if(!NodeName.equals("detail")){
-                    		writer.write(text); 
-                    	}else{
-                    		writer.write("<![CDATA[");  
-                            writer.write(text);  
-                            writer.write("]]>"); 
-                    	}
-                    } else {  
-                        writer.write(text);  
-                    }  
-                }  
-            };  
-        }  
-    }); 
+
+
+    public static XStream xstream = new XStream(new XppDriver() {
+            public HierarchicalStreamWriter createWriter(Writer out) {
+                return new PrettyPrintWriter(out) {
+                    // 对所有xml节点的转换都增加CDATA标记
+                    boolean cdata = true;
+                    String NodeName = "";
+
+                    @SuppressWarnings("unchecked")
+                    public void startNode(String name, Class clazz) {
+                        NodeName = name;
+                        super.startNode(name, clazz);
+                    }
+
+                    protected void writeText(QuickWriter writer, String text) {
+                        if (cdata) {
+                            if (!NodeName.equals("detail")) {
+                                writer.write(text);
+                            } else {
+                                writer.write("<![CDATA[");
+                                writer.write(text);
+                                writer.write("]]>");
+                            }
+                        } else {
+                            writer.write(text);
+                        }
+                    }
+                };
+            }
+        });
+
+
+
+
+
 	
 	//xml解析    
     public static SortedMap<String, String> doXMLParseWithSorted(String strxml) throws Exception {    
@@ -219,7 +224,7 @@ public class WXPayUtil {
 	 * @param orderInfo 
 	 * @return 
 	 */  
-	public static UnifiedOrderRespose httpOrder(String orderInfo) {  
+	public static UnifiedOrderRespose httpOrder(String orderInfo) {
 	    String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";  
 	    try {  
 	        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();  
@@ -233,15 +238,16 @@ public class WXPayUtil {
 			//获取输入流    
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));    
 			String line = null;    
-			StringBuffer sb = new StringBuffer();    
+			StringBuffer sb = new StringBuffer();
 			while((line = reader.readLine())!= null){    
-				sb.append(line);    
-			}    
-			//将请求返回的内容通过xStream转换为UnifiedOrderRespose对象  
-			xstream.alias("xml", UnifiedOrderRespose.class);  
-			UnifiedOrderRespose unifiedOrderRespose = (UnifiedOrderRespose)xstream.fromXML(sb.toString());  
-			return unifiedOrderRespose;
-	    } catch (Exception e) {  
+				sb.append(line);
+            }
+            System.out.println(sb);
+            String result = sb.toString();
+            //将请求返回的内容通过xStream转换为UnifiedOrderRespose对象
+			return (UnifiedOrderRespose) convertXmlStrToObject(UnifiedOrderRespose.class, result);
+
+        } catch (Exception e) {
 	        e.printStackTrace();  
 	    }  
 	    return null;  
@@ -557,6 +563,41 @@ public class WXPayUtil {
 	        }  
 	    }  
 	    String sign = MD5Util.MD5(sb.toString()).toUpperCase();//MD5加密  
-        return sign;  
-    }  
+        return sign;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    /**
+     * 将String类型的xml转换成对象
+     */
+    public static Object convertXmlStrToObject(Class clazz, String xmlStr) {
+        Object xmlObject = null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(clazz);
+            // 进行将Xml转成对象的核心接口
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            StringReader sr = new StringReader(xmlStr);
+            xmlObject = unmarshaller.unmarshal(sr);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return xmlObject;
+    }
+
+    public static void main(String[] args) throws Exception {
+//        String xml = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg><appid><![CDATA[wx688906a5f5df8b37]]></appid><mch_id><![CDATA[1542729801]]></mch_id><nonce_str><![CDATA[jNYAgdXwOdNy7WkK]]></nonce_str><sign><![CDATA[D53543056EDD0EEDB991B8DB6778E245]]></sign><result_code><![CDATA[SUCCESS]]></result_code><prepay_id><![CDATA[wx25155111737201fd372e72a21929010200]]></prepay_id><trade_type><![CDATA[JSAPI]]></trade_type></xml>";
+//        UnifiedOrderRespose unifiedOrderRespose = (UnifiedOrderRespose) convertXmlStrToObject(UnifiedOrderRespose.class, xml);
+//        System.out.println(unifiedOrderRespose.getPrepay_id());
+
+        Map map = new HashMap<String,String>();
+        map.put("appId","wx688906a5f5df8b37");//你的appId
+        map.put("timeStamp", "1564047442");
+        map.put("nonceStr",  "8bae90e87e4e4f818b5980ba54cec961");
+        String packages = "prepay_id=wx25173724315426f1197dbdd01260384600";
+        map.put("package",packages);
+        System.out.println(WXPayUtil.generateSignature(map, "sFG45KywyyiLsREWYZ3FRyWq84BG5z9b",SignType.MD5));
+    }
+
+
 }
