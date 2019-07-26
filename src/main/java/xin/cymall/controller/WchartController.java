@@ -637,16 +637,13 @@ public class WchartController {
         //根据微信文档return_code 和result_code都为SUCCESS的时候才会返回code_url
         if(null!=orderResponse  && "SUCCESS".equals(orderResponse.getReturn_code()) && "SUCCESS".equals(orderResponse.getResult_code())){
             String timestamp = String.valueOf(WXPayUtil.getCurrentTimestamp());
-            map.put("timestamp",timestamp);
-            map.put("nonceStr",noncestr);
-            UnifiedOrderRequest unifiedOrderRequest = (UnifiedOrderRequest) requestInfo.get("unifiedOrderRequest");
-            map.put("unifiedOrderRequest",unifiedOrderRequest);
             SortedMap<String, String> packageParams = new TreeMap<String, String>();
             packageParams.put("appId","wx688906a5f5df8b37");//你的appId
             packageParams.put("timeStamp", timestamp);
-            packageParams.put("nonceStr",  noncestr);
+            packageParams.put("nonceStr",  WXPayUtil.generateNonceStr());
             String packages = "prepay_id="+orderResponse.getPrepay_id();
             packageParams.put("package",packages);
+            packageParams.put("signType",WXPayConstants.MD5);
             String sign = null;//这个梗，就是开头说的，弄了半天才弄出来的
             try {
                 sign = WXPayUtil.generateSignature(packageParams,"QlP1QiBYOEfeck4MFJC5OrZPQRe1uFBQ");//秘钥
@@ -657,7 +654,6 @@ public class WchartController {
             if(sign!=null && !"".equals(sign)){
                 packageParams.put("paySign",sign);
             }
-            packageParams.put("signType",WXPayConstants.MD5);
             return packageParams;
         }else{ //不成功
             String text = "调用微信支付出错，返回状态码："+orderResponse.getReturn_code()+"，返回信息："+orderResponse.getReturn_msg();
@@ -665,7 +661,6 @@ public class WchartController {
                 text = text +"，错误码："+orderResponse.getErr_code()+"，错误描述："+orderResponse.getErr_code_des();
             }
             log.error(text);
-            map.put("result",-1);
             return null;
         }
     }
@@ -705,7 +700,7 @@ public class WchartController {
         Map<String,String> map = WXPayUtil.xmlToMap(sb.toString());//接受微信的回调的通知参数
         Map<String,String> return_data = new HashMap<String,String>();
         //判断签名是否正确
-        if(WXPayUtil.isSignatureValid(map, "你的密匙")){
+        if(WXPayUtil.isSignatureValid(map, "QlP1QiBYOEfeck4MFJC5OrZPQRe1uFBQ")){
             if(map.get("return_code").toString().equals("FAIL")){
                 return_data.put("return_code", "FAIL");
                 return_data.put("return_msg", map.get("return_msg"));
