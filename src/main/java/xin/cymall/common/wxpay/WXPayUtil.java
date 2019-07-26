@@ -77,7 +77,7 @@ public class WXPayUtil {
 	    packageParams.put("total_fee", unifiedOrderRequest.getTotal_fee());  
 	    packageParams.put("trade_type", unifiedOrderRequest.getTrade_type());  
 	    try {
-			unifiedOrderRequest.setSign(generateSignature(packageParams,"sFG45KywyyiLsREWYZ3FRyWq84BG5z9b"));//签名
+			unifiedOrderRequest.setSign(generateSignature(packageParams,"QlP1QiBYOEfeck4MFJC5OrZPQRe1uFBQ"));//签名
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

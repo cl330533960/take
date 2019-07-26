@@ -649,7 +649,7 @@ public class WchartController {
             packageParams.put("package",packages);
             String sign = null;//这个梗，就是开头说的，弄了半天才弄出来的
             try {
-                sign = WXPayUtil.generateSignature(packageParams,"sFG45KywyyiLsREWYZ3FRyWq84BG5z9b");//秘钥
+                sign = WXPayUtil.generateSignature(packageParams,"QlP1QiBYOEfeck4MFJC5OrZPQRe1uFBQ");//秘钥
             } catch (Exception e) {
                 map.put("result",-1);
                 e.printStackTrace();
