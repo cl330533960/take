@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="http://api.map.baidu.com/getscript?v=2.0&ak=MBGPZFWMZivzdW1ZVKPkUGsPIvvTRxgj"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <title>收件地址详细</title>
@@ -62,22 +63,31 @@
 
 </div>
 <a href="javascript:;" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;">保存</a>
-</body>
-<script>
-    $(function () {
-        $("#locSubmit").click(submit);
-        getLoaction("盐亭县");
-    })
 
+<script>
+    getLoaction("成都市武侯区九康六路299号");
 
     //根据地址获取经纬度
     function getLoaction(add) {
         var myGeo = new BMap.Geocoder();
         myGeo.getPoint(add, function(point){
             if (point) {
-                console.log("->"+point.lng) //经度
-                console.log("->"+point.lat) //纬度
-                alert(add+".lng:"+ point.lng);
+                var lng = point.lng;
+                var lat = point.lat;
+                const pointBak = new BMap.Point(lng, lat);
+                const convertor = new BMap.Convertor();
+                convertor.translate([pointBak], 1, 5,function(resPoint) {
+                    if(resPoint && resPoint.points && resPoint.points.length>0){
+                        lng = resPoint.points[0].lng;
+                        lat = resPoint.points[0].lat;
+                    }
+                    const point = new BMap.Point(lng, lat);
+                    const geo = new BMap.Geocoder();
+                    geo.getLocation(point, (res) => {
+                        alert("lng:"+ point.lng+"lat:"+point.lat);
+                    });
+                });
+
             }else{
                 alert("您输入的地址有误请检查后重新输入");
             }
@@ -87,30 +97,10 @@
 
 
 
-
-    function submit() {
-
-        initPay(1,1);
-        // $.ajax({
-        //     //请求方式
-        //     type: "POST",
-        //     //请求的媒体类型
-        //     //请求地址
-        //     url: "/wx/modifyLocation",
-        //     //数据，json字符串
-        //     data: {wxId:"oQ3Fp6Rd0oGRUbtBaGv-sOekF5_E",receiveName:$("#receiveName").val(),receiveAddr:$("#receiveAddr").val(),receivePhone:$("#receivePhone").val()},
-        //     //请求成功
-        //     success: function (result) {
-        //         $.toast("操作成功");
-        //         setTimeout( window.location.href="/wx/locationManage",1000);
-        //
-        //     },
-        //     //请求失败，包含具体的错误信息
-        //     error: function (e) {
-        //         $.toast("操作失败", "cancel");
-        //     }
-        // });
-    }
-
 </script>
+
+
+
+
+
 </html>

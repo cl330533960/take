@@ -16,7 +16,9 @@ import xin.cymall.common.dadaexpress.service.merchant.ShopAddService;
 import xin.cymall.common.dadaexpress.service.order.AddAfterQueryService;
 import xin.cymall.common.dadaexpress.service.order.OrderAddService;
 import xin.cymall.common.dadaexpress.service.order.QueryDeliverFeeService;
+import xin.cymall.common.dadaexpress.service.order.QueryShopDetailService;
 import xin.cymall.common.dadaexpress.utils.JSONUtil;
+import xin.cymall.entity.SrvRestaurant;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -88,23 +90,23 @@ public class DaDaExpressUtil {
      * 3. 该接口为批量接口,业务参数为数组
      **/
 
-    private static DadaApiResponse addShop() {
+    public static DadaApiResponse addShop(SrvRestaurant srvRestaurant,String cityName,String areaName) {
 
         // 1.初始化配置(isOnline表示是否测试环境)
         AppConfig appConfig = new AppConfig(false);
 
         // 2.初始化model
         ShopAddModel shopAddModel = new ShopAddModel();
-        shopAddModel.setOriginShopId("testShop-090402");
-        shopAddModel.setStationName("测试门店090402");
-        shopAddModel.setBusiness(2);
-        shopAddModel.setCityName("上海");
-        shopAddModel.setAreaName("浦东新区");
-        shopAddModel.setStationAddress("隆宇大厦");
-        shopAddModel.setLng(BigDecimal.valueOf(121.587173));
-        shopAddModel.setLat(BigDecimal.valueOf(31.228624));
-        shopAddModel.setContactName("测试达达2");
-        shopAddModel.setPhone("13812344322");
+        shopAddModel.setOriginShopId(srvRestaurant.getId());
+        shopAddModel.setStationName(srvRestaurant.getName());
+        shopAddModel.setBusiness(1);
+        shopAddModel.setCityName(cityName);
+        shopAddModel.setAreaName(areaName);
+        shopAddModel.setStationAddress(srvRestaurant.getAddr());
+        shopAddModel.setLng(new BigDecimal(srvRestaurant.getLng()));
+        shopAddModel.setLat(new BigDecimal(srvRestaurant.getLat()));
+        shopAddModel.setContactName(srvRestaurant.getContact());
+        shopAddModel.setPhone(srvRestaurant.getPhone());
 
         // 3.初始化service (门店新增比较特殊,是一个批量新增接口)
         List<ShopAddModel> shopAddList = new ArrayList<ShopAddModel>();
@@ -163,18 +165,38 @@ public class DaDaExpressUtil {
         return dadaClient.callRpc();
     }
 
+    /**
+     * 查询门店详情
+     */
+
+    public static DadaApiResponse queryShopDetail(String shopId){
+        // 1.初始化配置(isOnline表示是否测试环境)
+        AppConfig appConfig = new AppConfig(false);
+        ShopAddModel shopAddModel = new ShopAddModel();
+        shopAddModel.setOriginShopId(shopId);
+
+        System.out.println(shopAddModel.toJson());
+        // 3.初始化service
+        QueryShopDetailService queryShopDetailService = new QueryShopDetailService(shopAddModel.toJson());
+
+        // 4.初始化客户端
+        DadaRequestClient dadaClient = new DadaRequestClient(queryShopDetailService, appConfig);
+        return dadaClient.callRpc();
+
+    }
+
 
     /**
      * 查询订单运费接口
      **/
-    private static DadaApiResponse querydeliverfee() {
+    public static DadaApiResponse querydeliverfee() {
 
         // 1.初始化配置(isOnline表示是否测试环境)
         AppConfig appConfig = new AppConfig(false);
 
         // 2.初始化model
         QueryDeliverFeeModel queryDeliverFeeModel = new QueryDeliverFeeModel();
-        queryDeliverFeeModel.setShopNo("11664071");
+        queryDeliverFeeModel.setShopNo("11047059");
         queryDeliverFeeModel.setOriginId(String.valueOf(System.currentTimeMillis()));
         queryDeliverFeeModel.setCityCode("021");
         queryDeliverFeeModel.setCargoPrice(BigDecimal.valueOf(111));
@@ -211,7 +233,7 @@ public class DaDaExpressUtil {
     /**
      *预下单运费接口
      **/
-    private static DadaApiResponse addAfterQuery() {
+    public static DadaApiResponse addAfterQuery() {
 
         // 1.初始化配置(isOnline表示是否测试环境)
         AppConfig appConfig = new AppConfig(false);
@@ -230,8 +252,12 @@ public class DaDaExpressUtil {
     }
 
     public static void main(String[] args) {
+//        DadaApiResponse resp = queryShopDetail("shop001");
         DadaApiResponse resp = queryCityCode();
+
         System.out.println(JSONUtil.toJson(resp));
+
+        querydeliverfee();
     }
 
 }

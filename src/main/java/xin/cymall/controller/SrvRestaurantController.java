@@ -1,10 +1,12 @@
 package xin.cymall.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import xin.cymall.common.dadaexpress.DaDaExpressUtil;
 import xin.cymall.common.enumresource.DefaultEnum;
 import xin.cymall.common.enumresource.StateEnum;
 import xin.cymall.common.log.SysLog;
@@ -15,13 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
-import xin.cymall.common.utils.EnumBean;
+import xin.cymall.common.utils.*;
 import xin.cymall.entity.SrvRestaurant;
 import xin.cymall.entity.SysUser;
+import xin.cymall.service.AreaService;
 import xin.cymall.service.SrvRestaurantService;
-import xin.cymall.common.utils.PageUtils;
-import xin.cymall.common.utils.Query;
-import xin.cymall.common.utils.R;
 import xin.cymall.service.SysUserService;
 
 
@@ -39,6 +39,8 @@ public class SrvRestaurantController extends  AbstractController{
 	private SrvRestaurantService srvRestaurantService;
     @Autowired
     private SysUserService sysUserService;
+    @Autowired
+    private AreaService areaService;
 	
     /**
      * 跳转到列表页
@@ -109,7 +111,7 @@ public class SrvRestaurantController extends  AbstractController{
     @SysLog("保存")
 	@RequestMapping("/save")
 	@RequiresPermissions("srvrestaurant:save")
-	public R save(@RequestBody SrvRestaurant srvRestaurant){
+	public R save(@RequestBody SrvRestaurant srvRestaurant) throws IOException {
         String[] parentids = srvRestaurant.getParentAreaIds();
         if(parentids.length > 0)
             srvRestaurant.setArea(String.join(",", parentids));
@@ -118,13 +120,24 @@ public class SrvRestaurantController extends  AbstractController{
         if(existUser!=null){
             return R.error("用户名已存在!");
         }
+        String[] location = BaiduMapUtil.getPoint(srvRestaurant.getAddr());
+        if(location.length == 0){
+            return R.error("请输入正确的地址!");
+        }
+        srvRestaurant.setLng(location[0]);
+        srvRestaurant.setLat(location[1]);
         SysUser user = new SysUser();
         user.setPassword(DefaultEnum.PASSWORD.getCode());
         user.setCreateUserId(getUserId());
         user.setStatus(Integer.parseInt(StateEnum.ENABLE.getCode()));
-		srvRestaurantService.save(srvRestaurant,user);
-		return R.ok();
-	}
+		srvRestaurantService.save(srvRestaurant, user);
+        String areaStr = areaService.getAreaNameStr(srvRestaurant.getArea());
+        String[] areas = areaStr.split(",");
+        if (areas.length == 3) {
+            DaDaExpressUtil.addShop(srvRestaurant, areas[1], areas[2]);
+        }
+        return R.ok();
+    }
 	
 	/**
 	 * 修改

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xin.cymall.common.config.WxConfig;
+import xin.cymall.common.dadaexpress.DaDaExpressUtil;
+import xin.cymall.common.dadaexpress.domain.merchant.ShopAddModel;
 import xin.cymall.common.enumresource.CouponTypeEnum;
 import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.utils.*;
@@ -214,16 +216,16 @@ public class WchartController {
     @RequestMapping(value = "/rationorderFood",method = { RequestMethod.GET, RequestMethod.POST })
     public String rationorderFood(Model model,String code) throws WxErrorException {
         Map<String,Object> map = new HashMap<>();
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
-        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxMpOAuth2AccessToken.getOpenId());
-        map.put("userId", srvWxUser.getId());
+//        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+//        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxMpOAuth2AccessToken.getOpenId());
+//        map.put("userId", srvWxUser.getId());
         List<SrvUserAddr> list = srvUserAddrService.getList(map);
         if(list.size()>0){
             SrvUserAddr srvUserAddr = list.get(0);
             model.addAttribute("model",srvUserAddr);
             model.addAttribute("locs",list);
         }
-        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
+//        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
         return "wchat/rationorderfood";
     }
 
@@ -305,9 +307,16 @@ public class WchartController {
 
     @RequestMapping(value = "modifyLocation")
     @ResponseBody
-    public R modifyLocation(SrvUserAddr srvUserAddr) {
+    public R modifyLocation(SrvUserAddr srvUserAddr) throws IOException {
+        String[] location = BaiduMapUtil.getPoint(srvUserAddr.getReceiveAddr());
+        if(location.length == 0){
+            return R.error("请输入正确的收获地址!");
+        }
+        srvUserAddr.setLng(location[0]);
+        srvUserAddr.setLat(location[1]);
         srvUserAddrService.modifyLocation(srvUserAddr);
         return R.ok().put("data",srvUserAddr);
+
     }
 
     @RequestMapping(value = "assessOne")
@@ -786,6 +795,13 @@ public class WchartController {
         String xml = WXPayUtil.GetMapToXML(return_data);
         log.error("支付通知回调结果："+xml);
         return xml;
+    }
+
+
+    public void getWayFee(String srvRestaurantId,String dadaOrder){
+        ShopAddModel shop = null;
+//                DaDaExpressUtil.querydeliverfee();
+        DaDaExpressUtil.querydeliverfee();
     }
 
 
