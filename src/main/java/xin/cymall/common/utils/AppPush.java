@@ -110,7 +110,7 @@ public class AppPush {
 	 * 2.2 通知栏内容： key = titleText,
 	 * 2.3 穿透内容：key = transText
 	 */
-    public IPushResult pushMsgToSingle(String cid, Map<String, String> msg) {
+    public static IPushResult pushMsgToSingle(String cid, Map<String, String> msg) {
         // 代表在个推注册的一个 app，调用该类实例的方法来执行对个推的请求
         IGtPush push = new IGtPush(appKey, masterSecret);
         // 创建信息模板

@@ -11,6 +11,8 @@
         <result property="totalPrice" column="total_price"/>
 		<result property="orderId" column="order_id"/>
 		<result property="foodName" column="food_name"/>
+		<result property="price" column="price"/>
+
 	</resultMap>
 
 	<select id="get" resultType="xin.cymall.entity.SrvOrderFood">
@@ -50,6 +52,7 @@
     		<if test="numberVague != null and numberVague != ''"> and t.number like concat('%',#{numberVague},'%') </if>
             <if test="totalPrice != null and totalPrice != ''"> and t.total_price = #{totalPrice} </if>
     		<if test="totalPriceVague != null and totalPriceVague != ''"> and t.total_price like concat('%',#{totalPriceVague},'%') </if>
+			<if test="orderId != null and orderId != ''"> and t.order_id = #{orderId} </if>
         </where>
     </sql>
 	 
@@ -59,14 +62,18 @@
 			`id`, 
 			`food_id`, 
 			`number`, 
-			`total_price`
+			`total_price`,
+			order_id,
+			price
 		)
 		values
 		(
 			#{id}, 
 			#{foodId}, 
 			#{number}, 
-			#{totalPrice}
+			#{totalPrice},
+			#{orderId},
+			#{price}
 		)
 	</insert>
 	 

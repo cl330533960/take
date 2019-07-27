@@ -43,10 +43,25 @@
             });
 
             function assessPage() {
+                checkData();
+            }
+
+            function checkData(){
                 var sex = $("#sex").attr("data-values");
                 var weight = parseFloat($("#weight").val());
                 var waistline = parseFloat($("#waistline").val());
+
+                if(!weight){
+                    $.toptip('体重为必须项', 'error');
+                    return;
+                }
+                if(!sex){
+                    $.toptip('性别为必须项', 'error');
+                    return;
+                }
+                $.showLoading("正在提交数据，请稍后");
                 window.location.href = "/wx/assessTwo?weight=" + weight +  "&sex=" + sex + "&waistline=" + waistline;
+
             }
         </script>
 

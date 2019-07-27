@@ -5,6 +5,7 @@ package xin.cymall.common.dadaexpress;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.collections.OrderedMap;
 import xin.cymall.common.dadaexpress.client.*;
 import xin.cymall.common.dadaexpress.config.AppConfig;
 import xin.cymall.common.dadaexpress.domain.merchant.MerchantAddModel;
@@ -18,16 +19,22 @@ import xin.cymall.common.dadaexpress.service.merchant.MerchantAddService;
 import xin.cymall.common.dadaexpress.service.merchant.ShopAddService;
 import xin.cymall.common.dadaexpress.service.order.*;
 import xin.cymall.common.dadaexpress.utils.JSONUtil;
+import xin.cymall.common.utils.UUID;
 import xin.cymall.entity.SrvRestaurant;
+import xin.cymall.entity.wchart.SrvUserAddr;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @date 2019/07/15
  */
 public class DaDaExpressUtil {
+
+    private static Map<String,Object>  cityMap = new HashMap<>();
 
 /**达达文档
  *
@@ -58,7 +65,7 @@ public class DaDaExpressUtil {
         OrderAddModel orderAddModel = new OrderAddModel();
         orderAddModel.setShopNo("11047059");
         orderAddModel.setOriginId(String.valueOf(System.currentTimeMillis()));
-        System.out.println("----ourorderid:"+orderAddModel.getOriginId());
+        System.out.println("----ourorderid:" + orderAddModel.getOriginId());
         orderAddModel.setCityCode("021");
         orderAddModel.setCargoPrice(BigDecimal.valueOf(111));
         orderAddModel.setIsPrepay(0);
@@ -154,16 +161,26 @@ public class DaDaExpressUtil {
     /**
      * 查询城市列表的
      **/
-    private static DadaApiResponse queryCityCode() {
-        // 1.初始化配置(isOnline表示是否测试环境)
-        AppConfig appConfig = new AppConfig(false);
+    private static String queryCityCode(String cityName) {
 
-        // 2.初始化service
-        CityCodeService cityCodeService = new CityCodeService("");
+        if(cityMap.size() == 0 && cityMap.get(cityName) == null) {
+            // 1.初始化配置(isOnline表示是否测试环境)
+            AppConfig appConfig = new AppConfig(false);
 
-        // 3.初始化客户端
-        DadaRequestClient dadaClient = new DadaRequestClient(cityCodeService, appConfig);
-        return dadaClient.callRpc();
+            // 2.初始化service
+            CityCodeService cityCodeService = new CityCodeService("");
+
+            // 3.初始化客户端
+            DadaRequestClient dadaClient = new DadaRequestClient(cityCodeService, appConfig);
+            DadaApiResponse dadaApiResponse = dadaClient.callRpc();
+            JSONObject cityjs = JSON.parseObject(JSONUtil.toJson(dadaApiResponse));
+            JSONArray cityArray = cityjs.getJSONArray("result");
+            for (Object jsonObject : cityArray) {
+                JSONObject item = JSON.parseObject(JSONUtil.toJson(jsonObject));
+                cityMap.put(item.getString("cityName") + "市", item.getString("cityCode"));
+            }
+        }
+        return String.valueOf(cityMap.get(cityName));
     }
 
     /**
@@ -190,7 +207,7 @@ public class DaDaExpressUtil {
     /**
      * 查询订单运费接口
      **/
-    public static DadaApiResponse querydeliverfee() {
+    public static Map<String,Object> querydeliverfee(SrvRestaurant srvRestaurant,SrvUserAddr srvUserAddr,String cityName,Double orderAmount) {
 
         // 1.初始化配置(isOnline表示是否测试环境)
         AppConfig appConfig = new AppConfig(false);
@@ -198,16 +215,23 @@ public class DaDaExpressUtil {
         // 2.初始化model
         QueryDeliverFeeModel queryDeliverFeeModel = new QueryDeliverFeeModel();
         queryDeliverFeeModel.setShopNo("11047059");
-        queryDeliverFeeModel.setOriginId(String.valueOf(System.currentTimeMillis()));
+        queryDeliverFeeModel.setOriginId(UUID.generateId());
         queryDeliverFeeModel.setCityCode("021");
-        queryDeliverFeeModel.setCargoPrice(BigDecimal.valueOf(111));
+        queryDeliverFeeModel.setCargoPrice(BigDecimal.valueOf(orderAmount));
         queryDeliverFeeModel.setIsPrepay(0);
         queryDeliverFeeModel.setReceiverName("测试达达");
         queryDeliverFeeModel.setReceiverAddress("隆宇大厦");
+        queryDeliverFeeModel.setReceiverPhone("13622219090");
         queryDeliverFeeModel.setReceiverLat(BigDecimal.valueOf(31.228623));
         queryDeliverFeeModel.setReceiverLng(BigDecimal.valueOf(121.587172));
-        queryDeliverFeeModel.setReceiverPhone("13622219090");
-        queryDeliverFeeModel.setCallback("http://newopen.qa.imdada.cn");
+//        queryDeliverFeeModel.setReceiverName(srvUserAddr.getReceiveName()); 正式环境使用
+//        queryDeliverFeeModel.setReceiverAddress(srvUserAddr.getReceiveAddr());
+//        queryDeliverFeeModel.setReceiverPhone(srvUserAddr.getReceivePhone());
+//        queryDeliverFeeModel.setReceiverLat(new BigDecimal(srvUserAddr.getLat()));
+//        queryDeliverFeeModel.setReceiverLng(new BigDecimal(srvUserAddr.getLng()));
+//        queryDeliverFeeModel.setCityCode(queryCityCode(cityName));
+//        queryDeliverFeeModel.setShopNo(srvRestaurant.getId());
+        queryDeliverFeeModel.setCallback("http://gazi.free.idcfengye.com/wx/orderCallBack");
 
         // 3.初始化service
         QueryDeliverFeeService queryDeliverFeeService = new QueryDeliverFeeService(queryDeliverFeeModel.toJson());
@@ -215,9 +239,15 @@ public class DaDaExpressUtil {
 
         // 4.初始化客户端
         DadaRequestClient dadaClient = new DadaRequestClient(queryDeliverFeeService, appConfig);
-        return dadaClient.callRpc();
-
+        JSONObject livefeejs = JSON.parseObject(JSONUtil.toJson(dadaClient.callRpc()));
+        OrderPreRelease orderPreRelease = JSONUtil.fromJson
+                (JSONUtil.toJson(livefeejs.getJSONObject("result")), OrderPreRelease.class);
+        Map<String,Object> orderMap = new HashMap<>();
+        orderMap.put("payFee",orderPreRelease.getFee());
+        orderMap.put("expressNum",orderPreRelease.getDeliveryNo());
+        return orderMap;
     }
+
 
     /**
      *预下单运费接口
@@ -264,44 +294,36 @@ public class DaDaExpressUtil {
     public static void main(String[] args) {
 //        TODO  铁酱 除了城市查询接口的参数不需要传递以为其他都要自己传过去 方法里面是写死了的
 
+//
 //      1 城市code ok了
-        DadaApiResponse cityresp = queryCityCode();
-        JSONObject cityjs = JSON.parseObject(JSONUtil.toJson(cityresp));
-        JSONArray cityArray= cityjs.getJSONArray("result");
-        for(Object jsonObject :cityArray){
-            JSONObject item = JSON.parseObject(JSONUtil.toJson(jsonObject));
-            System.out.println("cityName:"+item.getString("cityName")+"---cityCode:"+item.getString("cityCode"));
-        }
+//        System.out.println(queryCityCode("成都市"));
+//        System.out.println(queryCityCode("南京市"));
 
 
- //    2 订单预发布 查询价格和deliveryNo下面预发单要用  OrderPreReleases是result返回的实体类    ok了
-        DadaApiResponse livefee = querydeliverfee();
-        JSONObject livefeejs = JSON.parseObject(JSONUtil.toJson(livefee));
-        OrderPreRelease orderPreRelease = JSONUtil.fromJson
-                (JSONUtil.toJson(livefeejs.getJSONObject("result")),OrderPreRelease.class);
-
-        System.out.println("Fee:"+orderPreRelease.getFee()+"--deliveryNo:"+orderPreRelease.getDeliveryNo());
+//     2 订单预发布 查询价格和deliveryNo下面预发单要用  OrderPreReleases是result返回的实体类    ok了
+        Map<String,Object> orderMap = querydeliverfee(null,null,"",60d);
 
 
 //    3 订单预发布 预发布订单  这个result 实体类没啥鸡巴卵用就不封装了    ok了
-        DadaApiResponse addafterquery = addAfterQuery(orderPreRelease.getDeliveryNo());
+        System.out.println(orderMap.get("expressNum")+"");
+        DadaApiResponse addafterquery = addAfterQuery(orderMap.get("expressNum")+"");
         JSONObject addafterqueryjs = JSON.parseObject(JSONUtil.toJson(addafterquery));
         System.out.println(JSONUtil.toJson(addafterquery));
 
 
 //    4 订单发布 1中的城市code 可以写在本地了应该不会改吧 不考虑报价这类的鬼东西了  OK了
-        DadaApiResponse addorder = addOrder();
-        JSONObject addorderjs = JSON.parseObject(JSONUtil.toJson(addorder));
-        OrderRelease orderRelease = JSONUtil.fromJson
-                (JSONUtil.toJson(livefeejs.getJSONObject("result")),OrderRelease.class);
-        System.out.println(JSONUtil.toJson(addorder));
-//    5 查询订单
-
+//        DadaApiResponse addorder = addOrder();
+//        JSONObject addorderjs = JSON.parseObject(JSONUtil.toJson(addorder));
+//        OrderRelease orderRelease = JSONUtil.fromJson
+//                (JSONUtil.toJson(livefeejs.getJSONObject("result")),OrderRelease.class);
+//        System.out.println(JSONUtil.toJson(addorder));
+////    5 查询订单
+//
         DadaApiResponse orderquery = orderQuery();
         JSONObject orderqueryjs = JSON.parseObject(JSONUtil.toJson(orderquery));
-        OrderDetial oderDetial = JSONUtil.fromJson
-                (JSONUtil.toJson(livefeejs.getJSONObject("result")),OrderDetial.class);
         System.out.println(JSONUtil.toJson(orderquery));
+
+
     }
 
 }

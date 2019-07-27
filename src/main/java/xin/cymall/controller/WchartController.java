@@ -12,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import xin.cymall.common.config.WxConfig;
 import xin.cymall.common.dadaexpress.DaDaExpressUtil;
+import xin.cymall.common.dadaexpress.client.CallBackInfo;
+import xin.cymall.common.dadaexpress.client.DadaApiResponse;
 import xin.cymall.common.dadaexpress.domain.merchant.ShopAddModel;
+import xin.cymall.common.dadaexpress.utils.JSONUtil;
 import xin.cymall.common.enumresource.CouponTypeEnum;
 import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.utils.*;
@@ -64,6 +64,10 @@ public class WchartController {
     private SrvDiscounreserveService srvDiscounreserveService;
     @Autowired
     private WxConfig wxConfig;
+    @Autowired
+    private SrvRestaurantService srvRestaurantService;
+    @Autowired
+    private AreaService areaService;
 
 
     @RequestMapping("/auth")
@@ -171,7 +175,9 @@ public class WchartController {
      * 跳转到新增页面
      **/
     @RequestMapping(value = "calcAssess")
-    public String calcAssess(){
+    public String calcAssess(Model model,String code) throws WxErrorException {
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
         return "wchat/calcassess";
     }
 
@@ -216,16 +222,16 @@ public class WchartController {
     @RequestMapping(value = "/rationorderFood",method = { RequestMethod.GET, RequestMethod.POST })
     public String rationorderFood(Model model,String code) throws WxErrorException {
         Map<String,Object> map = new HashMap<>();
-//        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
-//        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxMpOAuth2AccessToken.getOpenId());
-//        map.put("userId", srvWxUser.getId());
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxMpOAuth2AccessToken.getOpenId());
+        map.put("userId", srvWxUser.getId());
         List<SrvUserAddr> list = srvUserAddrService.getList(map);
         if(list.size()>0){
             SrvUserAddr srvUserAddr = list.get(0);
             model.addAttribute("model",srvUserAddr);
             model.addAttribute("locs",list);
         }
-//        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
+        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
         return "wchat/rationorderfood";
     }
 
@@ -254,7 +260,18 @@ public class WchartController {
     }
 
     @RequestMapping(value = "/orderInfo",method = { RequestMethod.GET, RequestMethod.POST })
-    public String orderInfo(){
+    public String orderInfo(Model model,@RequestParam String orderId){
+        SrvOrder srvOrder = srvOrderService.get(orderId);
+        if(srvOrder != null) {
+            srvOrder.setStatusText(OrderStatusEnum.getValue(srvOrder.getStatus()));
+            Map<String, Object> params = new HashMap<>();
+            params.put("orderId", srvOrder.getId());
+            List<SrvOrderFood> list = srvOrderFoodService.getList(params);
+            srvOrder.setFoodList(list);
+            SrvUserAddr userAddr = srvUserAddrService.get(srvOrder.getUserAddrId());
+            model.addAttribute("order", srvOrder);
+            model.addAttribute("location", userAddr);
+        }
         return "wchat/orderinfo";
     }
 
@@ -718,6 +735,7 @@ public class WchartController {
                 String out_trade_no = map.get("out_trade_no").toString();
                 srvOrderService.updateOrderSuccessCallback(out_trade_no);
 
+
                 //TODO 获得我们自己的的订单详情 做我们想做的事
 //				UserPayInfo payInfo = wxPayService.getUserPayInfo(out_trade_no);
 //				if(payInfo == null){
@@ -797,11 +815,55 @@ public class WchartController {
         return xml;
     }
 
+    @RequestMapping(value="/queryWayFee")
+    @ResponseBody
+    public R queryWayFee(String restaurantId,String userAddrId,String dadaOrder,Double totalAmount){
+        SrvRestaurant srvRestaurant = srvRestaurantService.get(restaurantId);
+        SrvUserAddr srvUserAddr = srvUserAddrService.get(userAddrId);
+        String areaStr = areaService.getAreaNameStr(srvRestaurant.getArea());
+        String[] areas = areaStr.split(",");
+        Map<String,Object> orderedMap = new HashMap<>();
+        if (areas.length == 3) {
+            orderedMap =  DaDaExpressUtil.querydeliverfee(srvRestaurant,srvUserAddr,areas[1],totalAmount);
+        }
+        return R.ok().put("data",orderedMap);
 
-    public void getWayFee(String srvRestaurantId,String dadaOrder){
-        ShopAddModel shop = null;
-//                DaDaExpressUtil.querydeliverfee();
-        DaDaExpressUtil.querydeliverfee();
+    }
+
+    @RequestMapping(value="/orderCallBack",produces = "application/json;charset=UTF-8")
+    public void orderCallBack(@RequestBody CallBackInfo callBackInfo){
+        //达达返回运单号
+        String expressNum = callBackInfo.getClient_id();
+        //提交给运单号
+        String dadaOrder = callBackInfo.getOrder_id();
+
+        Integer orderStatus = callBackInfo.getOrder_status();
+        if(orderStatus == 1){
+            //待接单
+        }else if(orderStatus == 2){
+            //待取货
+            String expressName = callBackInfo.getDm_name();
+            String expressPhone = callBackInfo.getDm_mobile();
+        }else if(orderStatus == 3){
+            //配送中
+        } else if(orderStatus == 4){
+            //已完成
+        }else if(orderStatus == 5){
+            //已取消
+        }else if(orderStatus == 7){
+            //已过期
+        }else if(orderStatus == 8){
+            //指派单
+        }else if(orderStatus == 9){
+            //妥投异常之物品返回中 配送员在收货地，无法正常送到用户手中（包括用户电话打不通、客户暂时不方便收件、客户拒收、货物有问题等等）
+        }else if(orderStatus == 100){
+            //骑士到店
+        }else if(orderStatus == 1000){
+            //创建达达运单失败=
+        }
+
+
+
     }
 
 

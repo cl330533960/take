@@ -90,4 +90,29 @@ public class OrderFood  implements Serializable {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderFood orderFood = (OrderFood) o;
+
+        if (!fudId.equals(orderFood.fudId)) return false;
+        if (!name.equals(orderFood.name)) return false;
+        if (!rid.equals(orderFood.rid)) return false;
+        if (!sysPrice.equals(orderFood.sysPrice)) return false;
+        return price.equals(orderFood.price);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fudId.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + rid.hashCode();
+        result = 31 * result + sysPrice.hashCode();
+        result = 31 * result + price.hashCode();
+        return result;
+    }
 }

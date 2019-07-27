@@ -31,7 +31,9 @@
 		<result property="receivePhone" column="receive_phone"/>
 		<result property="receiveAddr" column="receive_addr"/>
 		<result property="restaurantTotal" column="restaurant_total"/>
-
+		<result property="dadaOrder" column="dada_order"/>
+		<result property="expressTime" column="express_time"/>
+		<result property="finishTime" column="finish_time"/>
 	</resultMap>
 
 	<select id="get" resultType="xin.cymall.entity.SrvOrder">
@@ -136,7 +138,8 @@
 			`coupon_id`, 
 			`discount`,
 			order_time,
-			restaurant_total
+			restaurant_total,
+			dada_order
 		)
 		values
 		(
@@ -159,7 +162,8 @@
 			#{couponId}, 
 			#{discount},
 			now(),
-			#{restaurantTotal}
+			#{restaurantTotal},
+			#{dadaOrder}
 		)
 	</insert>
 	 
@@ -184,6 +188,10 @@
 			<if test="couponId != null">`coupon_id` = #{couponId}, </if>
 			<if test="discount != null">`discount` = #{discount}</if>
 			<if test="receiptTime!= null">`receipt_time` = #{receiptTime}</if>
+			<if test="restaurantTotal!= null">`restaurant_total` = #{restaurantTotal}</if>
+			<if test="expressTime!= null">`express_time` = #{expressTime}</if>
+			<if test="finishTime!= null">`finish_time` = #{finishTime}</if>
+
 		</set>
 		where id = #{id}
 	</update>

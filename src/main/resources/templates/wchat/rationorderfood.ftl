@@ -12,13 +12,13 @@
 <body>
 <div class="weui-cells weui-cells_radio">
     <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">热量（K）:</label></div>
+        <div class="weui-cell__hd"><label class="weui-label">热量（K）<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
             <input class="weui-input" id="cal" type="number" pattern="[0-9]*" placeholder="请输入热量">
         </div>
     </div>
     <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">用餐方式:</label></div>
+        <div class="weui-cell__hd"><label class="weui-label">用餐方式<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd" id="orderTypeRadio">
             <label class="weui-cell weui-check__label" for="x11">
                 <div class="weui-cell__bd">
@@ -51,7 +51,7 @@
         </div>
     </div>
     <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">位置:</label></div>
+        <div class="weui-cell__hd"><label class="weui-label">位置<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
         <a class="weui-cell weui-cell_access" id="locationActions" href="javascript:;">
 
@@ -133,18 +133,6 @@
                                placeholder="请输入联系电话">
                     </div>
                 </div>
-            <#--<div class="weui-cell">-->
-            <#--<div class="weui-cell__hd"><label class="weui-label">小区/大厦/学校</label></div>-->
-            <#--<div class="weui-cell__bd">-->
-            <#--<a class="weui-cell weui-cell_access" href="javascript:;">-->
-            <#--<div class="weui-cell__bd">-->
-            <#--<input class="weui-input" placeholder="请选择小区/大厦/学校">-->
-            <#--</div>-->
-            <#--<div class="weui-cell__ft">编辑</div>-->
-            <#--</a>-->
-            <#--</div>-->
-            <#--</div>-->
-
 
                 <div class="weui-cell">
 
@@ -187,10 +175,39 @@
         var orderType = $("input[name='orderType']:checked").val();
         var userAddrId = $("#addrId").val();
         var cal = $("#cal").val();
+        if(!cal){
+            $.toptip('热量为必须项', 'error');
+            return;
+        }
+        if(!orderType){
+            $.toptip('用餐方式为必须项', 'error');
+            return;
+        }
+        if(!userAddrId){
+            $.toptip('位置为必须项', 'error');
+            return;
+        }
+        $.showLoading("正在为你推荐适合热量的餐品，请稍后");
         window.location.href = "/wx/healthyFood?wxId=${wxId!}&orderType=" + orderType + "&userAddrId=" + userAddrId + "&cal=" + cal;
     }
 
     function saveAddr() {
+        var receiveName = $("#receiveName").val()
+        var receiveAddr = $("#receiveAddr").val()
+        var receivePhone = $("#receivePhone").val()
+        if(!receiveName){
+            $.toptip('联系人为必须项', 'error');
+            return;
+        }
+        if(!receivePhone){
+            $.toptip('联系电话必须项', 'error');
+            return;
+        }
+        if(!receiveAddr){
+            $.toptip('详细地址必须项', 'error');
+            return;
+        }
+        $.showLoading("正在提交数据，请稍后");
         $.ajax({
             //请求方式
             type: "POST",
@@ -204,12 +221,14 @@
             },
             //请求成功
             success: function (result) {
+                $.hideLoading();
                 $.toast("新增地址成功");
                 var html = template("addLocationHtml", {data: result.data});
                 $("#locationListPup").append(html);
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
+                $.hideLoading();
                 $.toast("操作失败", "cancel");
             }
         });

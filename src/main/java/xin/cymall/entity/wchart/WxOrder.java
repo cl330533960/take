@@ -27,6 +27,10 @@ public class WxOrder extends BaseWx {
     private Double userPayAmount;
     /**餐厅订单总额*/
     private Double restaurantTotal;
+    /**平台生成达达运单号*/
+    private String dadaOrder;
+    /**达达返回运单号*/
+    private String expressNum;
 
     public String getRestaurantId() {
         return restaurantId;
@@ -122,5 +126,21 @@ public class WxOrder extends BaseWx {
 
     public void setRestaurantTotal(Double restaurantTotal) {
         this.restaurantTotal = restaurantTotal;
+    }
+
+    public String getDadaOrder() {
+        return dadaOrder;
+    }
+
+    public void setDadaOrder(String dadaOrder) {
+        this.dadaOrder = dadaOrder;
+    }
+
+    public String getExpressNum() {
+        return expressNum;
+    }
+
+    public void setExpressNum(String expressNum) {
+        this.expressNum = expressNum;
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import xin.cymall.common.dadaexpress.DaDaExpressUtil;
 import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.utils.*;
 import xin.cymall.common.utils.UUID;
@@ -177,7 +178,8 @@ public class SysApiController {
     public R updateOrder(SrvOrder srvOrder){
         if(OrderStatusEnum.ORDRT_STATUS4.getCode().equals(srvOrder.getStatus())){
             srvOrder.setReceiptTime(new Date());
-            //通知骑手
+            //提交达达订单
+            DaDaExpressUtil.addAfterQuery(srvOrder.getExpressNum());
         }
         srvOrderService.update(srvOrder);
         return R.ok();

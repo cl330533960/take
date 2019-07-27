@@ -88,7 +88,7 @@
         <div class="weui-cell__bd">
             <p>包装费 <span id="packFee"> 0</span>元</p>
 
-            <p>配送费 6元</p>
+            <p>配送费 <span id="wayFee"> 0</span>元</p>
         </div>
     </div>
     <div class="weui-cells__title">添加备注</div>
@@ -103,13 +103,15 @@
     </div>
     <div class="weui-cell">
         <div class="weui-cell__bd">
-            <p>合计￥<span id="totalAmount" style="color: red">0</span></p>
+            <p>合计(不含运费)￥<span id="totalAmount" style="color: red">0</span></p>
         </div>
     </div>
-    <a href="#" onclick="submitOrder()" class="weui-btn weui-btn_primary">提交订单</a>
+    <a href="#" onclick="checkOrder()" class="weui-btn weui-btn_primary">提交订单</a>
 </div>
 </body>
 <script>
+    var dadaOrder = "";
+    var expressNum = "";
     var foodList = new Array();
     var sumbitFoodList = new Array();
     var totalFoodPrice = 0;
@@ -153,7 +155,7 @@
         var flag = true;
         $.each(sumbitFoodList, function (index, item) {
             if (item.rid != id) {
-                $.toast("只能添加同一餐厅的食物！", "forbidden");
+                $.toptip('只能添加同一餐厅的食物', 'error');
                 flag = false;
             }
         });
@@ -198,7 +200,74 @@
         restaurantTotal = restaurantFoodPrice + packFee;
     }
 
-    function submitOrder() {
+    function getRestaurantId(){
+        var restaurantId = "";
+        $.each(sumbitFoodList, function (index, item) {
+            restaurantId = item.rid;
+        });
+        return restaurantId;
+    }
+
+    function queryWayFee(){
+        dadaOrder = guid();
+        var restaurantId = getRestaurantId()
+        if(!restaurantId){
+            $.toptip('请至少选择一种餐品', 'error');
+            return;
+        }
+        $.showLoading("正在计算运费，请稍后");
+        $.ajax({
+            //请求方式
+            type: "POST",
+            //请求的媒体类型
+            //请求地址
+            url: "/wx/queryWayFee",
+            //数据，json字符串
+            data: {
+                dadaOrder: dadaOrder,
+                userAddrId: $("#addrId").val(),
+                totalAmount: parseInt($("#totalAmount").text()),
+                restaurantId:restaurantId
+            },
+            //请求成功
+            success: function (result) {
+                $.hideLoading();
+                var totalAmount = parseFloat($("#totalAmount").text()) + result.data.payFee;
+                expressNum = result.data.expressNum;
+                $("#wayFee").text(result.data.payFee);
+                $.confirm({
+                    title: '确认提交订单?',
+                    text: '订单运费为'+result.data.payFee+'，订单总金额为'+totalAmount+'，确认提交订单吗？',
+                    onOK: function () {
+                        submitOrder();
+                    },
+                    onCancel: function () {
+
+                    }
+                });
+            },
+            //请求失败，包含具体的错误信息
+            error: function (e) {
+                $.hideLoading();
+                $.toast("获取运费失败", "cancel");
+            }
+        });
+    }
+
+    function checkOrder() {
+        if(orderType == 1){
+            queryWayFee();
+        }else{
+            submitOrder();
+        }
+    }
+
+    function submitOrder(){
+        if(sumbitFoodList.length == 0) {
+            $.toptip('请至少选择一种餐品', 'error');
+            return;
+        }
+        $.showLoading("正在提交订单，请稍后");
         $.ajax({
             //请求方式
             type: "POST",
@@ -212,24 +281,30 @@
                 orderType: orderType,
                 userAddrId: $("#addrId").val(),
                 packFee: parseInt($("#packFee").text()),
+                wayFee: parseInt($("#wayFee").text()),
                 totalAmount: parseInt($("#totalAmount").text()),
                 userPayAmount: parseInt($("#totalAmount").text()),
                 restaurantTotal: restaurantTotal,
-                remark: $("#remark").val()
+                dadaOrder: dadaOrder,
+                remark: $("#remark").val(),
+                expressNum:expressNum
             },
             //请求成功
             success: function (result) {
 //                $.toast("操作成功");
+                $.hideLoading();
                 payInit(result.orderNo);
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
+                $.hideLoading();
                 $.toast("操作失败", "cancel");
             }
         });
     }
 
     function payInit(orderNo) {
+        $.showLoading("正在申请支付，请稍后");
         $.ajax({
             //请求方式
             type: "POST",
@@ -246,11 +321,12 @@
                 var signType = result.signType;
                 var noncestr = result.nonceStr;
                 var timestamp = result.timeStamp;
-                console.log(packageStr);
+                $.hideLoading();
                 onBridgeReady(appId, packageStr, paySign, signType, noncestr, timestamp);
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
+                $.hideLoading();
                 $.toast("操作失败", "cancel");
             }
         });
@@ -270,11 +346,11 @@
                 function (res) {
                     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
                     if (res.err_msg == "get_brand_wcpay_request:ok") {//成功
-                        alert('支付成功')
+                        $.toast('支付成功', 'success');
                     } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//取消
-                        alert("用户取消支付");
+                        $.toast('用户取消支付','cancel');
                     } else if (res.err_msg == "get_brand_wcpay_request:fail") {//失败
-                        alert.text("支付失败");
+                        $.toast('支付失败','error');
                     } else {
                         alert(res.err_msg);
                     }

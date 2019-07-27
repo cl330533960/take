@@ -15,7 +15,7 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">身高<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="height" type="number" pattern="[0-9]*" placeholder="请输入身高，单位cm">
+            <input class="weui-input" id="height" type="number"  placeholder="请输入身高，单位cm">
         </div>
     </div>
     <div class="weui-cell">
@@ -65,12 +65,42 @@
             });
 
             function assessPage(){
-                var sex = $("#sex").attr("data-values");
-                var sport = parseFloat($("#sport").attr("data-values"));
+                checkData();
+            }
+
+            function checkData(){
                 var height = parseFloat($("#height").val());
                 var weight = parseFloat($("#weight").val());
-                var waistline = parseFloat($("#waistline").val());
+                var sex = $("#sex").attr("data-values");
+                var sport = parseFloat($("#sport").attr("data-values"));
                 var age =parseInt($("#age").val());
+                var waistline = parseFloat($("#waistline").val());
+
+
+                if(!height){
+                    $.toptip('身高为必须项', 'error');
+                    return;
+                }
+                if(!weight){
+                    $.toptip('体重为必须项', 'error');
+                    return;
+                }
+
+                if(!age){
+                    $.toptip('年龄为必须项', 'error');
+                    return;
+                }
+
+                if(!sex){
+                    $.toptip('性别为必须项', 'error');
+                    return;
+                }
+
+                if(!sport){
+                    $.toptip('运动系数为必须项', 'error');
+                    return;
+                }
+                $.showLoading("正在提交数据，请稍后");
                 window.location.href = "/wx/assessOne?height="+height+"&weight="+weight+"&sex="+sex+"&waistline="+waistline+"&sportRatio="+sport+"&age="+age;
             }
         </script>

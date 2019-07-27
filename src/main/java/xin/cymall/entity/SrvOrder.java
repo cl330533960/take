@@ -61,6 +61,14 @@ public class SrvOrder implements Serializable {
 	/**接单时间*/
 	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date receiptTime;
+	/**配送时间*/
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date expressTime;
+	/**完成时间*/
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date finishTime;
+	/**达达订单号*/
+	private String dadaOrder;
 
 	private String wxName;
 	private String phone;
@@ -374,5 +382,29 @@ public class SrvOrder implements Serializable {
 
 	public void setRestaurantTotal(Double restaurantTotal) {
 		this.restaurantTotal = restaurantTotal;
+	}
+
+	public Date getExpressTime() {
+		return expressTime;
+	}
+
+	public void setExpressTime(Date expressTime) {
+		this.expressTime = expressTime;
+	}
+
+	public Date getFinishTime() {
+		return finishTime;
+	}
+
+	public void setFinishTime(Date finishTime) {
+		this.finishTime = finishTime;
+	}
+
+	public String getDadaOrder() {
+		return dadaOrder;
+	}
+
+	public void setDadaOrder(String dadaOrder) {
+		this.dadaOrder = dadaOrder;
 	}
 }
