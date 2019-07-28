@@ -1,5 +1,6 @@
 package xin.cymall.controller;
 
+import com.aliyun.oss.common.utils.LogUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
@@ -844,20 +845,37 @@ public class WchartController {
             //待取货
             String expressName = callBackInfo.getDm_name();
             String expressPhone = callBackInfo.getDm_mobile();
+            srvOrderService.updateOrderDada(dadaOrder,OrderStatusEnum.ORDRT_STATUS5.getCode(),expressName,expressPhone);
+            LogUtils.getLog().info(expressNum+":已接单,待取货");
+
         }else if(orderStatus == 3){
             //配送中
+            srvOrderService.updateOrderDada(dadaOrder,OrderStatusEnum.ORDRT_STATUS6.getCode(),"","");
+            LogUtils.getLog().info(expressNum + ":配送中");
+
         } else if(orderStatus == 4){
             //已完成
+            srvOrderService.updateOrderDada(dadaOrder,OrderStatusEnum.ORDRT_STATUS7.getCode(),"","");
+            LogUtils.getLog().info(expressNum + ":已完成");
+
         }else if(orderStatus == 5){
             //已取消
+            String cancelReason = callBackInfo.getCancel_reason();
+            LogUtils.getLog().info(expressNum + ":已取消,"+"取消原因:"+cancelReason);
+
         }else if(orderStatus == 7){
             //已过期
+            LogUtils.getLog().info(expressNum + ":已过期");
         }else if(orderStatus == 8){
             //指派单
         }else if(orderStatus == 9){
             //妥投异常之物品返回中 配送员在收货地，无法正常送到用户手中（包括用户电话打不通、客户暂时不方便收件、客户拒收、货物有问题等等）
+            LogUtils.getLog().info(expressNum + ":妥投异常之物品返回中 配送员在收货地，无法正常送到用户手中（包括用户电话打不通、客户暂时不方便收件、客户拒收、货物有问题等等）");
+
         }else if(orderStatus == 100){
             //骑士到店
+            LogUtils.getLog().info(expressNum + ":骑士到店");
+
         }else if(orderStatus == 1000){
             //创建达达运单失败=
         }

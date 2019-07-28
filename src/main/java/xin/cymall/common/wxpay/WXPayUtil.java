@@ -88,9 +88,55 @@ public class WXPayUtil {
 	    responseMap.put("orderInfo_toString", xstream.toXML(unifiedOrderRequest).replace("__", "_"));
 	    responseMap.put("unifiedOrderRequest",unifiedOrderRequest);
 	    return responseMap;  
-	} 
-	
-	/** 
+	}
+
+    /**
+     * 生成订单对象信息
+     *  orderId 订单号
+     *  appId 微信appId
+     *  mch_id 微信分配的商户ID
+     *  body  支付介绍主体
+     *  price 支付价格（放大100倍）
+     *  spbill_create_ip 终端IP
+     *  notify_url  异步直接结果通知接口地址
+     *  noncestr
+     * @return
+     */
+    public static Map<String,Object> createOrderRefund(Map<String, String> requestMap) {
+        //生成订单对象
+        OrderRefundRequest orderRefundRequest = new OrderRefundRequest();
+        orderRefundRequest.setAppid(requestMap.get("appId"));//公众账号ID
+        orderRefundRequest.setMch_id(requestMap.get("mch_id"));//商户号
+        orderRefundRequest.setNonce_str(requestMap.get("noncestr"));//随机字符串
+        orderRefundRequest.setOut_trade_no(requestMap.get("out_trade_no"));//商户订单号
+        orderRefundRequest.setOut_refund_no(requestMap.get("out_refund_no"));//商户订单号
+        orderRefundRequest.setTotal_fee(requestMap.get("total_fee"));  //订单金额
+        orderRefundRequest.setTotal_fee(requestMap.get("refund_fee"));  //退款金额
+
+
+        SortedMap<String, String> packageParams = new TreeMap<String, String>();
+        packageParams.put("appid", orderRefundRequest.getAppid());
+        packageParams.put("mch_id", orderRefundRequest.getMch_id());
+        packageParams.put("nonce_str", orderRefundRequest.getNonce_str());
+        packageParams.put("out_trade_no", orderRefundRequest.getOut_trade_no());
+        packageParams.put("out_refund_no", orderRefundRequest.getOut_refund_no());
+        packageParams.put("total_fee", orderRefundRequest.getTotal_fee());
+        packageParams.put("refund_fee", orderRefundRequest.getRefund_fee());
+        try {
+            orderRefundRequest.setSign(generateSignature(packageParams,"QlP1QiBYOEfeck4MFJC5OrZPQRe1uFBQ"));//签名
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //将订单对象转为xml格式
+        xstream.alias("xml", UnifiedOrderRequest.class);//根元素名需要是xml
+        System.out.println("封装好的退款请求数据："+xstream.toXML(orderRefundRequest).replace("__", "_"));
+        Map<String,Object> responseMap = new HashMap<String,Object>();
+        responseMap.put("refund_toString", xstream.toXML(orderRefundRequest).replace("__", "_"));
+        responseMap.put("orderRefundRequest",orderRefundRequest);
+        return responseMap;
+    }
+
+    /**
 	 * 生成签名 
 	 * @  appid_value
 	 * @  mch_id_value
@@ -251,7 +297,42 @@ public class WXPayUtil {
 	        e.printStackTrace();  
 	    }  
 	    return null;  
-	}  
+	}
+
+    /**
+     * 调退单API
+     * @param orderInfo
+     * @return
+     */
+    public static OrderRefundRespose httpOrderRefund(String orderInfo) {
+        String url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
+        try {
+            HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+            //加入数据
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            BufferedOutputStream buffOutStr = new BufferedOutputStream(conn.getOutputStream());
+            buffOutStr.write(orderInfo.getBytes("UTF-8"));
+            buffOutStr.flush();
+            buffOutStr.close();
+            //获取输入流
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            String line = null;
+            StringBuffer sb = new StringBuffer();
+            while((line = reader.readLine())!= null){
+                sb.append(line);
+            }
+            System.out.println(sb);
+            String result = sb.toString();
+            //将请求返回的内容通过xStream转换为UnifiedOrderRespose对象
+            return (OrderRefundRespose) convertXmlStrToObject(OrderRefundRespose.class, result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * XML格式字符串转换为Map
      *

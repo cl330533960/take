@@ -17,6 +17,7 @@ import xin.cymall.common.dadaexpress.DaDaExpressUtil;
 import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.utils.AppPush;
 import xin.cymall.common.utils.OrderUtil;
+import xin.cymall.common.utils.StringUtil;
 import xin.cymall.common.utils.UUID;
 import xin.cymall.dao.SrvOrderDao;
 import xin.cymall.dao.SrvOrderFoodDao;
@@ -128,6 +129,17 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 			}
 			update(srvOrder);
 		}
+	}
+
+	@Override
+	public void updateOrderDada(String dadaOrder, String orderStatus,String expressName,String expressPhone) {
+		SrvOrder srvOrder = srvOrderDao.queryOrderByDada(dadaOrder);
+		srvOrder.setStatus(orderStatus);
+		if(!StringUtil.isEmpty(expressName))
+			srvOrder.setExpressName(expressName);
+		if(!StringUtil.isEmpty(expressPhone))
+			srvOrder.setExpressPhone(expressPhone);
+		srvOrderDao.update(srvOrder);
 	}
 
 

@@ -134,7 +134,7 @@ public class SrvRestaurantController extends  AbstractController{
         String areaStr = areaService.getAreaNameStr(srvRestaurant.getArea());
         String[] areas = areaStr.split(",");
         if (areas.length == 3) {
-            DaDaExpressUtil.addShop(srvRestaurant, areas[1], areas[2]);
+//            DaDaExpressUtil.addShop(srvRestaurant, areas[1], areas[2]);
         }
         return R.ok();
     }

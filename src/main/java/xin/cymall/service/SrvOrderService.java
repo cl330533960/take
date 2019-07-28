@@ -37,5 +37,7 @@ public interface SrvOrderService {
 
 	void updateOrderSuccessCallback(String orderNo);
 
+	void updateOrderDada(String dadaOrder, String orderStatus,String expressName,String expressPhone);
+
 
 }

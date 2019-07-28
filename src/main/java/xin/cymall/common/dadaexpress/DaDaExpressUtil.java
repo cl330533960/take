@@ -105,16 +105,26 @@ public class DaDaExpressUtil {
 
         // 2.初始化model
         ShopAddModel shopAddModel = new ShopAddModel();
-        shopAddModel.setOriginShopId(srvRestaurant.getId());
-        shopAddModel.setStationName(srvRestaurant.getName());
+//        shopAddModel.setOriginShopId(srvRestaurant.getId());
+//        shopAddModel.setStationName(srvRestaurant.getName());
+//        shopAddModel.setBusiness(1);
+//        shopAddModel.setCityName(cityName);
+//        shopAddModel.setAreaName(areaName);
+//        shopAddModel.setStationAddress(srvRestaurant.getAddr());
+//        shopAddModel.setLng(new BigDecimal(srvRestaurant.getLng()));
+//        shopAddModel.setLat(new BigDecimal(srvRestaurant.getLat()));
+//        shopAddModel.setContactName(srvRestaurant.getContact());
+//        shopAddModel.setPhone(srvRestaurant.getPhone());
+        shopAddModel.setOriginShopId("shop001");
+        shopAddModel.setStationName("新门店1");
         shopAddModel.setBusiness(1);
-        shopAddModel.setCityName(cityName);
-        shopAddModel.setAreaName(areaName);
-        shopAddModel.setStationAddress(srvRestaurant.getAddr());
-        shopAddModel.setLng(new BigDecimal(srvRestaurant.getLng()));
-        shopAddModel.setLat(new BigDecimal(srvRestaurant.getLat()));
-        shopAddModel.setContactName(srvRestaurant.getContact());
-        shopAddModel.setPhone(srvRestaurant.getPhone());
+        shopAddModel.setCityName("上海市");
+        shopAddModel.setAreaName("浦东新区");
+        shopAddModel.setStationAddress("地址1");
+        shopAddModel.setLng(BigDecimal.valueOf(121.515014));
+        shopAddModel.setLat(BigDecimal.valueOf(31.229081));
+        shopAddModel.setContactName("xxx");
+        shopAddModel.setPhone("13012345678");
 
         // 3.初始化service (门店新增比较特殊,是一个批量新增接口)
         List<ShopAddModel> shopAddList = new ArrayList<ShopAddModel>();
@@ -293,6 +303,9 @@ public class DaDaExpressUtil {
 
     public static void main(String[] args) {
 //        TODO  铁酱 除了城市查询接口的参数不需要传递以为其他都要自己传过去 方法里面是写死了的
+
+//        DadaApiResponse dadaApiResponse = addShop(null, "成都市", "武侯区");
+//        System.out.println(dadaApiResponse);
 
 //
 //      1 城市code ok了

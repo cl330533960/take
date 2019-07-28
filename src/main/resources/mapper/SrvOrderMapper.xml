@@ -40,7 +40,7 @@
 		select t.*,u.wx_name,u.phone,r.name as restaurantName,ua.receive_name,ua.receive_phone,ua.receive_addr from srv_order t
 		left join srv_user u on t.user_id = u.id
 		left join srv_restaurant r on t.restaurant_id = r.id
-		left join srv_user_addr ua on t.user_addr_id = ua.id and default_select = 1
+		left join srv_user_addr ua on t.user_addr_id = ua.id
 		where t.id = #{value}
 	</select>
 
@@ -212,6 +212,11 @@
 		left join srv_user_addr ua on t.user_addr_id = ua.id and ua.default_select = 1
 		left join srv_coupon c on t.coupon_id = c.id
 		where t.id = #{id} and t.restaurant_id = #{restaurantId}
+	</select>
+
+	<select id="queryOrderByDada" resultType="xin.cymall.entity.SrvOrder">
+		select t.id from srv_order t
+		where t.dada_order = #{value}
 	</select>
 
 </mapper>
