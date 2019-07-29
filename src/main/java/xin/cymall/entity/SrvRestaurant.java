@@ -59,7 +59,7 @@ public class SrvRestaurant implements Serializable {
 	/****/
 	private String password;
 	/****/
-	private String balance;
+	private Double balance;
 	/**1自动0手动**/
 	private String autoReceipt;
 	/****/
@@ -321,13 +321,13 @@ public class SrvRestaurant implements Serializable {
 	/**
 	 * 设置�?
 	 */
-	public void setBalance(String balance) {
+	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
 	/**
 	 * 获取�?
 	 */
-	public String getBalance() {
+	public Double getBalance() {
 		return balance;
 	}
 	/**

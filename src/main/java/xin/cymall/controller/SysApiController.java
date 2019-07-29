@@ -92,6 +92,7 @@ public class SysApiController {
             if(!StringUtil.isEmpty(srvFood.getImagePath())) {
                 map.put("foodId", srvFood.getId());
                 map.put("status", "1");
+                map.put("restaurantId",restaurantId);
                 List<SrvFoodUpDown> foodUpDowns = srvFoodUpDownService.getList(map);
                 if(foodUpDowns.size()>0){
                     srvFood.setIsUpDown("1");

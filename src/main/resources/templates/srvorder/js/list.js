@@ -53,6 +53,15 @@ var Render = {
     /**
      * @param rowdata    行数据
      * @param renderData 渲染后的列
+     * @description      退款按钮渲染
+     */
+    refund:function(rowdata,renderData){
+        var btn=' <button  onclick="refund(\''+"退款"+'\',\''+"/srvorder/refund"+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-mini layui-btn-delete">退款</button>';
+        return btn;
+    },
+    /**
+     * @param rowdata    行数据
+     * @param renderData 渲染后的列
      * @description      启用禁用按钮渲染
      */
     state:function(rowdata,renderData){

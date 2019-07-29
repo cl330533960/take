@@ -2,6 +2,8 @@ package xin.cymall.controller;
 
 import java.util.List;
 import java.util.Map;
+
+import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.enumresource.StateEnum;
 import xin.cymall.common.log.SysLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -116,7 +118,7 @@ public class SrvMerchanclearController extends AbstractController {
 	@RequiresPermissions("srvmerchanclear:list")
 	public R listData(@RequestParam Map<String, Object> params){
         Query query = new Query(params);
-
+        query.put("status", OrderStatusEnum.ORDRT_STATUS7.getCode());
         List<SrvOrder> srvOrderList = srvOrderService.getList(query);
         int total = srvOrderService.getCount(query);
 

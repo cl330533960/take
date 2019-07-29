@@ -1,8 +1,11 @@
 package xin.cymall.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+import xin.cymall.common.dadaexpress.utils.JSONUtil;
 import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.enumresource.StateEnum;
 import xin.cymall.common.log.SysLog;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
+import xin.cymall.common.wxpay.WXPayUtil;
 import xin.cymall.entity.SrvOrder;
 import xin.cymall.service.SrvOrderFoodService;
 import xin.cymall.service.SrvOrderService;
@@ -126,7 +130,7 @@ public class SrvOrderController {
     @RequiresPermissions("srvorder:update")
     public R enable(@RequestBody String[] ids){
         String stateValue=StateEnum.ENABLE.getCode();
-		srvOrderService.updateState(ids,stateValue);
+		srvOrderService.updateState(ids, stateValue);
         return R.ok();
     }
     /**
@@ -140,6 +144,33 @@ public class SrvOrderController {
         String stateValue=StateEnum.LIMIT.getCode();
 		srvOrderService.updateState(ids,stateValue);
         return R.ok();
+    }
+
+    /**
+     * 删除
+     */
+    @ResponseBody
+    @SysLog("退款")
+    @RequestMapping("/refund")
+    @RequiresPermissions("srvorder:update")
+    public R refund(@RequestParam String orderId) throws Exception {
+        SrvOrder srvOrder = srvOrderService.get(orderId);
+        Map<String, String> requestMap = new HashMap<>();
+        requestMap.put("appId","wx688906a5f5df8b37");
+        requestMap.put("mch_id", "1542729801");
+        requestMap.put("out_trade_no",srvOrder.getOrderNo());
+        requestMap.put("out_refund_no", srvOrder.getOrderNo());
+        requestMap.put("total_fee", "1");
+        requestMap.put("refund_fee", "1");
+        requestMap.put("nonce_str", WXPayUtil.generateNonceStr());
+        Map<String,Object> requestInfo = WXPayUtil.createOrderRefund(requestMap);
+        String refundData = (String) requestInfo.get("refund_toString");
+        String returnData = WXPayUtil.doRefund(refundData);
+        JSONObject jsonObject = JSONObject.fromObject(returnData);
+        Map<String,Object> map = new HashMap<>();
+        map.put("",jsonObject.get("return_code"));
+        map.put("",jsonObject.get("return_msg"));
+        return R.ok().put("data",map);
     }
 	
 	/**

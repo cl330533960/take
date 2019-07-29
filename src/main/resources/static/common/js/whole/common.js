@@ -216,6 +216,42 @@ function deleteOne(msg,url,id){
 
 
 /**
+ * 删除一条数据
+ * @param url 请求地址
+ * @param id  选中的id
+ */
+function refund(msg,url,id){
+    //获取选中的id
+    confirm("确认"+msg+"？",function(){
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {orderId:id},
+            async: false,
+            success: function (result) {
+                if (result.code === 0) {
+                    $(".search-btn").click();
+                    if(result.data.return_code = "SUCCESS"){
+                        parent.layer.msg('退款成功 !', {icon: 1});
+                    }
+                    else{
+                        parent.layer.msg(result.data.return_msg, {icon: 1});
+                    }
+                } else {
+
+                    parent.layer.msg(result.msg, {icon: 5});
+                }
+            },
+            error: function () {
+                parent.layer.msg("系统繁忙", {icon: 5});
+            }
+        });
+    });
+
+}
+
+
+/**
  * 批量启用或禁用
  * @param msg      提示信息(启用或禁用)
  * @param table_id 表格id

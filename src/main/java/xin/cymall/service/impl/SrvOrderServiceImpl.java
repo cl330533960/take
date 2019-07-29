@@ -132,6 +132,7 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 	}
 
 	@Override
+	@Transactional
 	public void updateOrderDada(String dadaOrder, String orderStatus,String expressName,String expressPhone) {
 		SrvOrder srvOrder = srvOrderDao.queryOrderByDada(dadaOrder);
 		srvOrder.setStatus(orderStatus);
@@ -139,6 +140,9 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 			srvOrder.setExpressName(expressName);
 		if(!StringUtil.isEmpty(expressPhone))
 			srvOrder.setExpressPhone(expressPhone);
+		if(orderStatus.equals(OrderStatusEnum.ORDRT_STATUS7.getCode())){
+			srvRestaurantDao.updateBalance(srvOrder.getUserPayFee(),srvOrder.getRestaurantId());
+		}
 		srvOrderDao.update(srvOrder);
 	}
 

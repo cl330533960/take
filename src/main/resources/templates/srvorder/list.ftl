@@ -82,7 +82,7 @@
 
             <th width="5%" param="{name:'receivePhone'}">收件人电话</th>
 
-            <th width="5%" param="{operate:'true',buttons:'Render.info'}">操作1</th>
+            <th width="5%" param="{operate:'true',buttons:'Render.info,Render.refund'}">操作</th>
 
         </tr>
         </thead>

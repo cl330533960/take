@@ -88,7 +88,7 @@
     <div class="weui-panel weui-panel_access">
         <div class="weui-panel__bd">
             {{each data as value index}}
-            <div class="weui-media-box weui-media-box_appmsg">
+            <a href="/wx/orderInfo?orderId={{value.id}}" class="weui-media-box weui-media-box_appmsg">
                 <div class="weui-media-box__hd">
                     <img class="weui-media-box__thumb"
                          src="http://03imgmini.eastday.com/mobile/20190706/20190706131806_56aecc32cbbb3810c2f3658a7a59011b_3_mwpm_03200403.jpg">
@@ -101,7 +101,7 @@
                 <div class="weui-media-box__fd">
                     <h4 class="weui-media-box__title">{{value.statusText}}</h4>
                 </div>
-            </div>
+            </a>
             {{/each}}
         </div>
     </div>
