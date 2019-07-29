@@ -318,7 +318,7 @@ public class WchartController {
     @RequestMapping(value = "/discounreserve")
     public String discounreserve(Model model,String code) throws WxErrorException {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
-        model.addAttribute("wxId",wxMpOAuth2AccessToken.getOpenId());
+        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
         return "wchat/discounreserve";
     }
 
@@ -711,9 +711,9 @@ public class WchartController {
      * @param response
      * @throws Exception
      */
-    @RequestMapping(value="/paymentNotice",produces="text/html;charset=utf-8")
-    @ResponseBody
-    public String WeixinParentNotifyPage(HttpServletRequest request,HttpServletResponse response) throws Exception{
+    @RequestMapping(value="/paymentNotice")
+    public void WeixinParentNotifyPage(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        response.setContentType("application/xml");
         ServletInputStream instream = request.getInputStream();
         StringBuffer sb = new StringBuffer();
         int len = -1;
@@ -732,88 +732,19 @@ public class WchartController {
                 return_data.put("return_code", "FAIL");
                 return_data.put("return_msg", map.get("return_msg"));
             }else if(map.get("return_code").toString().equals("SUCCESS")){
-                String result_code = map.get("result_code").toString();
                 String out_trade_no = map.get("out_trade_no").toString();
+                return_data.put("return_code", "SUCCESS");
+                return_data.put("return_msg", "OK");
+                LogUtils.getLog().debug("订单号："+out_trade_no+"支付成功");
                 srvOrderService.updateOrderSuccessCallback(out_trade_no);
-
-
-                //TODO 获得我们自己的的订单详情 做我们想做的事
-//				UserPayInfo payInfo = wxPayService.getUserPayInfo(out_trade_no);
-//				if(payInfo == null){
-//					return_data.put("return_code", "FAIL");
-//					return_data.put("return_msg", "订单不存在");
-//					return WeixinUtil.GetMapToXML(return_data);
-//				}else{
-//					//2	已支付（不确定是否支付成功）3 支付完成  4 取消支付	 5支付失败
-//					if(result_code.equals("SUCCESS")){//支付成功
-//						//如果订单已经支付直接返回成功
-//						if(payInfo.getPayStatus()==3){
-//							return_data.put("return_code", "SUCCESS");
-//							return_data.put("return_msg", "OK");
-//							return WXPayUtil.GetMapToXML(return_data);
-//						}else{
-//							String sign = map.get("sign").toString();
-//							String total_fee = map.get("total_fee").toString();//订单金额
-//							if(!publicUtil.subZeroAndDot3(payInfo.getTotal_fee().toString()).equals(total_fee)){//订单金额是否一致
-//								return_data.put("return_code", "FAIL");
-//								return_data.put("return_msg", "金额异常");
-//							}else{
-//								String time_end = map.get("time_end").toString();
-//								String bank_type = map.get("bank_type").toString();
-//								String settlement_total_fee = map.get("settlement_total_fee");
-//								if(settlement_total_fee==null || "".equals(settlement_total_fee)){
-//									settlement_total_fee = "0";
-//								}
-//								payInfo.setSign(sign);
-//								payInfo.setResult_code(result_code);
-//								payInfo.setPayStatus(3);
-//								payInfo.setTime_end(time_end);
-//								payInfo.setSettlement_total_fee(settlement_total_fee);
-//								payInfo.setBank_type(bank_type);
-//								payInfo.setCoupon_fee("0");
-//								int result = wxPayService.updatePayInfo(payInfo);
-//								if(result<=0){
-//									return_data.put("return_code", "FAIL");
-//									return_data.put("return_msg", "更新订单失败");
-//									return WeixinUtil.GetMapToXML(return_data);
-//								}else{
-//									UserOrderInfo orderInfo = new UserOrderInfo();
-//									orderInfo.setId(payInfo.getOrderId());
-//									orderInfo.setStatus(2);
-//									result = wxPayService.updateOrderInfo(orderInfo);
-//									if(result<=0){
-//										return_data.put("return_code", "FAIL");
-//										return_data.put("return_msg", "更新订单失败");
-//										return WeixinUtil.GetMapToXML(return_data);
-//									}else{
-//										return_data.put("return_code", "SUCCESS");
-//										return_data.put("return_msg", "OK");
-//										return WeixinUtil.GetMapToXML(return_data);
-//									}
-//								}
-//							}
-//						}
-//					}else{//支付失败，更新支付结果
-//						if(payInfo!=null){
-//							payInfo.setResult_code(result_code);
-//							payInfo.setPayStatus(5);
-//							payInfo.setErr_code(map.get("err_code").toString());
-//							payInfo.setErr_code_des(map.get("err_code_des").toString());
-//							wxPayService.updatePayInfo(payInfo);
-//						}
-//						return_data.put("return_code", "FAIL");
-//						return_data.put("return_msg",map.get("return_msg").toString());
-//						return WeixinUtil.GetMapToXML(return_data);
-//					}
-//				}
             }
         }else{
             return_data.put("return_code", "FAIL");
             return_data.put("return_msg", "签名错误");
         }
         String xml = WXPayUtil.GetMapToXML(return_data);
-        log.error("支付通知回调结果："+xml);
-        return xml;
+        log.info("支付通知回调结果："+xml);
+        response.getWriter().print(xml);
     }
 
     @RequestMapping(value="/queryWayFee")

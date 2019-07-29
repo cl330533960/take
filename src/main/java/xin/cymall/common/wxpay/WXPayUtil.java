@@ -3,8 +3,19 @@ package xin.cymall.common.wxpay;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyStore;
 import java.util.*;
 import java.security.MessageDigest;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
+import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import com.thoughtworks.xstream.XStream;
@@ -15,6 +26,7 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
 import xin.cymall.common.wxpay.WXPayConstants.SignType;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.net.ssl.SSLContext;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -107,11 +119,11 @@ public class WXPayUtil {
         OrderRefundRequest orderRefundRequest = new OrderRefundRequest();
         orderRefundRequest.setAppid(requestMap.get("appId"));//公众账号ID
         orderRefundRequest.setMch_id(requestMap.get("mch_id"));//商户号
-        orderRefundRequest.setNonce_str(requestMap.get("noncestr"));//随机字符串
+        orderRefundRequest.setNonce_str(requestMap.get("nonce_str"));//随机字符串
         orderRefundRequest.setOut_trade_no(requestMap.get("out_trade_no"));//商户订单号
         orderRefundRequest.setOut_refund_no(requestMap.get("out_refund_no"));//商户订单号
         orderRefundRequest.setTotal_fee(requestMap.get("total_fee"));  //订单金额
-        orderRefundRequest.setTotal_fee(requestMap.get("refund_fee"));  //退款金额
+        orderRefundRequest.setRefund_fee(requestMap.get("refund_fee"));  //退款金额
 
 
         SortedMap<String, String> packageParams = new TreeMap<String, String>();
@@ -129,10 +141,10 @@ public class WXPayUtil {
         }
         //将订单对象转为xml格式
         xstream.alias("xml", UnifiedOrderRequest.class);//根元素名需要是xml
-        System.out.println("封装好的退款请求数据："+xstream.toXML(orderRefundRequest).replace("__", "_"));
+        System.out.println("封装好的退款请求数据：" + xstream.toXML(orderRefundRequest).replace("__", "_"));
         Map<String,Object> responseMap = new HashMap<String,Object>();
         responseMap.put("refund_toString", xstream.toXML(orderRefundRequest).replace("__", "_"));
-        responseMap.put("orderRefundRequest",orderRefundRequest);
+        responseMap.put("orderRefundRequest", orderRefundRequest);
         return responseMap;
     }
 
@@ -666,19 +678,87 @@ public class WXPayUtil {
         return xmlObject;
     }
 
-    public static void main(String[] args) throws Exception {
-//        String xml = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg><appid><![CDATA[wx688906a5f5df8b37]]></appid><mch_id><![CDATA[1542729801]]></mch_id><nonce_str><![CDATA[jNYAgdXwOdNy7WkK]]></nonce_str><sign><![CDATA[D53543056EDD0EEDB991B8DB6778E245]]></sign><result_code><![CDATA[SUCCESS]]></result_code><prepay_id><![CDATA[wx25155111737201fd372e72a21929010200]]></prepay_id><trade_type><![CDATA[JSAPI]]></trade_type></xml>";
-//        UnifiedOrderRespose unifiedOrderRespose = (UnifiedOrderRespose) convertXmlStrToObject(UnifiedOrderRespose.class, xml);
-//        System.out.println(unifiedOrderRespose.getPrepay_id());
 
-        Map map = new HashMap<String,String>();
-        map.put("appId","wx688906a5f5df8b37");//你的appId
-        map.put("timeStamp", "1564047442");
-        map.put("nonceStr",  "8bae90e87e4e4f818b5980ba54cec961");
-        String packages = "prepay_id=wx25173724315426f1197dbdd01260384600";
-        map.put("package",packages);
-        System.out.println(WXPayUtil.generateSignature(map, "sFG45KywyyiLsREWYZ3FRyWq84BG5z9b",SignType.MD5));
+    public static String doRefund(String data) throws Exception {
+        String url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
+        /**
+         * 注意PKCS12证书 是从微信商户平台-》账户设置-》 API安全 中下载的
+         */
+
+        KeyStore keyStore  = KeyStore.getInstance("PKCS12");
+        FileInputStream instream = new FileInputStream(new File("D:/apiclient_cert.p12"));//P12文件目录
+        try {
+            /**
+             * 此处要改
+             * */
+            keyStore.load(instream, "1542729801".toCharArray());//这里写密码..默认是你的MCHID
+        } finally {
+            instream.close();
+        }
+
+        // Trust own CA and all self-signed certs
+        /**
+         * 此处要改
+         * */
+        SSLContext sslcontext = SSLContexts.custom()
+                .loadKeyMaterial(keyStore, "1542729801".toCharArray())//这里也是写密码的
+                .build();
+        // Allow TLSv1 protocol only
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                sslcontext,
+                new String[] { "TLSv1" },
+                null,
+                SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+        CloseableHttpClient httpclient = HttpClients.custom()
+                .setSSLSocketFactory(sslsf)
+                .build();
+        try {
+            HttpPost httpost = new HttpPost(url); // 设置响应头信息
+            httpost.addHeader("Connection", "keep-alive");
+            httpost.addHeader("Accept", "*/*");
+            httpost.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            httpost.addHeader("Host", "api.mch.weixin.qq.com");
+            httpost.addHeader("X-Requested-With", "XMLHttpRequest");
+            httpost.addHeader("Cache-Control", "max-age=0");
+            httpost.addHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) ");
+            httpost.setEntity(new StringEntity(data, "UTF-8"));
+            CloseableHttpResponse response = httpclient.execute(httpost);
+            try {
+                HttpEntity entity = response.getEntity();
+
+                String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+                EntityUtils.consume(entity);
+                System.out.println(jsonStr);
+                return jsonStr;
+            } finally {
+                response.close();
+            }
+        } finally {
+            httpclient.close();
+        }
     }
+
+    public static void main(String[] args) throws Exception {
+        Map<String, String> requestMap = new HashMap<>();
+        requestMap.put("appId","wx688906a5f5df8b37");
+        requestMap.put("mch_id", "1542729801");
+        requestMap.put("out_trade_no","120190729171152199");
+        requestMap.put("out_refund_no", "120190729171152199");
+        requestMap.put("total_fee", "1");
+        requestMap.put("refund_fee", "1");
+        requestMap.put("nonce_str", generateNonceStr());
+
+        Map<String,Object> requestInfo = WXPayUtil.createOrderRefund(requestMap);
+        String refundData = (String) requestInfo.get("refund_toString");
+
+        //判断返回码
+//        OrderRefundRespose orderResponse = WXPayUtil.httpOrderRefund(orderInfo_toString);// 调用统一下单接口
+//        System.out.println(orderResponse);
+        WXPayUtil.doRefund(refundData);
+
+    }
+
+
 
 
 }

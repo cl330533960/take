@@ -45,7 +45,7 @@
 	</select>
 
 	<select id="getByOderNo" resultType="xin.cymall.entity.SrvOrder">
-		select t.id from srv_order t
+		select t.* from srv_order t
 		where t.order_no = #{value}
 	</select>
 
