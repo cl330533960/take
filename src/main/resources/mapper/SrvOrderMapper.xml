@@ -54,7 +54,6 @@
 		left join srv_wx_user u on t.user_id = u.id
 		left join srv_restaurant r on t.restaurant_id = r.id
 		left join srv_user_addr ua on t.user_addr_id = ua.id
--- 		and ua.default_select = 1
 		<include refid="where_clause" />
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -209,7 +208,7 @@
 
 	<select id="receiptOrder" resultType="xin.cymall.entity.SrvOrder">
 		select t.id,t.remark,t.pack_fee,t.way_fee,ua.receive_name,ua.receive_phone,ua.receive_addr,c.amount,t.discount,ua.receive_addr from srv_order t
-		left join srv_user_addr ua on t.user_addr_id = ua.id and ua.default_select = 1
+		left join srv_user_addr ua on t.user_addr_id = ua.id
 		left join srv_coupon c on t.coupon_id = c.id
 		where t.id = #{id} and t.restaurant_id = #{restaurantId}
 	</select>
