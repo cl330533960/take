@@ -35,7 +35,7 @@
         </div>
     </div>
     <br>
-    <a href="javascript:;" onclick="assessPage()" class="weui-btn weui-btn_primary">去点餐</a>
+    <a href="/https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx688906a5f5df8b37&redirect_uri=http://www.tastyfit.vip/wx/rationorderFood&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect"  class="weui-btn weui-btn_primary">去点餐</a>
 </div>
 
 </div>
