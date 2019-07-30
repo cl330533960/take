@@ -170,6 +170,7 @@
 		LEFT JOIN srv_restaurant r on fud.restaurant_id = r.id
 		where f.cal &lt;= #{value}
 		AND f.status = 1
+		ORDER BY r.name DESC
 		LIMIT 5
 	</select>
 

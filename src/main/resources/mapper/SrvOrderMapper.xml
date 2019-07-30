@@ -185,11 +185,11 @@
 			<if test="wayFee != null">`way_fee` = #{wayFee}, </if>
 			<if test="packFee != null">`pack_fee` = #{packFee}, </if>
 			<if test="couponId != null">`coupon_id` = #{couponId}, </if>
-			<if test="discount != null">`discount` = #{discount}</if>
-			<if test="receiptTime!= null">`receipt_time` = #{receiptTime}</if>
-			<if test="restaurantTotal!= null">`restaurant_total` = #{restaurantTotal}</if>
-			<if test="expressTime!= null">`express_time` = #{expressTime}</if>
-			<if test="finishTime!= null">`finish_time` = #{finishTime}</if>
+			<if test="discount != null">`discount` = #{discount},</if>
+			<if test="receiptTime!= null">`receipt_time` = #{receiptTime},</if>
+			<if test="restaurantTotal!= null">`restaurant_total` = #{restaurantTotal},</if>
+			<if test="expressTime!= null">`express_time` = #{expressTime},</if>
+			<if test="finishTime!= null">`finish_time` = #{finishTime},</if>
 
 		</set>
 		where id = #{id}

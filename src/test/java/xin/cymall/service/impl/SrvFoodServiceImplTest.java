@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xin.cymall.CyFastApplication;
 import xin.cymall.entity.SrvFood;
 import xin.cymall.service.SrvFoodService;
+import xin.cymall.service.SrvOrderService;
 
 import java.util.List;
 
@@ -19,10 +20,10 @@ public class SrvFoodServiceImplTest extends TestCase {
 
     @Autowired
     private SrvFoodService srvFoodService;
+    @Autowired
+    private SrvOrderService srvOrderService;
     @Test
     public void testFindHealthFood() throws Exception {
-
-        List<SrvFood> list = srvFoodService.findHealthFood(200);
-        System.out.println(list.size());
+        srvOrderService.updateOrderSuccessCallback("120190730142937524");
     }
 }
