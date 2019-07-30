@@ -35,7 +35,7 @@
 		<result property="clientId" column="c_id"/>
     </resultMap>
 
-	<select id="get" resultType="xin.cymall.entity.SrvRestaurant">
+	<select id="get" resultMap="srvRestaurantMap">
 		select * from srv_restaurant where id = #{value}
 	</select>
 
