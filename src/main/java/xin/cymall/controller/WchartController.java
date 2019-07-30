@@ -652,7 +652,7 @@ public class WchartController {
         requestMap.put("mch_id", "1542729801");//商家号
         requestMap.put("payMoney",payMoney);
         requestMap.put("spbill_create_ip", getIpAddr(request));
-        requestMap.put("notify_url", "http://gazi.free.idcfengye.com/wx/paymentNotice");// 这个回调url
+        requestMap.put("notify_url", "http://www.tastyfit.vip/wx/paymentNotice");// 这个回调url
         requestMap.put("noncestr", noncestr);
         requestMap.put("body","tt");
         requestMap.put("detail","te");
