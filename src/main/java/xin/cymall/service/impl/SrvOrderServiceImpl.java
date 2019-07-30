@@ -119,7 +119,7 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 			message.put("title","你有一条新的订单");
 			message.put("titleText","你有一条新的订单");
 			message.put("transText", "你有一条新的订单");
-			LogUtils.getLog().debug(AppPush.pushMsgToSingle(srvRestaurant.getClientId(), message));
+			System.out.println((AppPush.pushMsgToSingle(srvRestaurant.getClientId(), message).getResponse()));
 			if("1".equals(srvRestaurant.getAutoReceipt()) && "1".equals(srvOrder.getOrderType())){
 				//自动接单 需要订单类型为外卖
 				srvOrder.setStatus(OrderStatusEnum.ORDRT_STATUS4.getCode());
