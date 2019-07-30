@@ -1,6 +1,7 @@
 package xin.cymall.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.aliyun.oss.common.utils.LogUtils;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -118,7 +119,7 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 			message.put("title","你有一条新的订单");
 			message.put("titleText","你有一条新的订单");
 			message.put("transText", "你有一条新的订单");
-			AppPush.pushMsgToSingle(srvRestaurant.getClientId(), message);
+			LogUtils.getLog().debug(AppPush.pushMsgToSingle(srvRestaurant.getClientId(), message));
 			if("1".equals(srvRestaurant.getAutoReceipt()) && "1".equals(srvOrder.getOrderType())){
 				//自动接单 需要订单类型为外卖
 				srvOrder.setStatus(OrderStatusEnum.ORDRT_STATUS4.getCode());
