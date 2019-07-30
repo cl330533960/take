@@ -32,5 +32,5 @@ public interface SrvFoodService {
 
 	List<SrvFood> queryFoodByRestaurantId(String restaurantId);
 
-	List<SrvFood> findHealthFood(String userAddrId,Integer cal);
+	List<SrvFood> findHealthFood(Integer cal);
 }

@@ -282,7 +282,7 @@ public class WchartController {
         model.addAttribute("model", srvUserAddr);
         model.addAttribute("wxId", healthOrderRequest.getWxId());
         model.addAttribute("orderType", healthOrderRequest.getOrderType());
-        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(), healthOrderRequest.getCal());
+        List<SrvFood> list = srvFoodService.findHealthFood( healthOrderRequest.getCal());
         model.addAttribute("foodList", list);
         return "wchat/healthyfood";
     }
@@ -408,7 +408,7 @@ public class WchartController {
     @RequestMapping(value = "/getRecommendFood")
     @ResponseBody
     public R getRecommendFood(HealthOrderRequest healthOrderRequest) {
-        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getUserAddrId(), healthOrderRequest.getCal());
+        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getCal());
         return R.ok().put("data", list);
     }
 
