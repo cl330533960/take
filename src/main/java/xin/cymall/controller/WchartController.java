@@ -816,7 +816,13 @@ public class WchartController {
     }
 
 
-
+    /**
+     * 跳转到新增页面
+     **/
+    @RequestMapping(value = "getindex")
+    public String getIndex(){
+        return "wchat/calcassess";
+    }
 
 
 

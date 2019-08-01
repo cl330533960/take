@@ -9,18 +9,40 @@
     <script type="text/javascript" src="/wchat/js/index.js"></script>
 </head>
 <body>
-<div class="weui-cells weui-cells_form">
-    <div class="weui-cell">
-        我的热量我知道，根据个性化的数据， 计算评估每天摄入热量的合理范围，并合理搭配三大营养素的比例。
+<div class="weui-cells weui-cells_form" >
+    <div>
+        <img src="/statics/img/ypyw/top_banner_img.png" width="100%" height="140px" />
+        <h3 style="position: absolute;top: 30px;left: 15px"  >
+            我的热量我知道
+        </h3>
+        <div style="position: absolute;top: 60px;left: 15px;font-size: 8px;"  >
+            根据个性化的数据
+        </div>
+        <div style="position: absolute;top: 80px;left: 15px;font-size: 8px;"  >
+            计算评估每天摄入热量的合理范围
+        </div>
+        <div style="position: absolute;top: 100px;left: 15px;font-size: 8px;"  >
+            并合理搭配三大营养素的比例
+        </div>
+
     </div>
+
     <div class="weui-cell">请选择计算方法</div>
     <div class="weui-cells weui-cells_radio">
-        <label class="weui-cell weui-check__label" for="x11">
+        <label class="weui-cell weui-check__label" for="x11" >
             <div class="weui-cell__bd">
-                <p>1.Harris-Benedict方程 </p>
 
-                <p>推荐，考虑因素全面，医学常用 </p>
+                <a  class="weui-media-box weui-media-box_appmsg" style="height: 30px">
+                    <div class="weui-media-box__hd">
+                        <img class="weui-media-box__thumb" src="/statics/img/ypyw/icon_fangcheng.png">
+                    </div>
+                    <div class="weui-media-box__bd">
+                        <h4 class="weui-media-box__title">1.Harris-Benedict方程</h4>
+                        <p class="weui-media-box__desc">推荐，考虑因素全面，医学常用</p>
+                    </div>
+                </a>
             </div>
+
             <div class="weui-cell__ft">
                 <input type="radio" class="weui-check" value="1" name="calcType" id="x11"
                        checked="checked">
@@ -29,26 +51,32 @@
         </label>
         <label class="weui-cell weui-check__label" for="x12">
             <div class="weui-cell__bd">
-                <p> 2.瘦体重法</p>
-
-                <p>知道自己的瘦体重（去脂体重）者适用</p>
+                <a  class="weui-media-box weui-media-box_appmsg"style="height: 30px">
+                    <div class="weui-media-box__hd">
+                        <img class="weui-media-box__thumb" src="/statics/img/ypyw/icon_lose_weight.png">
+                    </div>
+                    <div class="weui-media-box__bd">
+                        <h4 class="weui-media-box__title">2.瘦体重法</h4>
+                        <p class="weui-media-box__desc">适合知道自己(去脂)体重者</p>
+                    </div>
+                </a>
             </div>
             <div class="weui-cell__ft">
                 <input type="radio" name="calcType" value="2" class="weui-check" id="x12">
                 <span class="weui-icon-checked"></span>
             </div>
         </label>
+
+
     </div>
 
-    <div class="weui-cell">
+    <div class="weui-cell" >
         <div class="weui-media-box__bd">
-            <h4 class="weui-media-box__title">温馨提示</h4>
+            <h4 class="weui-media-box__title" style="color:red ">温馨提示</h4>
 
-            <p class="weui-media-box__desc"> 1、本热量评估仅供18-65岁有减脂需求的人士参考使用。</p>
-
-            <p class="weui-media-box__desc"> 2、患有急慢性病者请在医生指导下使用。</p>
-
-            <p class="weui-media-box__desc"> 3、怀孕、哺乳期不适用。</p>
+            <p class="weui-media-box__desc" style="margin-top: 10px "> 1、本热量评估仅供18-65岁有减脂需求的人士参考使用。</p>
+            <p class="weui-media-box__desc"style="margin-top: 10px "> 2、患有急慢性病者请在医生指导下使用。</p>
+            <p class="weui-media-box__desc"style="margin-top: 10px "> 3、怀孕、哺乳期不适用。</p>
         </div>
     <#--<p>温馨提示</p>-->
 
@@ -59,8 +87,8 @@
     <#--<p> 3、怀孕、哺乳期不适用。</p>-->
     </div>
     <br>
-    <a href="javascript:;" onclick="calcPage()" class="weui-btn weui-btn_primary">开始评估</a>
-
+    <a href="javascript:;" onclick="calcPage()" style="margin-right: 15px;margin-left: 15px;margin-bottom: 50px;border-radius: 30px;" class="weui-btn weui-btn_primary">开始评估</a>
+    <div></div>
 <#--<div class="button">-->
 <#--<a href="javascript:;" onclick="start('/wx/start')"-->
 <#--style="font-size: 34px;padding: 2px 6px;-->

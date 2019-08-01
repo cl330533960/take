@@ -32,7 +32,7 @@
         </div>
     </div>
     <br>
-    <a href="javascript:;" onclick="assessPage()" class="weui-btn weui-btn_primary">开始评估</a>
+    <a href="javascript:;" onclick="assessPage()" style="margin-right: 15px;margin-left: 15px;border-radius: 30px;margin-bottom: 50px"class="weui-btn weui-btn_primary">开始评估</a>
 
     <div>
 
