@@ -11,18 +11,19 @@
 </head>
 <body>
 <div class="weui-cells weui-cells_radio">
-    <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">热量（K）<span style="color: red">*</span>:</label></div>
-        <div class="weui-cell__bd">
-            <input class="weui-input" id="cal" type="number" pattern="[0-9]*" placeholder="请输入热量">
-        </div>
+    <div class="weui-cell" style="display:flex;flex-direction: row;height: 50px;align-items: center">
+        <div style="background-color: #ff5740 ;width: 2px ;height: 20px;margin-left: 15px"></div>
+        <div style="margin-left: 20px;font-size: 20px">用餐方式</div>
     </div>
+
     <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">用餐方式<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd" id="orderTypeRadio">
             <label class="weui-cell weui-check__label" for="x11">
                 <div class="weui-cell__bd">
-                    <p>外卖送餐</p>
+                    <div style="display: flex ;flex-direction: row;align-items:center">
+                        <img src="/statics/img/ypyw/icon_waimai.png" width="20px"/>
+                        <p style="margin-left: 15px">外卖送餐</p>
+                    </div>
                 </div>
                 <div class="weui-cell__ft">
                     <input type="radio" class="weui-check" value="1" name="orderType" id="x11" checked="checked">
@@ -32,7 +33,11 @@
             <label class="weui-cell weui-check__label" for="x12">
 
                 <div class="weui-cell__bd">
-                    <p>店内就餐</p>
+                    <div style="display: flex ;flex-direction: row;align-items:center">
+                        <img src="/statics/img/ypyw/icon_store.png" width="20px"/>
+                        <p style="margin-left: 15px">店内就餐</p>
+                    </div>
+
                 </div>
                 <div class="weui-cell__ft">
                     <input type="radio" name="orderType" value="2" class="weui-check" id="x12">
@@ -40,9 +45,11 @@
                 </div>
             </label>
             <label class="weui-cell weui-check__label" for="x13">
-                <div class="weui-cell__bd">
-                    <p>打包带走</p>
+                <div style="display: flex ;flex-direction: row;align-items:center">
+                    <img src="/statics/img/ypyw/icon_takeaway.png" width="20px"/>
+                    <p style="margin-left: 15px">打包带走</p>
                 </div>
+
                 <div class="weui-cell__ft">
                     <input type="radio" name="orderType" value="3" class="weui-check" id="x13">
                     <span class="weui-icon-checked"></span>
@@ -50,8 +57,25 @@
             </label>
         </div>
     </div>
+
+    <div class="weui-cell" style="display:flex;flex-direction: row;height: 50px;align-items: center">
+        <div style="background-color: #ff5740 ;width: 2px ;height: 20px;margin-left: 15px"></div>
+        <div style="margin-left: 20px;font-size: 20px">热量</div>
+    </div>
+
     <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">位置<span style="color: red">*</span>:</label></div>
+        <div style="margin-left: 15px" class="weui-cell__hd"><label class="weui-label">输入热量(K)<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="cal" type="number" pattern="[0-9]*" placeholder="请输入热量">
+        </div>
+    </div>
+    <div class="weui-cell" style="display:flex;flex-direction: row;height: 50px;align-items: center">
+        <div style="background-color: #ff5740 ;width: 2px ;height: 20px;margin-left: 15px"></div>
+        <div style="margin-left: 20px;font-size: 20px">位置</div>
+    </div>
+    <div class="weui-cell">
+
+        <div style="margin-left: 15px" class="weui-cell__hd"><label class="weui-label">选择位置<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
         <a class="weui-cell weui-cell_access" id="locationActions" href="javascript:;">
 
@@ -68,9 +92,11 @@
             </a>
         </div>
     </div>
+
+    <a href="#" onclick="toDiancan()" style="margin-right: 15px;margin-left: 15px;border-radius: 30px;margin-bottom: 50px;margin-top: 20px" class="weui-btn weui-btn_primary">下一步</a>
 </div>
 
-<a href="#" onclick="toDiancan()" class="weui-btn weui-btn_primary">下一步</a>
+
 
 <div id="locationList" class="weui-popup__container" style="display: none;">
     <div class="weui-popup__overlay"></div>
@@ -141,7 +167,7 @@
                         <input class="weui-input" name="receiveAddr" id="receiveAddr" placeholder="请输入详细地址">
                     </div>
                 </div>
-                <a href="javascript:;" onclick="saveAddr()" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;">保存</a>
+                <a href="javascript:;" onclick="saveAddr()" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;margin-right: 15px;border-radius: 30px;margin-left: 15px;margin-bottom: 50px;">保存</a>
             </div>
         </div>
     </div>

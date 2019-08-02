@@ -32,20 +32,19 @@
         <div style="border-bottom:1px dashed ;widows: 100%;margin-right: 5px;margin-left: 5px;margin-bottom: 20px;margin-top: 20px"></div>
         <div style="display: flex;justify-content: center;margin-bottom: 10px">
 
-            <#--<c:if test="${model.bmi gt 18.5}">-->
-                <#--<img src="/statics/img/ypyw/img_thin.png" width="150px" height="150px"/>-->
-            <#--</c:if>-->
-            <#--<c:if test="${model.bmi gt 18.5}&&${model.bmi lt 24}">-->
-                <#--<img src="/statics/img/ypyw/img_normal.png" width="150px" height="150px"/>-->
-            <#--</c:if>-->
-            <#--<c:if test="${model.bmi>=24}&&${model.bmi<28}">-->
-                <#--<img src="/statics/img/ypyw/img_overweight.png" width="150px" height="150px"/>-->
-            <#--</c:if>-->
-            <#--<c:if test="${model.bmi>=28}">-->
-                <#--<img src="/statics/img/ypyw/img_fat.png" width="150px" height="150px"/>-->
-            <#--</c:if>-->
-
+            <#if model.bmiRes! == '偏瘦'>
+            <img src="/statics/img/ypyw/img_thin.png" width="150px" height="150px"/>
+             </#if>
+            <#if model.bmiRes! == '正常'>
+            <img src="/statics/img/ypyw/img_normal.png" width="150px" height="150px"/>
+            </#if>
+            <#if model.bmiRes! == '超重'>
+            <img src="/statics/img/ypyw/img_overweight.png" width="150px" height="150px"/>
+            </#if>
+            <#if model.bmiRes! == '肥胖'>
             <img src="/statics/img/ypyw/img_fat.png" width="150px" height="150px"/>
+            </#if>
+
 
             <div style="position: absolute;top: 196px;color: #ffffff;font-size: 25px"><b>${model.bmi!}</b></div>
             <div style="position: absolute;top: 226px;color: #ffffff;font-size: 15px"">${model.bmiRes!}</div>

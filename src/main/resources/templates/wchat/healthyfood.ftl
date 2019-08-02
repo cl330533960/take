@@ -13,7 +13,8 @@
     <input type="hidden" id="orderType" name="orderType" value="${orderType!}"/>
 
     <div class="weui-cell">
-        <div class="weui-cell__bd">
+        <img src="/statics/img/ypyw/icon_address.png" width="35px" alt=""/>
+        <div class="weui-cell__bd" style="margin-left: 15px">
             <input type="hidden" id="wxId" value="${wxId!}"/>
             <input type="hidden" id="addrId" value="${model.id!}"/>
 
@@ -43,7 +44,7 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><img
                             src="http://03imgmini.eastday.com/mobile/20190706/20190706131806_56aecc32cbbb3810c2f3658a7a59011b_3_mwpm_03200403.jpg"
-                            alt="" style="width:80px;height:80px;margin-right:5px;display:block"></div>
+                            alt="" style="width:80px;height:80px;margin-right:5px;display:block;border-radius: 15px;"></div>
                     <div class="weui-cell__bd">
                         <p>${food.rname!}</p>
 
@@ -86,9 +87,9 @@
     </div>
     <div class="weui-cell">
         <div class="weui-cell__bd">
-            <p>包装费 <span id="packFee"> 0</span>元</p>
+            <p>包装费 <span id="packFee" style="color: red"> 0</span>元</p>
 
-            <p>配送费 <span id="wayFee"> 0</span>元</p>
+            <p>配送费 <span id="wayFee" style="color: red"> 0</span>元</p>
         </div>
     </div>
     <div class="weui-cells__title">添加备注</div>
@@ -105,8 +106,9 @@
         <div class="weui-cell__bd">
             <p>合计(不含运费)￥<span id="totalAmount" style="color: red">0</span></p>
         </div>
+        <a href="#" onclick="checkOrder()" style="border-radius: 30px;" class="weui-btn weui-btn_primary">提交订单</a>
     </div>
-    <a href="#" onclick="checkOrder()" class="weui-btn weui-btn_primary">提交订单</a>
+
 </div>
 </body>
 <script>
