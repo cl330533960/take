@@ -75,4 +75,9 @@ public class SrvFoodServiceImpl implements SrvFoodService {
 		return srvFoodDao.findHealthFood(cal);
 	}
 
+	@Override
+	public Map<String, Object> queryfoodInfo(String fooId, String restaurantId) {
+		return srvFoodDao.queryfoodInfo(fooId,restaurantId);
+	}
+
 }

@@ -69,6 +69,8 @@ public class WchartController {
     private SrvRestaurantService srvRestaurantService;
     @Autowired
     private AreaService areaService;
+    @Autowired
+    private SrvMerchanopinionService srvMerchanopinionService;
 
 
     @RequestMapping("/auth")
@@ -219,6 +221,43 @@ public class WchartController {
 
         return "wchat/home";
     }
+
+    /**
+     *
+     * 功能描述: 餐品详情
+     *
+     * @param:
+     * @return:
+     * @auther:
+     * @date: 2019/8/2 9:41
+     */
+    @RequestMapping(value = "/foodInfo",method = { RequestMethod.GET, RequestMethod.POST })
+    public String foodInfo(Model model,String restaurantId,String foodId){
+        Map<String,Object> foodMap = srvFoodService.queryfoodInfo(foodId, restaurantId);
+        Map<String, Object> params = new HashMap<>();
+        params.put("restaurantId", restaurantId);
+        List<SrvMerchanopinion> list = srvMerchanopinionService.getList(params);
+        foodMap.put("commentList",list);
+        model.addAttribute("model",foodMap);
+        return "";
+//        return "wchat/home";
+    }
+
+    @RequestMapping(value = "/saveComment",method = { RequestMethod.GET, RequestMethod.POST })
+    public R saveComment(@RequestParam String wxId,@RequestParam String restaurantId,@RequestParam String content) {
+        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxId);
+        SrvMerchanopinion srvMerchanopinion = new SrvMerchanopinion();
+        srvMerchanopinion.setName(srvWxUser.getWxName());
+        srvMerchanopinion.setCommentTime(new Date());
+        srvMerchanopinion.setContent(content);
+        srvMerchanopinion.setStatus("0");
+        srvMerchanopinionService.save(srvMerchanopinion);
+        return R.ok();
+    }
+
+
+
+
 
     @RequestMapping(value = "/rationorderFood",method = { RequestMethod.GET, RequestMethod.POST })
     public String rationorderFood(Model model,String code) throws WxErrorException {

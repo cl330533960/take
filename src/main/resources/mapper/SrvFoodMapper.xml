@@ -174,4 +174,11 @@
 		LIMIT 5
 	</select>
 
+
+	<select id="queryfoodInfo" parameterType="java.lang.String" resultType="java.util.Map">
+		select f.name,f.sys_price,f.image_path,f.cal,f.remark,IFNULL(count(of.food_id),0) as month_sale from srv_food f
+		left JOIN srv_order_food of on f.id = of.food_id
+		LEFT JOIN srv_order o on o.id = of.order_id
+		where f.id = #{param1} and o.restaurant_id =  #{param2}
+		and o.status = '7' and DATE_FORMAT(o.order_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )	</select>
 </mapper>
