@@ -90,7 +90,19 @@
         </div>
     </div>
     <br>
-    <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx688906a5f5df8b37&redirect_uri=http://www.tastyfit.vip/wx/rationorderFood&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect" style="background-color: #ff5740;border-radius: 30px;margin-left: 15px;margin-right: 15px;margin-bottom: 30px "  class="weui-btn weui-btn_primary">去点餐</a>
+          <#if model.bmiRes! == '偏瘦'>
+            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx688906a5f5df8b37&redirect_uri=http://www.tastyfit.vip/wx/rationorderFood&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect" style="background-color: #34beef;border-radius: 30px;margin-left: 15px;margin-right: 15px;margin-bottom: 30px "  class="weui-btn weui-btn_primary">去点餐</a>
+           </#if>
+            <#if model.bmiRes! == '正常'>
+           <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx688906a5f5df8b37&redirect_uri=http://www.tastyfit.vip/wx/rationorderFood&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect" style="background-color: #26ca98;border-radius: 30px;margin-left: 15px;margin-right: 15px;margin-bottom: 30px "  class="weui-btn weui-btn_primary">去点餐</a>
+            </#if>
+            <#if model.bmiRes! == '超重'>
+            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx688906a5f5df8b37&redirect_uri=http://www.tastyfit.vip/wx/rationorderFood&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect" style="background-color: #fea918;border-radius: 30px;margin-left: 15px;margin-right: 15px;margin-bottom: 30px "  class="weui-btn weui-btn_primary">去点餐</a>
+            </#if>
+            <#if model.bmiRes! == '肥胖'>
+           <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx688906a5f5df8b37&redirect_uri=http://www.tastyfit.vip/wx/rationorderFood&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect" style="background-color: #ff725e;border-radius: 30px;margin-left: 15px;margin-right: 15px;margin-bottom: 30px "  class="weui-btn weui-btn_primary">去点餐</a>
+            </#if>
+
 </div>
 
 </div>
