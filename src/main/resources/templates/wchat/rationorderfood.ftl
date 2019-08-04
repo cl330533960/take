@@ -11,9 +11,9 @@
 </head>
 <body>
 <div class="weui-cells weui-cells_radio">
-    <div class="weui-cell" style="display:flex;flex-direction: row;height: 50px;align-items: center">
-        <div style="background-color: #ff5740 ;width: 2px ;height: 20px;margin-left: 15px"></div>
-        <div style="margin-left: 20px;font-size: 20px">用餐方式</div>
+    <div class="weui-cell" style="display:flex;flex-direction: row;height: 30px;align-items: center">
+        <div style="background-color: #ff5740 ;width: 3px ;height: 12px;margin-left: 15px"></div>
+        <div style="margin-left: 20px;font-size: 16px">用餐方式</div>
     </div>
 
     <div class="weui-cell">
@@ -45,11 +45,12 @@
                 </div>
             </label>
             <label class="weui-cell weui-check__label" for="x13">
+                <div class="weui-cell__bd">
                 <div style="display: flex ;flex-direction: row;align-items:center">
                     <img src="/statics/img/ypyw/icon_takeaway.png" width="20px"/>
                     <p style="margin-left: 15px">打包带走</p>
                 </div>
-
+                </div>
                 <div class="weui-cell__ft">
                     <input type="radio" name="orderType" value="3" class="weui-check" id="x13">
                     <span class="weui-icon-checked"></span>
@@ -58,9 +59,9 @@
         </div>
     </div>
 
-    <div class="weui-cell" style="display:flex;flex-direction: row;height: 50px;align-items: center">
-        <div style="background-color: #ff5740 ;width: 2px ;height: 20px;margin-left: 15px"></div>
-        <div style="margin-left: 20px;font-size: 20px">热量</div>
+    <div class="weui-cell" style="display:flex;flex-direction: row;height: 30px;align-items: center">
+        <div style="background-color: #ff5740 ;width: 3px ;height: 12px;margin-left: 15px"></div>
+        <div style="margin-left: 20px;font-size: 16px">热量</div>
     </div>
 
     <div class="weui-cell">
@@ -69,13 +70,13 @@
             <input class="weui-input" id="cal" type="number" pattern="[0-9]*" placeholder="请输入热量">
         </div>
     </div>
-    <div class="weui-cell" style="display:flex;flex-direction: row;height: 50px;align-items: center">
-        <div style="background-color: #ff5740 ;width: 2px ;height: 20px;margin-left: 15px"></div>
-        <div style="margin-left: 20px;font-size: 20px">位置</div>
+    <div class="weui-cell" style="display:flex;flex-direction: row;height: 30px;align-items: center">
+        <div style="background-color: #ff5740 ;width: 3px ;height: 12px;margin-left: 15px"></div>
+        <div style="margin-left: 20px;font-size: 16px">选择位置</div>
     </div>
     <div class="weui-cell">
 
-        <div style="margin-left: 15px" class="weui-cell__hd"><label class="weui-label">选择位置<span style="color: red">*</span>:</label></div>
+        <#--<div style="margin-left: 15px" class="weui-cell__hd"><label class="weui-label">选择位置<span style="color: red">*</span>:</label></div>-->
         <div class="weui-cell__bd">
         <a class="weui-cell weui-cell_access" id="locationActions" href="javascript:;">
 
@@ -83,10 +84,9 @@
                 <div class="weui-cell__bd" id="showHtml">
                     <input type="hidden" id="addrId" value="${(model.id)!""}"/>
 
-                    <p id="nameAndPhone">${(model.receiveName)!""}&nbsp;&nbsp;${(model.receivePhone)!""}</p>
+                    <p id="nameAndPhone"><span >${(model.receiveName)!"请选择地址"}&nbsp;&nbsp;</span><span style="font-size: 10px">${(model.receivePhone)!""}</span></span></p>
 
-
-                    <p id="addr">${(model.receiveAddr)!""}</p>
+                    <p style="font-size: 10px;margin-top: 5px" id="addr">${(model.receiveAddr)!""}</p>
                 </div>
                 <div class="weui-cell__ft"></div>
             </a>

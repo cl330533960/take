@@ -10,17 +10,17 @@
 </head>
 <body>
 <div class="weui-cells weui-cells_form">
+
     <input type="hidden" id="orderType" name="orderType" value="${orderType!}"/>
 
     <div class="weui-cell">
-        <img src="/statics/img/ypyw/icon_address.png" width="35px" alt=""/>
+        <img src="/statics/img/ypyw/icon_address.png" width="20px" alt=""/>
         <div class="weui-cell__bd" style="margin-left: 15px">
             <input type="hidden" id="wxId" value="${wxId!}"/>
             <input type="hidden" id="addrId" value="${model.id!}"/>
 
-            <p id="nameAndPhone">${model.receiveName!}&nbsp;&nbsp;${model.receivePhone!}</p>
-
-            <p id="addr">${model.receiveAddr!}</p>
+            <p id="nameAndPhone"><span >${(model.receiveName)!}&nbsp;&nbsp;</span><span style="font-size: 12px">${(model.receivePhone)!}</span></span></p>
+            <p style="font-size: 12px" id="addr">${model.receiveAddr!}</p>
         </div>
     </div>
     <div class="weui-search-bar" id="searchBar">
@@ -39,18 +39,23 @@
     </div>
     <div class="weui-cells">
     <#list foodList! as food>
-        <div class="weui-cell weui-cell_swiped">
+        <div   onclick="gotodetail(${food.fudId!})" class="weui-cell weui-cell_swiped">
             <div class="weui-cell__bd" style="transform: translate3d(0px, 0px, 0px);">
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><img
                             src="http://03imgmini.eastday.com/mobile/20190706/20190706131806_56aecc32cbbb3810c2f3658a7a59011b_3_mwpm_03200403.jpg"
-                            alt="" style="width:80px;height:80px;margin-right:5px;display:block;border-radius: 15px;"></div>
+                            alt="" style="width:50px;height:50px;margin-right:5px;display:block;border-radius: 15px;"></div>
                     <div class="weui-cell__bd">
-                        <p>${food.rname!}</p>
 
-                        <p>${food.name!}</p>
-                        <span class="price">￥${food.sysPrice!}</span>
+
+
+                        <div style="display: flex;flex-direction: row">
+                            <p>${food.rname!}店</p>
+                            <p style="margin-left: 20px">${food.name!}</p>
+                        </div>
+                        <span class="price" style="font-size: 15px;color: #ff5740">￥${food.sysPrice!}</span>
                     </div>
+
                     <div class="weui-cell__ft">
                         <div class="weui-count">
                             <a class="weui-count__btn weui-count__decrease"></a>
@@ -106,7 +111,7 @@
         <div class="weui-cell__bd">
             <p>合计(不含运费)￥<span id="totalAmount" style="color: red">0</span></p>
         </div>
-        <a href="#" onclick="checkOrder()" style="border-radius: 30px;" class="weui-btn weui-btn_primary">提交订单</a>
+        <a href="#" onclick="checkOrder()" style="border-radius: 20px;height: 30px;width:80px " class="weui-btn weui-btn_primary">支付</a>
     </div>
 
 </div>
@@ -359,17 +364,9 @@
                 });
 
     }
-
-    //    if (typeof WeixinJSBridge == "undefined") {
-    //        if (document.addEventListener) {
-    //            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-    //        } else if (document.attachEvent) {
-    //            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-    //            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-    //        }
-    //    } else {
-    //        onBridgeReady();
-    //    }
-
+    function gotodetail(foodid) {
+        // $.showLoading("跳转详情，请稍后");
+        window.location.href = "/wx/gotodetail?foodid="+foodid;
+    }
 </script>
 </html>

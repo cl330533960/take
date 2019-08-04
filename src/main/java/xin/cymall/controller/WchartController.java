@@ -853,6 +853,14 @@ public class WchartController {
 
 
     }
+    /**
+     * 跳转到详情
+     **/
+    @RequestMapping(value = "gotodetail")
+    public String gotodetail(Model model, String foodid){
+        System.out.println("----->"+foodid);
+        return "wchat/healthyfooddetil";
+    }
 
 
     /**
@@ -860,7 +868,7 @@ public class WchartController {
      **/
     @RequestMapping(value = "getindex")
     public String getIndex(){
-        return "wchat/healthyfood";
+        return "wchat/healthyfooddetil";
     }
 
 
