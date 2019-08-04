@@ -5,6 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>健康餐品</title>
+    <style>
+        .outadded_menu{
+
+        }
+    </style>
 <#include "../wx.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
 </head>
@@ -39,16 +44,13 @@
     </div>
     <div class="weui-cells">
     <#list foodList! as food>
-        <div   onclick="gotodetail(${food.fudId!})" class="weui-cell weui-cell_swiped">
-            <div class="weui-cell__bd" style="transform: translate3d(0px, 0px, 0px);">
-                <div class="weui-cell">
-                    <div class="weui-cell__hd"><img
+        <div   class="weui-cell weui-cell_swiped">
+            <div class="weui-cell__bd "  style="transform: translate3d(0px, 0px, 0px);">
+                <div class="weui-cell" >
+                    <div class="weui-cell__hd  outadded_menu"  id="${food.fudId!}"><img
                             src="http://03imgmini.eastday.com/mobile/20190706/20190706131806_56aecc32cbbb3810c2f3658a7a59011b_3_mwpm_03200403.jpg"
                             alt="" style="width:50px;height:50px;margin-right:5px;display:block;border-radius: 15px;"></div>
-                    <div class="weui-cell__bd">
-
-
-
+                    <div class="weui-cell__bd  outadded_menu"  id="${food.fudId!}">
                         <div style="display: flex;flex-direction: row">
                             <p>${food.rname!}店</p>
                             <p style="margin-left: 20px">${food.name!}</p>
@@ -111,7 +113,7 @@
         <div class="weui-cell__bd">
             <p>合计(不含运费)￥<span id="totalAmount" style="color: red">0</span></p>
         </div>
-        <a href="#" onclick="checkOrder()" style="border-radius: 20px;height: 30px;width:80px " class="weui-btn weui-btn_primary">支付</a>
+        <a href="#" onclick="checkOrder()" style="border-radius: 20px;width:100px " class="weui-btn weui-btn_primary">支付</a>
     </div>
 
 </div>
@@ -157,6 +159,8 @@
         $input.val(number)
 
     })
+
+
 
     function checkOnlyFood(id) {
         var flag = true;
@@ -364,6 +368,11 @@
                 });
 
     }
+
+    $('.outadded_menu').click(function(){
+        gotodetail($(this).attr('id'));
+        console.log($(this).attr('id'));
+    })
     function gotodetail(foodid) {
         // $.showLoading("跳转详情，请稍后");
         window.location.href = "/wx/gotodetail?foodid="+foodid;

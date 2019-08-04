@@ -27,15 +27,21 @@
 <#--<a class="weui-swiped-btn weui-swiped-btn_default close-swipeout" href="javascript:">关闭</a>-->
 <#--</div>-->
 <#--</div>-->
-<div class="weui-cells__title">订单详情</div>
+<div class="weui-cell" style="display:flex;flex-direction: row;height: 30px;align-items: center">
+    <div style="background-color: #ff5740 ;width: 3px ;height: 12px;margin-left: 15px"></div>
+    <#--<div class="weui-cells__title">订单详情</div>-->
+    <div style="margin-left: 20px;font-size: 16px">餐品详情</div>
+</div>
+
 <div class="weui-cells weui-cells_form">
 <#list order.foodList! as food>
     <div class="weui-cell weui-cell_swiped">
         <div class="weui-cell__bd" style="transform: translate3d(0px, 0px, 0px);">
             <div class="weui-cell">
                 <div class="weui-cell__hd"><img
+                        style="border-radius: 15px" width="50px" height="50px"
                         src="http://03imgmini.eastday.com/mobile/20190706/20190706131806_56aecc32cbbb3810c2f3658a7a59011b_3_mwpm_03200403.jpg"
-                        alt="" style="width:80px;height:80px;margin-right:5px;display:block"></div>
+                        alt="" style="margin-right:5px;display:block"></div>
                 <div class="weui-cell__bd">
                     <p>${food.name!}</p>
 
@@ -44,7 +50,7 @@
                     <p>单价:${food.price!}</p>
                 </div>
                 <div class="weui-count">
-                    合计:${food.totalPrice!}
+                    合计:<span style="color: red">${food.totalPrice!}</span>
                 </div>
             </div>
         </div>
@@ -60,15 +66,20 @@
     <div class="weui-cell">
         <div class="weui-cell__bd">
 
-            <p>包装费 ${order.packFee!}元</p>
+            <p>包装费 <span style="color: red">${order.packFee!}</span>元</p>
 
-            <p>配送费 ${order.wayFee!}元</p>
+            <p>配送费  <span style="color: red">${order.wayFee!}</span>元</p>
 
         <#--<p>商家联系电话：010-3334444</p>-->
         </div>
     </div>
 </div>
-<div class="weui-cells__title">订单信息</div>
+<div class="weui-cell" style="display:flex;flex-direction: row;height: 30px;align-items: center">
+    <div style="background-color: #ff5740 ;width: 3px ;height: 12px;margin-left: 15px"></div>
+    <#--<div class="weui-cells__title"></div>-->
+    <div style="margin-left: 20px;font-size: 16px">订单信息</div>
+</div>
+
 <div class="weui-cells weui-cells_form">
     <div class="weui-cell">
         <div class="weui-cell__bd">
@@ -84,7 +95,12 @@
         </div>
     </div>
 </div>
-<div class="weui-cells__title">配送信息</div>
+<div class="weui-cell" style="display:flex;flex-direction: row;height: 30px;align-items: center">
+    <div style="background-color: #ff5740 ;width: 3px ;height: 12px;margin-left: 15px"></div>
+    <#--<div class="weui-cells__title">配送信息</div>-->
+    <div style="margin-left: 20px;font-size: 16px">配送信息</div>
+</div>
+
 <div class="weui-cells weui-cells_form">
     <div class="weui-cell">
         <div class="weui-cell__bd">

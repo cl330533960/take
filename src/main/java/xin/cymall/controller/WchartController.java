@@ -868,7 +868,7 @@ public class WchartController {
      **/
     @RequestMapping(value = "getindex")
     public String getIndex(){
-        return "wchat/healthyfooddetil";
+        return "wchat/healthyfood";
     }
 
 
