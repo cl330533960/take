@@ -309,6 +309,11 @@ public class WchartController {
             Map<String, Object> params = new HashMap<>();
             params.put("orderId", srvOrder.getId());
             List<SrvOrderFood> list = srvOrderFoodService.getList(params);
+            for(SrvOrderFood srvOrderFood : list){
+                if(!StringUtil.isEmpty(srvOrderFood.getImagePath())) {
+                    srvOrderFood.setImagePath(srvOrderFood.getImagePath().split(",")[0]);
+                }
+            }
             srvOrder.setFoodList(list);
             SrvUserAddr userAddr = srvUserAddrService.get(srvOrder.getUserAddrId());
             model.addAttribute("order", srvOrder);

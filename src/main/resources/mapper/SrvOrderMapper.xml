@@ -27,6 +27,7 @@
 		<result property="wxName" column="wx_name"/>
 		<result property="phone" column="phone"/>
 		<result property="restaurantName" column="restaurantName"/>
+		<result property="logoPath" column="logo_path"/>
 		<result property="receiveName" column="receive_name"/>
 		<result property="receivePhone" column="receive_phone"/>
 		<result property="receiveAddr" column="receive_addr"/>
@@ -50,7 +51,7 @@
 	</select>
 
 	<select id="getList" resultType="xin.cymall.entity.SrvOrder">
-		select t.*,u.wx_name,u.phone,r.name as restaurantName,ua.receive_name,ua.receive_phone,ua.receive_addr from srv_order t
+		select t.*,u.wx_name,u.phone,r.name as restaurantName,ua.receive_name,ua.receive_phone,ua.receive_addr,r.logo_path from srv_order t
 		left join srv_wx_user u on t.user_id = u.id
 		left join srv_restaurant r on t.restaurant_id = r.id
 		left join srv_user_addr ua on t.user_addr_id = ua.id

@@ -40,8 +40,7 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><img
                         style="border-radius: 15px" width="50px" height="50px"
-                        src="http://03imgmini.eastday.com/mobile/20190706/20190706131806_56aecc32cbbb3810c2f3658a7a59011b_3_mwpm_03200403.jpg"
-                        alt="" style="margin-right:5px;display:block"></div>
+                        src="/getData/showImage?imagePath=${food.imagePath!}"  alt="" style="margin-right:5px;display:block"></div>
                 <div class="weui-cell__bd">
                     <p>${food.name!}</p>
 
@@ -66,9 +65,9 @@
     <div class="weui-cell">
         <div class="weui-cell__bd">
 
-            <p>包装费 <span style="color: red">${order.packFee!}</span>元</p>
+            <p>包装费 <span style="color: red">${order.packFee!0}</span>元</p>
 
-            <p>配送费  <span style="color: red">${order.wayFee!}</span>元</p>
+            <p>配送费  <span style="color: red">${order.wayFee!0}</span>元</p>
 
         <#--<p>商家联系电话：010-3334444</p>-->
         </div>

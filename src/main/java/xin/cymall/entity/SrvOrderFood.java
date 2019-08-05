@@ -30,6 +30,8 @@ public class SrvOrderFood implements Serializable {
 
 	private String foodName;
 
+	private String imagePath;
+
 	/**
 	 * 设置：
 	 */
@@ -101,5 +103,13 @@ public class SrvOrderFood implements Serializable {
 
 	public void setFoodName(String foodName) {
 		this.foodName = foodName;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }

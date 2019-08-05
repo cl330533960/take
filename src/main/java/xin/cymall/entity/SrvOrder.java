@@ -78,6 +78,7 @@ public class SrvOrder implements Serializable {
 	private String receiveName;
 	private List<SrvOrderFood> foodList;
 	private String statusText;
+	private String logoPath;
 
 	/**
 	 * 设置：主键ID
@@ -406,5 +407,13 @@ public class SrvOrder implements Serializable {
 
 	public void setDadaOrder(String dadaOrder) {
 		this.dadaOrder = dadaOrder;
+	}
+
+	public String getLogoPath() {
+		return logoPath;
+	}
+
+	public void setLogoPath(String logoPath) {
+		this.logoPath = logoPath;
 	}
 }

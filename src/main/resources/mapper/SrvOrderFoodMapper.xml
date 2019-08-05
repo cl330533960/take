@@ -12,6 +12,8 @@
 		<result property="orderId" column="order_id"/>
 		<result property="foodName" column="food_name"/>
 		<result property="price" column="price"/>
+		<result property="imagePath" column="image_path"/>
+
 
 	</resultMap>
 
@@ -20,7 +22,7 @@
 	</select>
 
 	<select id="getList" resultType="xin.cymall.entity.SrvOrderFood">
-		select t.*,f.name as food_name from srv_order_food t
+		select t.*,f.name as food_name,f.image_path from srv_order_food t
 		left join srv_food f on t.food_id = f.id
 		<include refid="where_clause" />
         <choose>

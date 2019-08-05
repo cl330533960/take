@@ -47,9 +47,9 @@
         <div   class="weui-cell weui-cell_swiped">
             <div class="weui-cell__bd "  style="transform: translate3d(0px, 0px, 0px);">
                 <div class="weui-cell" >
-                    <div class="weui-cell__hd  outadded_menu"  foodId="${food.id!}" restaurantId="${food.rid!}"><img
-                            src="/getData/showImage?imagePath="+${food.imagePath!}
-                            alt="" style="width:50px;height:50px;margin-right:5px;display:block;border-radius: 15px;"></div>
+                    <div class="weui-cell__hd  outadded_menu"  foodId="${food.id!}" restaurantId="${food.rid!}">
+                        <img src="/getData/showImage?imagePath=${food.imagePath!}" alt="" style="width:50px;height:50px;margin-right:5px;display:block;border-radius: 15px;">
+                    </div>
                     <div class="weui-cell__bd" >
                         <div style="display: flex;flex-direction: row">
                             <p>${food.rname!}店</p>
@@ -358,6 +358,7 @@
                     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
                     if (res.err_msg == "get_brand_wcpay_request:ok") {//成功
                         $.toast('支付成功', 'success');
+                        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx688906a5f5df8b37&redirect_uri=http://www.tastyfit.vip/wx/orderList&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect";
                     } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//取消
                         $.toast('用户取消支付','cancel');
                     } else if (res.err_msg == "get_brand_wcpay_request:fail") {//失败

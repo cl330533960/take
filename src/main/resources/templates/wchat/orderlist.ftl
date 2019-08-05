@@ -92,7 +92,7 @@
                 <div class="weui-media-box__hd">
                     <img class="weui-media-box__thumb"
                          style="border-radius: 15px" width="50px" height="50px"
-                         src="http://03imgmini.eastday.com/mobile/20190706/20190706131806_56aecc32cbbb3810c2f3658a7a59011b_3_mwpm_03200403.jpg">
+                         src="/getData/showImage?imagePath="{{value.logoPath}}>
                 </div>
                 <div class="weui-media-box__bd">
                     <h4 class="weui-media-box__title">门店:{{value.restaurantName}}</h4>

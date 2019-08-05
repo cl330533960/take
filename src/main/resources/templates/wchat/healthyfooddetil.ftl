@@ -29,7 +29,7 @@
     <div class="swiper-container" style="z-index:1">
         <div class="swiper-wrapper">
         <#list model.imageList! as img>
-            <div class="swiper-slide"><img src="/getData/showImage?imagePath=" +${img!} alt=""></div>
+            <div class="swiper-slide"><img src="/getData/showImage?imagePath=${img!}" alt=""></div>
         </#list>
         </div>
         <div class="swiper-pagination"></div>
