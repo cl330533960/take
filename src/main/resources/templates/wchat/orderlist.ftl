@@ -92,7 +92,7 @@
                 <div class="weui-media-box__hd">
                     <img class="weui-media-box__thumb"
                          style="border-radius: 15px" width="50px" height="50px"
-                         src="/getData/showImage?imagePath="{{value.logoPath}}>
+                         src="/getData/showImage?imagePath={{value.logoPath}}">
                 </div>
                 <div class="weui-media-box__bd">
                     <h4 class="weui-media-box__title">门店:{{value.restaurantName}}</h4>
