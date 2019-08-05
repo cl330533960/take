@@ -47,10 +47,10 @@
         <div   class="weui-cell weui-cell_swiped">
             <div class="weui-cell__bd "  style="transform: translate3d(0px, 0px, 0px);">
                 <div class="weui-cell" >
-                    <div class="weui-cell__hd  outadded_menu"  id="${food.fudId!}"><img
-                            src="http://03imgmini.eastday.com/mobile/20190706/20190706131806_56aecc32cbbb3810c2f3658a7a59011b_3_mwpm_03200403.jpg"
+                    <div class="weui-cell__hd  outadded_menu"  foodId="${food.id!}" restaurantId="${food.rid!}"><img
+                            src="/getData/showImage?imagePath="+${food.imagePath!}
                             alt="" style="width:50px;height:50px;margin-right:5px;display:block;border-radius: 15px;"></div>
-                    <div class="weui-cell__bd  outadded_menu"  id="${food.fudId!}">
+                    <div class="weui-cell__bd" >
                         <div style="display: flex;flex-direction: row">
                             <p>${food.rname!}店</p>
                             <p style="margin-left: 20px">${food.name!}</p>
@@ -129,10 +129,10 @@
     var orderType = '';
     $(function () {
         orderType = $("#orderType").val();
-    <#list foodList! as food>
-        var food = '{"id":"${food.id!}","fudId":"${food.fudId!}","name":"${food.name!}","rid":"${food.rid!}","sysPrice":${food.sysPrice!},"packFee":${food.packFee!},"price":${food.price!}}';
-        foodList.push($.parseJSON(food));
-    </#list>
+        <#list foodList! as food>
+            var food = '{"id":"${food.id!}","fudId":"${food.fudId!}","name":"${food.name!}","rid":"${food.rid!}","sysPrice":${food.sysPrice!},"packFee":${food.packFee!},"price":${food.price!}}';
+            foodList.push($.parseJSON(food));
+        </#list>
     })
     var MAX = 99, MIN = 0;
     $('.weui-count__decrease').click(function (e) {
@@ -370,12 +370,10 @@
     }
 
     $('.outadded_menu').click(function(){
-        gotodetail($(this).attr('id'));
-        console.log($(this).attr('id'));
+        gotodetail($(this).attr('foodId'),$(this).attr('restaurantId'),);
     })
-    function gotodetail(foodid) {
-        // $.showLoading("跳转详情，请稍后");
-        window.location.href = "/wx/gotodetail?foodid="+foodid;
+    function gotodetail(foodid,restaurantId) {
+        window.location.href = "/wx/foodInfo?foodId="+foodid+"&restaurantId="+restaurantId;
     }
 </script>
 </html>

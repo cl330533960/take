@@ -100,7 +100,6 @@
                     $.toptip('运动系数为必须项', 'error');
                     return;
                 }
-                $.showLoading("正在提交数据，请稍后");
                 window.location.href = "/wx/assessOne?height="+height+"&weight="+weight+"&sex="+sex+"&waistline="+waistline+"&sportRatio="+sport+"&age="+age;
             }
         </script>

@@ -237,10 +237,12 @@ public class WchartController {
         Map<String, Object> params = new HashMap<>();
         params.put("restaurantId", restaurantId);
         List<SrvMerchanopinion> list = srvMerchanopinionService.getList(params);
+        String imagePath = String.valueOf(foodMap.get("image_path"));
+        String[] imgs = imagePath.split(",");
         foodMap.put("commentList",list);
+        foodMap.put("imageList", imgs);
         model.addAttribute("model",foodMap);
-        return "";
-//        return "wchat/home";
+        return "wchat/healthyfooddetil";
     }
 
     @RequestMapping(value = "/saveComment",method = { RequestMethod.GET, RequestMethod.POST })
@@ -322,6 +324,11 @@ public class WchartController {
         model.addAttribute("wxId", healthOrderRequest.getWxId());
         model.addAttribute("orderType", healthOrderRequest.getOrderType());
         List<SrvFood> list = srvFoodService.findHealthFood( healthOrderRequest.getCal());
+        for(SrvFood srvFood : list){
+            if(!StringUtil.isEmpty(srvFood.getImagePath())) {
+                srvFood.setImagePath(srvFood.getImagePath().split(",")[0]);
+            }
+        }
         model.addAttribute("foodList", list);
         return "wchat/healthyfood";
     }

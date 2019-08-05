@@ -213,7 +213,6 @@
             $.toptip('位置为必须项', 'error');
             return;
         }
-        $.showLoading("正在为你推荐适合热量的餐品，请稍后");
         window.location.href = "/wx/healthyFood?wxId=${wxId!}&orderType=" + orderType + "&userAddrId=" + userAddrId + "&cal=" + cal;
     }
 
