@@ -16,11 +16,15 @@
             </div>
         </div>
 
+
         <div class="layui-form-item">
             <label class="layui-form-label"><span class="span_must">*</span>所属角色</label>
-            <div cyType="selectTool" cyProps="url:'/sys/role/findAll',multiple:'true'"
-                 value="" name="roleIdList[]" class="layui-input-normal"></div>
-        </div>
+
+            <div class="layui-input-normal">
+                <div cyType="selectTool" cyProps="url:'/sys/role/findAll',multiple:'true'"
+                     value="" name="roleIdList[]" class="layui-input-normal"></div>
+            </div>
+         </div>
         <#include "common.ftl"/>
 
 

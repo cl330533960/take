@@ -119,7 +119,7 @@ function editOne(url,id){
         shadeClose: false,
         shade: [0.3, '#000'],
         maxmin: true, //开启最大化最小化按钮
-        area: ['1200px', '800px'],
+        area: ['893px', '600px'],
         content: url+"/"+id
     });
 }
@@ -136,7 +136,7 @@ function editOne_copy(title,url,id){
         shadeClose: false,
         shade: [0.3, '#000'],
         maxmin: true, //开启最大化最小化按钮
-        area: ['800px', '400px'],
+        area: ['893px', '400px'],
         content: url+"/"+id
     });
 }
