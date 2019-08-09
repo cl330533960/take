@@ -16,7 +16,7 @@
         </div>
 
        <div class="layui-form-item">${(model.bucket)!""}
-            <label class="layui-form-label">省市区</label>
+            <label class="layui-form-label"><span class="span_must">*</span>省市区</label>
            <div class="layui-input-inline" style="width:700px;">
                <div cyType="linkSelectTool" cyProps="url:'/area/normalList/',topId:'1111111111',name:'parentAreaIds[]'"
                     value="${(model.area)!""}" class="layui-input-inline"></div>
