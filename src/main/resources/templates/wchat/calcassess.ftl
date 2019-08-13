@@ -33,13 +33,13 @@
         .borderline{
             border:1px #276fd4  solid;
         }
-        label{
-            line-height: 20px;
-            display: inline-block;
-            margin-left: 5px;
-            margin-right:15px;
-            color: #777;
-        }
+        /*label{*/
+            /*line-height: 20px;*/
+            /*display: inline-block;*/
+            /*margin-left: 5px;*/
+            /*margin-right:15px;*/
+            /*color: #777;*/
+        /*}*/
         .radio_type{
             width: 20px;
             height: 20px;
@@ -145,8 +145,6 @@
             <div class="weui-cell__ft">
                 <input type="radio" name="calcType" value="2" class="radio_type" id="x12">
                 <span class="weui-icon-checked"></span>
-
-
             </div>
         </label>
 
@@ -188,6 +186,16 @@
     }
 
     $(document).ready(function() {
+
+
+        if($("input[type=radio][name=calcType]:checked").val()==1){
+            $("#div11").addClass("borderline"); //添加样式
+            $("#div12").removeClass("borderline"); //
+        }else {
+            $("#div12").addClass("borderline"); //添加样式
+            $("#div11").removeClass("borderline"); //
+        }
+
         $('input[type=radio][name=calcType]').change(function() {
             if (this.value == 1) {
 

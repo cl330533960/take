@@ -8,6 +8,59 @@
 <#include "../wx.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
     <script type="text/javascript" src="/wchat/js/template.js"></script>
+    <style>
+        label{
+            line-height: 20px;
+            display: inline-block;
+            margin-left: 5px;
+            margin-right:15px;
+            color: #777;
+        }
+        .radio_type{
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            display: inline-block;
+            position: relative;
+        }
+        .radio_type:before{
+            content: '';
+            width: 20px;
+            height: 20px;
+            /*border: 1px solid #7d7d7d;*/
+            display: inline-block;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        .radio_type:checked:before{
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ff5740;
+            background:#ff5740;
+            display: inline-block;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        .radio_type:checked:after{
+            content: '';
+            width: 10px;
+            height:5px;
+            border: 2px solid white;
+            border-top: transparent;
+            border-right: transparent;
+            text-align: center;
+            display: block;
+            position: absolute;
+            top: 6px;
+            left:5px;
+            vertical-align: middle;
+            transform: rotate(-45deg);
+        }
+        .radio_type:checked+label{
+            color: #ff5740;
+        }
+    </style>
 </head>
 <body>
 <div class="weui-cells weui-cells_radio">
@@ -26,7 +79,7 @@
                     </div>
                 </div>
                 <div class="weui-cell__ft">
-                    <input type="radio" class="weui-check" value="1" name="orderType" id="x11" checked="checked">
+                    <input type="radio" class="radio_type" value="1" name="orderType" id="x11" checked="checked">
                     <span class="weui-icon-checked"></span>
                 </div>
             </label>
@@ -40,9 +93,10 @@
 
                 </div>
                 <div class="weui-cell__ft">
-                    <input type="radio" name="orderType" value="2" class="weui-check" id="x12">
+                    <input type="radio" name="orderType" value="2" class="radio_type" id="x12">
                     <span class="weui-icon-checked"></span>
                 </div>
+
             </label>
             <label class="weui-cell weui-check__label" for="x13">
                 <div class="weui-cell__bd">
@@ -52,7 +106,7 @@
                 </div>
                 </div>
                 <div class="weui-cell__ft">
-                    <input type="radio" name="orderType" value="3" class="weui-check" id="x13">
+                    <input type="radio" name="orderType" value="3" class="radio_type" id="x13">
                     <span class="weui-icon-checked"></span>
                 </div>
             </label>
@@ -84,16 +138,16 @@
                 <div class="weui-cell__bd" id="showHtml">
                     <input type="hidden" id="addrId" value="${(model.id)!""}"/>
 
-                    <p id="nameAndPhone"><span >${(model.receiveName)!"请选择地址"}&nbsp;&nbsp;</span><span style="font-size: 10px">${(model.receivePhone)!""}</span></span></p>
+                    <p id="nameAndPhone"><span >${(model.receiveName)!"请选择地址"}&nbsp;&nbsp;</span><span style="font-size: 12px">${(model.receivePhone)!""}</span></span></p>
 
-                    <p style="font-size: 10px;margin-top: 5px" id="addr">${(model.receiveAddr)!""}</p>
+                    <p style="font-size: 12px;margin-top: 5px" id="addr">${(model.receiveAddr)!""}</p>
                 </div>
                 <div class="weui-cell__ft"></div>
             </a>
         </div>
     </div>
 
-    <a href="#" onclick="toDiancan()" style="margin-right: 15px;margin-left: 15px;border-radius: 30px;margin-bottom: 50px;margin-top: 20px" class="weui-btn weui-btn_primary">下一步</a>
+    <a href="#" onclick="toDiancan()" style="margin-right: 15px;margin-left: 15px;border-radius: 30px;margin-bottom: 50px;margin-top: 20px;background-color: #ff5740" class="weui-btn weui-btn_primary">下一步</a>
 </div>
 
 
@@ -103,7 +157,7 @@
     <div class="weui-popup__modal">
         <div class="toolbar">
             <div class="toolbar-inner">
-                <a href="javascript:;" class="picker-button close-popup">确定</a>
+                <a href="javascript:;" class="picker-button close-popup" style="color: #ff5740">确定</a>
 
                 <h1 class="title">选择地址</h1>
             </div>
@@ -121,7 +175,7 @@
                             <p id="addr">${emp.receiveAddr!}</p>
                         </div>
                         <div class="weui-cell__ft">
-                            <input type="radio" class="weui-check" <#if emp.id == model.id>checked="checked"</#if>
+                            <input type="radio" class="radio_type" <#if emp.id == model.id>checked="checked"</#if>
                                    value="${emp.id!}" name="addrs">
                             <span class="weui-icon-checked"></span>
                         </div>
@@ -139,7 +193,7 @@
     <div class="weui-popup__modal">
         <div class="toolbar">
             <div class="toolbar-inner">
-                <a href="javascript:;" class="picker-button close-popup">关闭</a>
+                <a href="javascript:;" class="picker-button close-popup" style="color: #ff5740">关闭</a>
 
                 <h1 class="title">新增收货地址</h1>
             </div>
@@ -167,7 +221,7 @@
                         <input class="weui-input" name="receiveAddr" id="receiveAddr" placeholder="请输入详细地址">
                     </div>
                 </div>
-                <a href="javascript:;" onclick="saveAddr()" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;margin-right: 15px;border-radius: 30px;margin-left: 15px;margin-bottom: 50px;">保存</a>
+                <a href="javascript:;" onclick="saveAddr()" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;margin-right: 15px;border-radius: 30px;margin-left: 15px;margin-bottom: 50px;background-color: #ff5740">保存</a>
             </div>
         </div>
     </div>

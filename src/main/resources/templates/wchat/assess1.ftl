@@ -23,6 +23,7 @@
         <div class="weui-cell__bd">
             <input class="weui-input" id="weight" type="number"  placeholder="请输入体重，单位kg">
         </div>
+
     </div>
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">腰围:</label></div>
@@ -61,7 +62,7 @@
             });
             $("#sport").select({
                 title: "运动强度",
-                items: [{title: "很少运动", value: 1.1}, {title: "每周走步2-3次，每次40分钟以上", value: 1.15},{title: "每周慢跑3次以上，每次40分钟以上", value: 1.2}]
+                items: [{title: "很少运动", value: 1.1}, {title: "每周走步2-3次,每次40分钟以上", value: 1.15},{title: "每周慢跑3次以上,每次40分钟以上", value: 1.2}]
             });
 
             function assessPage(){
