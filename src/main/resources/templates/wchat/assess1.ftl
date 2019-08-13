@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <title>HB热量评估</title>
+    <title>HB法·热量评估</title>
 <#include "../wx.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
 </head>
@@ -49,7 +49,7 @@
         </div>
     </div>
     <br>
-    <a href="javascript:;" onclick="assessPage()"style="margin-right: 15px;margin-left: 15px;border-radius: 30px;margin-bottom: 50px" class="weui-btn weui-btn_primary">开始评估</a>
+    <a href="javascript:;" onclick="assessPage()"style="margin-right: 15px;margin-left: 15px;border-radius: 30px;margin-bottom: 50px;background-color: #276fd4" class="weui-btn weui-btn_primary">开始评估</a>
 
     <div>
 
