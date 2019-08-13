@@ -4,7 +4,88 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <title>我的热量我知道</title>
+    <title>有品有味·热量评估</title>
+    <style>
+        .myweui{
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            height: 1px;
+            border-top: 1px solid #e5e5e5;
+            color: #e5e5e5;
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            -webkit-transform: scaleY(.5);
+            transform: scaleY(.5);
+            left: 15px;
+            z-index: 2;
+        }
+        .itembg{
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left: 10px;
+            margin-bottom: 10px;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 2px 20px 0px rgba(163, 197, 182, 0.35);
+            border-radius:20px;
+        }
+        .borderline{
+            border:1px #276fd4  solid;
+        }
+        label{
+            line-height: 20px;
+            display: inline-block;
+            margin-left: 5px;
+            margin-right:15px;
+            color: #777;
+        }
+        .radio_type{
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            display: inline-block;
+            position: relative;
+        }
+        .radio_type:before{
+            content: '';
+            width: 20px;
+            height: 20px;
+            /*border: 1px solid #7d7d7d;*/
+            display: inline-block;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        .radio_type:checked:before{
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 1px solid #276fd4;
+            background:#276fd4;
+            display: inline-block;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        .radio_type:checked:after{
+            content: '';
+            width: 10px;
+            height:5px;
+            border: 2px solid white;
+            border-top: transparent;
+            border-right: transparent;
+            text-align: center;
+            display: block;
+            position: absolute;
+            top: 6px;
+            left:5px;
+            vertical-align: middle;
+            transform: rotate(-45deg);
+        }
+        .radio_type:checked+label{
+            color: #276fd4;
+        }
+    </style>
+
 <#include "../wx.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
 </head>
@@ -12,24 +93,24 @@
 <div class="weui-cells weui-cells_form" >
     <div>
         <img src="/statics/img/ypyw/top_banner_img.png" width="100%" height="140px" />
-        <h3 style="position: absolute;top: 30px;left: 15px"  >
+        <h3 style="position: absolute;top: 30px;left: 15px;"  >
             我的热量我知道
         </h3>
-        <div style="position: absolute;top: 60px;left: 15px;font-size: 8px;"  >
-            根据个性化的数据
+        <div style="position: absolute;top: 60px;left: 15px;font-size: 8px;color:rgba(154,169,189,1);"  >
+
         </div>
-        <div style="position: absolute;top: 80px;left: 15px;font-size: 8px;"  >
-            计算评估每天摄入热量的合理范围
+        <div style="position: absolute;top: 80px;left: 15px;font-size: 8px;color:rgba(154,169,189,1);"  >
+            根据个性化的数据计算评估每天摄入热量的
         </div>
-        <div style="position: absolute;top: 100px;left: 15px;font-size: 8px;"  >
-            并合理搭配三大营养素的比例
+        <div style="position: absolute;top: 100px;left: 15px;font-size: 8px;color:rgba(154,169,189,1);"  >
+            合理范围并合理搭配三大营养素的比例
         </div>
 
     </div>
 
     <div class="weui-cell">请选择计算方法</div>
     <div class="weui-cells weui-cells_radio">
-        <label class="weui-cell weui-check__label" for="x11" >
+        <label class="weui-cell weui-check__label itembg  borderline" id="div11" for="x11" >
             <div class="weui-cell__bd">
 
                 <a  class="weui-media-box weui-media-box_appmsg" style="height: 30px">
@@ -44,12 +125,12 @@
             </div>
 
             <div class="weui-cell__ft">
-                <input type="radio" class="weui-check" value="1" name="calcType" id="x11"
+                <input type="radio" class="radio_type" value="1" name="calcType" id="x11"
                        checked="checked">
                 <span class="weui-icon-checked"></span>
             </div>
         </label>
-        <label class="weui-cell weui-check__label" for="x12">
+        <label class="weui-cell weui-check__label itembg" id="div12"  for="x12">
             <div class="weui-cell__bd">
                 <a  class="weui-media-box weui-media-box_appmsg"style="height: 30px">
                     <div class="weui-media-box__hd">
@@ -62,11 +143,12 @@
                 </a>
             </div>
             <div class="weui-cell__ft">
-                <input type="radio" name="calcType" value="2" class="weui-check" id="x12">
+                <input type="radio" name="calcType" value="2" class="radio_type" id="x12">
                 <span class="weui-icon-checked"></span>
+
+
             </div>
         </label>
-
 
     </div>
 
@@ -87,7 +169,7 @@
     <#--<p> 3、怀孕、哺乳期不适用。</p>-->
     </div>
     <br>
-    <a href="javascript:;" onclick="calcPage()" style="margin-right: 15px;margin-left: 15px;margin-bottom: 50px;border-radius: 30px;" class="weui-btn weui-btn_primary">开始评估</a>
+    <a href="javascript:;" onclick="calcPage()" style="margin-right: 15px;margin-left: 15px;margin-bottom: 50px;border-radius: 30px;background-color: #276fd4" class="weui-btn weui-btn_primary">开始评估</a>
     <div></div>
 <#--<div class="button">-->
 <#--<a href="javascript:;" onclick="start('/wx/start')"-->
@@ -104,5 +186,19 @@
         var calcType = $("input[name='calcType']:checked").val();
         window.location.href="/wx/calcPage"+'?type='+calcType;
     }
+
+    $(document).ready(function() {
+        $('input[type=radio][name=calcType]').change(function() {
+            if (this.value == 1) {
+
+                $("#div11").addClass("borderline"); //添加样式
+                $("#div12").removeClass("borderline"); //
+            }
+            else if (this.value == 2) {
+                $("#div12").addClass("borderline"); //添加样式
+                $("#div11").removeClass("borderline"); //
+            }
+        });
+    });
 
 </script>

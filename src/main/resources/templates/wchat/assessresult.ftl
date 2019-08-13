@@ -5,6 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>评估结果</title>
+    <style>
+        .textcolor{
+            color: #949b9f;
+        }
+
+    </style>
 <#include "../wx.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
 
@@ -54,19 +60,19 @@
       </div>
 
     </div>
-    <div class="weui-cell">
-        您的体质指数(BMI)为:${model.bmi!}属于：${model.bmiRes!}
-    </div>
-    <div class="weui-cell">
+    <#--<div class="weui-cell">-->
+        <#--您的体质指数(BMI)为:${model.bmi!}属于：${model.bmiRes!}-->
+    <#--</div>-->
+    <div class="weui-cell textcolor">
         体型(腹部)：${model.centerObesityRes!}
     </div>
-    <div class="weui-cell">
+    <div class="weui-cell textcolor">
         您的理想体重为：${model.normalWeightDown!}KG ~ ${model.normalWeightDown!}KG
     </div>
-    <div class="weui-cell">
+    <div class="weui-cell textcolor">
         您目前超重：${model.overWeight!}
     </div>
-    <div class="weui-cell">
+    <div class="weui-cell textcolor" >
         每日摄取热量建议为：${model.cal!}Kcal
     </div>
 <div class="" style="display:flex;flex-direction: row;height: 50px;align-items: center">
