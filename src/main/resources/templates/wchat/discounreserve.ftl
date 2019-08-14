@@ -6,107 +6,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>优惠预订</title>
 <#include "../wx.ftl"/>
-<style type="text/css">
-    .bgback{  margin-left: 10%;
-              margin-right: 10%;
-              height: 12%;
-              display: flex;
-              align-items: center;
-              background-color: #ffffff; }
-     .margintop{
-         margin-top: 4%;
-     }
-    .line{
-          margin-left: 5%;
-          margin-right: 5%;
-          height: 1px;
-          background: #0C0C0C;
-      }
-    .fontsize{
-        font-size: 24px;
-        margin-left: 10px;
-    }
-    .input{
-        margin-left: auto;
-        outline-style: none ;
-        border: 1px solid #ccc;
-        border-radius: 1px;
-        width: 200px;
-        font-size: 24sp;
-        height: 30px;
-        font-family: "Microsoft soft";
-        /*font-weight: 700;*/
-        font-family: "Microsoft soft";
-        /*background: url("../../static/statics/img/down.png") no-repeat 20px 20px*/
-    }
-    .selected{
-        height: 30px;
-        margin-left: auto;
-        outline-style: none ;
-        border: 1px solid #ccc;
-        border-radius: 1px;
-        width: 80px;
-        font-size: 24sp;
-        /*font-weight: 700;*/
-        font-family: "Microsoft soft";
-        /*background: url("../../static/statics/img/down.png") no-repeat 20px 20px*/
-    }
-    .button{
-        border-radius:12px;
-        margin-left: 15%;
-        margin-right: 15%;
-        height: 20px;
-        display: block;border: 14px solid #06CB06;
-        background: #06CB06;margin-top: 15%;text-align: center
-    }
+    <script type="text/javascript" src="/wchat/js/index.js"></script>
+    <script type="text/javascript" src="/wchat/js/iosSelect.js"></script>
+    <script type="text/javascript" src="/wchat/js/data.js"></script>
+    <link rel="stylesheet" href="/wchat/js/iosSelect.css">
+    <style type="text/css">
+        .bgback{  margin-left: 10%;
+            margin-right: 10%;
+            height: 12%;
+            display: flex;
+            align-items: center;
+            background-color: #ffffff; }
+        .margintop{
+            margin-top: 4%;
+        }
+        .line{
+            margin-left: 5%;
+            margin-right: 5%;
+            height: 1px;
+            background: #0C0C0C;
+        }
+        .fontsize{
+            font-size: 24px;
+            margin-left: 10px;
+        }
+        .input{
+            margin-left: auto;
+            outline-style: none ;
+            border: 1px solid #ccc;
+            border-radius: 1px;
+            width: 200px;
+            font-size: 24sp;
+            height: 30px;
+            font-family: "Microsoft soft";
+            /*font-weight: 700;*/
+            font-family: "Microsoft soft";
+            /*background: url("../../static/statics/img/down.png") no-repeat 20px 20px*/
+        }
+        .selected{
+            height: 30px;
+            margin-left: auto;
+            outline-style: none ;
+            border: 1px solid #ccc;
+            border-radius: 1px;
+            width: 80px;
+            font-size: 24sp;
+            /*font-weight: 700;*/
+            font-family: "Microsoft soft";
+            /*background: url("../../static/statics/img/down.png") no-repeat 20px 20px*/
+        }
+        .button{
+            border-radius:12px;
+            margin-left: 15%;
+            margin-right: 15%;
+            height: 20px;
+            display: block;border: 14px solid #06CB06;
+            background: #06CB06;margin-top: 15%;text-align: center
+        }
 
- </style>
+    </style>
 </head>
 <body>
 
 <!-- 容器 -->
-<div>
-     <div>
-         <div style="display: flex;justify-content: center ;background-color:#24aa7d ; align-items:center; ">
-             <a style="height:40px;font-size: 24px; color: #ffffff"> 优惠预订</a>
-         </div>
-         <div class="weui-msg__text-area" style="margin-left: 15%;margin-right: 15%;margin-top: 15px">
-             <p class="weui-msg__desc">优惠预订,您可以在此选择优惠。优惠类型以及时间如下,敬请选择</p>
-         </div>
+<div class="weui-cells weui-cells_form">
+
+    <div class="" style="display:flex;flex-direction: row;height: 42px;align-items: center">
+        <div style="background-color: #276fd4 ;width: 2px ;height: 20px;margin-left: 15px"></div>
+        <div style="margin-left: 20px;font-size: 16px">优惠预定介绍</div>
+    </div>
+    <div class="weui-msg__text-area" style="margin-left: 15px;margin-right: 15px;margin-top: 15px">
+        <p class="weui-msg__desc">优惠预订,您可以在此选择优惠。优惠类型以及时间如下,敬请选择</p>
+    </div>
 
 
-         <div class="bgback margintop">
-             <label  style="float:left; line-heighe:45px; font-size: 24sp">套餐类型:</label>
-             <select class="selected" id="numbers" >
-                 <option value="1" style="font-size: 23sp" selected>周套餐</option>
-                <option value="2" style="font-size: 23sp">月套餐</option>
-             </select>
-         </div>
-         <#--<div class="line"></div>-->
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">手机<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="weight" maxlength="11"   type="number" placeholder="请输入手机号">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">备注:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="waistline" type="number" placeholder="请输入备注">
+        </div>
+    </div>
 
-         <div class="bgback margintop">
-             <label  style="float:left; line-heighe:45px; font-size: 24sp">手机号:</label>
-             <input type="text" maxlength="11" type='number'class="input" id="phone" placeholder=""  >   </input>
-         </div>
-         <#--<div class="line"></div>-->
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">套餐类型:<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="ctype"  readonly="readonly" placeholder="套餐类型">
+        </div>
+        <div id="ctypedom" class="weui-cell__hd" style="color: #276fd4;margin-right: 5px">选择</div>
+        <img  src="/statics/img/ypyw/right.png" width="10px">
+    </div>
 
-         <div class="bgback margintop">
-             <label style="float:left; line-heighe:45px; font-size: 24sp">备注:</label>
-             <input type="text" maxlength="10"  class="input" id="remark" placeholder=""  >   </input>
-         </div>
+    <br/>
 
-         <div  class="button">
-             <a href="javascript:;" onclick="savediscounreserve()"
-                style="font-size: 24sp;padding: 2px 6px;
-            display: block;color: #ffffff;line-height:20px " >确定</a>
-         </div>
+    <a href="javascript:;" onclick="savediscounreserve()" style="margin-right: 15px;margin-left: 15px;margin-bottom: 50px;margin-top50px;border-radius: 30px;background-color: #276fd4" class="weui-btn weui-btn_primary">确定</a>
 
-     </div>
+
+
 
 
 </div>
 <script type="text/javascript">
 
+    var ctypeDom = document.querySelector('#ctypedom');
+    var ctypedom = document.querySelector('#ctype');
+    ctypeDom.addEventListener('click', function () {
+        var bankId = ctypeDom.dataset['value'];
+        var bankSelect = new IosSelect(1,
+                [typedata],
+                {
+                    container: '.container',
+                    title: '选择套餐',
+                    itemHeight: 50,
+                    itemShowCount: 3,
+                    oneLevelId: bankId,
+                    callback: function (selectOneObj) {
+                        ctypedom.value = selectOneObj.value;
+                    }
+                });
+    });
 
     function savediscounreserve() {
 
@@ -114,9 +137,8 @@
         var remark =  $("#remark").val();
         var phone= $("#phone").val();
 
-        $.showLoading("正在提交数据，请稍后");
 
-        var url="/wx/discountReserve?wxId=${wxId}&discounType="+discounType+"&remark="+remark;
+        var url="/wx/discounreserve?wxId=${wxId}&discounType="+discounType+"&remark="+remark;
         $.ajax({
             //请求方式
             type: "POST",
@@ -126,12 +148,10 @@
             //数据，json字符串
             //请求成功
             success: function (result) {
-                $.hideLoading();
-                $.toast("保存成功");
+                $.toast("保存成功", "cancel");
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
-                $.hideLoading();
                 $.toast("获取数据失败", "cancel");
             }
         });
