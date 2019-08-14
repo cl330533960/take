@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>健康餐品</title>
     <style>
-        .outadded_menu{
-
+        .myweui-count__decrease{
         }
     </style>
 <#include "../wx.ftl"/>
@@ -19,7 +18,7 @@
     <input type="hidden" id="orderType" name="orderType" value="${orderType!}"/>
 
     <div class="weui-cell">
-        <img src="/statics/img/ypyw/icon_address.png" width="20px" alt=""/>
+        <img src="/statics/img/ypyw/icon_address.png" width="30px" alt=""/>
         <div class="weui-cell__bd" style="margin-left: 15px">
             <input type="hidden" id="wxId" value="${wxId!}"/>
             <input type="hidden" id="addrId" value="${model.id!}"/>
@@ -113,7 +112,7 @@
         <div class="weui-cell__bd">
             <p>合计(不含运费)￥<span id="totalAmount" style="color: red">0</span></p>
         </div>
-        <a href="#" onclick="checkOrder()" style="border-radius: 20px;width:100px " class="weui-btn weui-btn_primary">支付</a>
+        <a href="#" onclick="checkOrder()" style="border-radius: 20px;width:100px;background-color: #ff5740" class="weui-btn weui-btn_primary">支付</a>
     </div>
 
 </div>
