@@ -7,11 +7,6 @@
 <body>
 <div class="layui-field-box">
     <form class="layui-form" action="">
-
-
-
-    <#include "common.ftl"/>
-
         <div class="layui-form-item">
             <label class="layui-form-label"><span class="span_must">*</span>用户名</label>
 
@@ -29,6 +24,9 @@
                      name="roleIdList[]" class="layui-input-normal"></div>
             </div>
         </div>
+
+
+    <#include "common.ftl"/>
 
 
 

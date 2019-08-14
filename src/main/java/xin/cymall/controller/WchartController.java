@@ -127,7 +127,7 @@ public class WchartController {
                         textMessage.setContent("你真的就是瓜皮\n没事别乱点击我\n瓜皮其实不是骂人的意思");
                         break;
                     case "czgood":
-                        textMessage.setContent("商务请联系110120119");
+                        textMessage.setContent("商务请联系有品有位");
                         break;
                     case "czgetmz":
 //                        1 主动向微信服务器发一个消息
@@ -574,7 +574,6 @@ public class WchartController {
     public R discountReserve(WxDiscounreserve wxDiscounreserve){
         SrvDiscounreserve srvDiscounreserve = new SrvDiscounreserve();
         SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxDiscounreserve.getWxId());
-        srvDiscounreserve.setId(UUID.generateId());
         srvDiscounreserve.setUserId(srvWxUser.getId());
         srvDiscounreserve.setDiscountStart(new Date());
         if(wxDiscounreserve.equals("1")){
@@ -881,7 +880,7 @@ public class WchartController {
      **/
     @RequestMapping(value = "getindex")
     public String getIndex(){
-        return "wchat/testhealthyfood";
+        return "wchat/calcassess";
     }
 
 
