@@ -78,8 +78,8 @@
          <div class="bgback margintop">
              <label  style="float:left; line-heighe:45px; font-size: 24sp">套餐类型:</label>
              <select class="selected" id="numbers" >
-                    <option value="2" style="font-size: 23sp">月套餐</option>
-                    <option value="1" style="font-size: 23sp" selected>周套餐</option>
+                 <option value="1" style="font-size: 23sp" selected>周套餐</option>
+                <option value="2" style="font-size: 23sp">月套餐</option>
              </select>
          </div>
          <#--<div class="line"></div>-->
@@ -114,8 +114,9 @@
         var remark =  $("#remark").val();
         var phone= $("#phone").val();
 
+        $.showLoading("正在提交数据，请稍后");
 
-        var url="/wx/discounreserve?wxId=${wxId}&discounType="+discounType+"&remark="+remark;
+        var url="/wx/discountReserve?wxId=${wxId}&discounType="+discounType+"&remark="+remark;
         $.ajax({
             //请求方式
             type: "POST",
@@ -125,10 +126,12 @@
             //数据，json字符串
             //请求成功
             success: function (result) {
-                $.toast("保存成功", "cancel");
+                $.hideLoading();
+                $.toast("保存成功");
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
+                $.hideLoading();
                 $.toast("获取数据失败", "cancel");
             }
         });

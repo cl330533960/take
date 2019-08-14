@@ -574,6 +574,7 @@ public class WchartController {
     public R discountReserve(WxDiscounreserve wxDiscounreserve){
         SrvDiscounreserve srvDiscounreserve = new SrvDiscounreserve();
         SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxDiscounreserve.getWxId());
+        srvDiscounreserve.setId(UUID.generateId());
         srvDiscounreserve.setUserId(srvWxUser.getId());
         srvDiscounreserve.setDiscountStart(new Date());
         if(wxDiscounreserve.equals("1")){
