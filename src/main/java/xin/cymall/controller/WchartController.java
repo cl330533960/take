@@ -342,17 +342,17 @@ public class WchartController {
 
 
     @RequestMapping(value = "/couponList",method = { RequestMethod.GET, RequestMethod.POST })
-    public String couponList(Model model,@RequestParam String wxId,@RequestParam String isValid) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("userId", "ea0891f465c94367b7607ad1834e715b");
-        map.put("isValid", isValid);
-        map.put("sidx", "start_time");
-
-        List<SrvCoupon> list = srvCouponService.getList(map);
-        for(SrvCoupon srvCoupon : list){
-            srvCoupon.setType(CouponTypeEnum.getValue(srvCoupon.getType()));
-        }
-        model.addAttribute("model", list);
+    public String couponList(Model mode) {
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("userId", "ea0891f465c94367b7607ad1834e715b");
+//        map.put("isValid", isValid);
+//        map.put("sidx", "start_time");
+//
+//        List<SrvCoupon> list = srvCouponService.getList(map);
+//        for(SrvCoupon srvCoupon : list){
+//            srvCoupon.setType(CouponTypeEnum.getValue(srvCoupon.getType()));
+//        }
+//        model.addAttribute("model", list);
         return "wchat/couponlist";
     }
 
