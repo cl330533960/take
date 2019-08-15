@@ -28,7 +28,7 @@ public class BaiduMapUtil {
         //4 解析结果
         int code = response.getStatusLine().getStatusCode();
         System.out.println(code);
-        String[] location = new String[]{};
+        String[] location = new String[2];
         if(code == 200) {
             HttpEntity entity = response.getEntity();
             String locationJsonStr = EntityUtils.toString(entity);

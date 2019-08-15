@@ -127,7 +127,7 @@ public class WchartController {
                         textMessage.setContent("你真的就是瓜皮\n没事别乱点击我\n瓜皮其实不是骂人的意思");
                         break;
                     case "czgood":
-                        textMessage.setContent("商务请联系有品有位");
+                        textMessage.setContent("商务请联系110120119");
                         break;
                     case "czgetmz":
 //                        1 主动向微信服务器发一个消息
@@ -342,17 +342,17 @@ public class WchartController {
 
 
     @RequestMapping(value = "/couponList",method = { RequestMethod.GET, RequestMethod.POST })
-    public String couponList(Model mode) {
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("userId", "ea0891f465c94367b7607ad1834e715b");
-//        map.put("isValid", isValid);
-//        map.put("sidx", "start_time");
-//
-//        List<SrvCoupon> list = srvCouponService.getList(map);
-//        for(SrvCoupon srvCoupon : list){
-//            srvCoupon.setType(CouponTypeEnum.getValue(srvCoupon.getType()));
-//        }
-//        model.addAttribute("model", list);
+    public String couponList(Model model,@RequestParam String wxId,@RequestParam String isValid) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", "ea0891f465c94367b7607ad1834e715b");
+        map.put("isValid", isValid);
+        map.put("sidx", "start_time");
+
+        List<SrvCoupon> list = srvCouponService.getList(map);
+        for(SrvCoupon srvCoupon : list){
+            srvCoupon.setType(CouponTypeEnum.getValue(srvCoupon.getType()));
+        }
+        model.addAttribute("model", list);
         return "wchat/couponlist";
     }
 
@@ -574,6 +574,7 @@ public class WchartController {
     public R discountReserve(WxDiscounreserve wxDiscounreserve){
         SrvDiscounreserve srvDiscounreserve = new SrvDiscounreserve();
         SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxDiscounreserve.getWxId());
+        srvDiscounreserve.setId(UUID.generateId());
         srvDiscounreserve.setUserId(srvWxUser.getId());
         srvDiscounreserve.setDiscountStart(new Date());
         if(wxDiscounreserve.equals("1")){
@@ -690,9 +691,9 @@ public class WchartController {
     @RequestMapping("/toPayInit")
     @ResponseBody
     public SortedMap<String,String> toPay(HttpServletRequest request,
-                                    @RequestParam(value="payMoney",required=true) String payMoney,
-                                    @RequestParam(value="wxId",required=true) String wxId,
-                                    @RequestParam(value="orderNo",required=true) String orderNo){
+                                          @RequestParam(value="payMoney",required=true) String payMoney,
+                                          @RequestParam(value="wxId",required=true) String wxId,
+                                          @RequestParam(value="orderNo",required=true) String orderNo){
         Map<String,Object> map = new HashMap<>();
 //        String orderId = String.valueOf(WXPayUtil.generateUUID());
         String noncestr = WXPayUtil.generateNonceStr();
@@ -880,7 +881,7 @@ public class WchartController {
      **/
     @RequestMapping(value = "getindex")
     public String getIndex(){
-        return "wchat/calcassess";
+        return "wchat/testhealthyfood";
     }
 
 

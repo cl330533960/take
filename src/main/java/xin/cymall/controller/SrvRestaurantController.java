@@ -26,8 +26,8 @@ import xin.cymall.service.SysUserService;
 
 
 /**
- * 
- * 
+ *
+ *
  * @author chenyi
  * @email 228112142@qq.com
  * @date 2019-06-21 18:55:54
@@ -35,13 +35,13 @@ import xin.cymall.service.SysUserService;
 @Controller
 @RequestMapping("srvrestaurant")
 public class SrvRestaurantController extends  AbstractController{
-	@Autowired
-	private SrvRestaurantService srvRestaurantService;
+    @Autowired
+    private SrvRestaurantService srvRestaurantService;
     @Autowired
     private SysUserService sysUserService;
     @Autowired
     private AreaService areaService;
-	
+
     /**
      * 跳转到列表页
      */
@@ -50,28 +50,28 @@ public class SrvRestaurantController extends  AbstractController{
     public String list() {
         return "srvrestaurant/list";
     }
-    
-	/**
-	 * 列表数据
-	 */
+
+    /**
+     * 列表数据
+     */
     @ResponseBody
-	@RequestMapping("/listData")
-	@RequiresPermissions("srvrestaurant:list")
-	public R listData(@RequestParam Map<String, Object> params){
-		//查询列表数据
+    @RequestMapping("/listData")
+    @RequiresPermissions("srvrestaurant:list")
+    public R listData(@RequestParam Map<String, Object> params){
+        //查询列表数据
         Query query = new Query(params);
 
-		List<SrvRestaurant> srvRestaurantList = srvRestaurantService.getList(query);
+        List<SrvRestaurant> srvRestaurantList = srvRestaurantService.getList(query);
         for(SrvRestaurant restaurant : srvRestaurantList){
             restaurant.setArea(srvRestaurantService.getArea(restaurant.getArea()));
         }
 
-		int total = srvRestaurantService.getCount(query);
-		
-		PageUtils pageUtil = new PageUtils(srvRestaurantList, total, query.getLimit(), query.getPage());
-		
-		return R.ok().put("page", pageUtil);
-	}
+        int total = srvRestaurantService.getCount(query);
+
+        PageUtils pageUtil = new PageUtils(srvRestaurantList, total, query.getLimit(), query.getPage());
+
+        return R.ok().put("page", pageUtil);
+    }
 
     /**
      * 跳转到新增页面
@@ -88,14 +88,14 @@ public class SrvRestaurantController extends  AbstractController{
     @RequestMapping("/edit/{id}")
     @RequiresPermissions("srvrestaurant:update")
     public String edit(Model model, @PathVariable("id") String id){
-		SrvRestaurant srvRestaurant = srvRestaurantService.get(id);
+        SrvRestaurant srvRestaurant = srvRestaurantService.get(id);
         model.addAttribute("model",srvRestaurant);
         return "srvrestaurant/edit";
     }
 
-	/**
-	 * 信息
-	 */
+    /**
+     * 信息
+     */
     @ResponseBody
     @RequestMapping("/info/{id}")
     @RequiresPermissions("srvrestaurant:info")
@@ -105,13 +105,13 @@ public class SrvRestaurantController extends  AbstractController{
     }
 
     /**
-	 * 保存
-	 */
+     * 保存
+     */
     @ResponseBody
     @SysLog("保存")
-	@RequestMapping("/save")
-	@RequiresPermissions("srvrestaurant:save")
-	public R save(@RequestBody SrvRestaurant srvRestaurant) throws IOException {
+    @RequestMapping("/save")
+    @RequiresPermissions("srvrestaurant:save")
+    public R save(@RequestBody SrvRestaurant srvRestaurant) throws IOException {
         String[] parentids = srvRestaurant.getParentAreaIds();
         if(parentids.length > 0)
             srvRestaurant.setArea(String.join(",", parentids));
@@ -130,29 +130,31 @@ public class SrvRestaurantController extends  AbstractController{
         user.setPassword(DefaultEnum.PASSWORD.getCode());
         user.setCreateUserId(getUserId());
         user.setStatus(Integer.parseInt(StateEnum.ENABLE.getCode()));
-		srvRestaurantService.save(srvRestaurant, user);
-        String areaStr = areaService.getAreaNameStr(srvRestaurant.getArea());
-        String[] areas = areaStr.split(",");
-        if (areas.length == 3) {
+        srvRestaurantService.save(srvRestaurant, user);
+        if(!StringUtil.isEmpty(srvRestaurant.getArea())) {
+            String areaStr = areaService.getAreaNameStr(srvRestaurant.getArea());
+            String[] areas = areaStr.split(",");
+            if (areas.length == 3) {
 //            DaDaExpressUtil.addShop(srvRestaurant, areas[1], areas[2]);
+            }
         }
         return R.ok();
     }
-	
-	/**
-	 * 修改
-	 */
+
+    /**
+     * 修改
+     */
     @ResponseBody
     @SysLog("修改")
-	@RequestMapping("/update")
-	@RequiresPermissions("srvrestaurant:update")
-	public R update(@RequestBody SrvRestaurant srvRestaurant){
+    @RequestMapping("/update")
+    @RequiresPermissions("srvrestaurant:update")
+    public R update(@RequestBody SrvRestaurant srvRestaurant){
         String[] parentids = srvRestaurant.getParentAreaIds();
         srvRestaurant.setArea(String.join(",", parentids));
-		srvRestaurantService.update(srvRestaurant);
-		
-		return R.ok();
-	}
+        srvRestaurantService.update(srvRestaurant);
+
+        return R.ok();
+    }
 
     /**
      * 启用
@@ -163,7 +165,7 @@ public class SrvRestaurantController extends  AbstractController{
     @RequiresPermissions("srvrestaurant:update")
     public R enable(@RequestBody String[] ids){
         String stateValue=StateEnum.ENABLE.getCode();
-		srvRestaurantService.updateState(ids, stateValue);
+        srvRestaurantService.updateState(ids, stateValue);
         return R.ok();
     }
     /**
@@ -175,22 +177,22 @@ public class SrvRestaurantController extends  AbstractController{
     @RequiresPermissions("srvrestaurant:update")
     public R limit(@RequestBody String[] ids){
         String stateValue=StateEnum.LIMIT.getCode();
-		srvRestaurantService.updateState(ids,stateValue);
+        srvRestaurantService.updateState(ids,stateValue);
         return R.ok();
     }
-	
-	/**
-	 * 删除
-	 */
+
+    /**
+     * 删除
+     */
     @ResponseBody
     @SysLog("删除")
-	@RequestMapping("/delete")
-	@RequiresPermissions("srvrestaurant:delete")
-	public R delete(@RequestBody String[] ids){
-		srvRestaurantService.deleteBatch(ids);
-		
-		return R.ok();
-	}
+    @RequestMapping("/delete")
+    @RequiresPermissions("srvrestaurant:delete")
+    public R delete(@RequestBody String[] ids){
+        srvRestaurantService.deleteBatch(ids);
+
+        return R.ok();
+    }
 
     /**
      * 获取下级地区

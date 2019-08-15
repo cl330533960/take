@@ -21,14 +21,14 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">所属角色</label>
+        <#--<div class="layui-form-item">-->
+            <#--<label class="layui-form-label">所属角色</label>-->
 
-            <div class="layui-input-normal">
-                <div cyType="selectTool" cyProps="url:'/sys/role/findAll',multiple:'true'" value=""
-                     name="roleIdList[]" class="layui-input-normal"></div>
-            </div>
-        </div>
+            <#--<div class="layui-input-normal">-->
+                <#--<div cyType="selectTool" cyProps="url:'/sys/role/findAll',multiple:'true'" value=""-->
+                     <#--name="roleIdList[]" class="layui-input-normal"></div>-->
+            <#--</div>-->
+        <#--</div>-->
 
 
 
