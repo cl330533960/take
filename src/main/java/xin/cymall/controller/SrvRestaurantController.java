@@ -131,12 +131,10 @@ public class SrvRestaurantController extends  AbstractController{
         user.setCreateUserId(getUserId());
         user.setStatus(Integer.parseInt(StateEnum.ENABLE.getCode()));
 		srvRestaurantService.save(srvRestaurant, user);
-        if(!StringUtil.isEmpty(srvRestaurant.getArea())) {
-            String areaStr = areaService.getAreaNameStr(srvRestaurant.getArea());
-            String[] areas = areaStr.split(",");
-            if (areas.length == 3) {
+        String areaStr = areaService.getAreaNameStr(srvRestaurant.getArea());
+        String[] areas = areaStr.split(",");
+        if (areas.length == 3) {
 //            DaDaExpressUtil.addShop(srvRestaurant, areas[1], areas[2]);
-            }
         }
         return R.ok();
     }
