@@ -131,14 +131,16 @@
                 });
     });
 
+
     function savediscounreserve() {
 
         var discounType =  $('#numbers option:selected') .val();//选中的值
         var remark =  $("#remark").val();
         var phone= $("#phone").val();
 
+        $.showLoading("正在提交数据，请稍后");
 
-        var url="/wx/discounreserve?wxId=${wxId}&discounType="+discounType+"&remark="+remark;
+        var url="/wx/discountReserve?wxId=${wxId}&discounType="+discounType+"&remark="+remark;
         $.ajax({
             //请求方式
             type: "POST",
@@ -148,10 +150,12 @@
             //数据，json字符串
             //请求成功
             success: function (result) {
-                $.toast("保存成功", "cancel");
+                $.hideLoading();
+                $.toast("保存成功");
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
+                $.hideLoading();
                 $.toast("获取数据失败", "cancel");
             }
         });
