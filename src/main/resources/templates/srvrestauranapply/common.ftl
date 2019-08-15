@@ -52,7 +52,9 @@
             <label class="layui-form-label">申请时间<span class="span_must">*</span></label>
             <div class="layui-input-normal">
                 <input type="text"  name="applyTime" maxlength="20" lay-verify="required"
-                 value="${(model.applyTime)!""}"  placeholder="请输入申请时间"  class="layui-input">
+                       value="${(model.applyTime?string("yyyy-MM-dd"))!""}"  placeholder="请输入申请时间"  class="layui-input">
+
+
             </div>
         </div>
 
