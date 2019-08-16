@@ -25,7 +25,7 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">腰围:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="waistline" readonly="readonly" type="number" placeholder="请输入腰围，单位厘米">
+            <input class="weui-input" id="waistline" readonly="readonly"  placeholder="请输入腰围，单位厘米">
         </div>
         <div id="waistlinedom" class="weui-cell__hd" style="color: #276Dcc">选择</div>
     </div>
@@ -66,6 +66,9 @@
                     $.toptip('性别为必须项', 'error');
                     return;
                 }
+
+                var waistlinedata =$("#waistline").val();
+                waistline=waistlinedata.split("cm")[0];
                 window.location.href = "/wx/assessTwo?weight=" + weight +  "&sex=" + sex + "&waistline=" + waistline;
 
             }

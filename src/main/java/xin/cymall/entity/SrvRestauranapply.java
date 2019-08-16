@@ -1,5 +1,7 @@
 package xin.cymall.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,6 +30,7 @@ public class SrvRestauranapply implements Serializable {
 	/**健康等级**/
 	private String healthLevel;
 	/**申请时间**/
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	private Date applyTime;
 	/**状态**/
 	private String status;

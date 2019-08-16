@@ -270,7 +270,7 @@ public class GetDataController {
         }
         baos.flush();
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("image/jpeg;charset=UTF-8");
+//        response.setContentType("image/jpeg;charset=UTF-8");
         response.setContentLength(baos.size());
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.write(baos.toByteArray());

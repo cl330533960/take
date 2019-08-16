@@ -32,7 +32,7 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">腰围:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="waistline" type="number"  readonly="readonly" placeholder="请输入腰围，单位厘米">
+            <input class="weui-input" id="waistline" readonly="readonly" placeholder="请输入腰围，单位厘米">
         </div>
         <div id="waistlinedom" class="weui-cell__hd" style="color: #276Dcc">选择</div>
     </div>
@@ -83,6 +83,7 @@
                 var sex = $("#sex").attr("data-values");
                 var sport = parseFloat($("#sport").attr("data-values"));
                 var age =parseInt($("#age").val());
+
                 var waistline = parseFloat($("#waistline").val());
 
 
@@ -109,6 +110,10 @@
                     $.toptip('运动系数为必须项', 'error');
                     return;
                 }
+
+                var waistlinedata =$("#waistline").val();
+                waistline=waistlinedata.split("cm")[0];
+
                 window.location.href = "/wx/assessOne?height="+height+"&weight="+weight+"&sex="+sex+"&waistline="+waistline+"&sportRatio="+sport+"&age="+age;
             }
 
