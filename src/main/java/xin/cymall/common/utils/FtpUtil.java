@@ -136,6 +136,8 @@ public class FtpUtil {
 			ftp.connect(ftpHost, ftpPort);
 			// 2.登录服务器 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
 			ftp.login(ftpUser, ftpPassword);
+
+			ftp.setControlEncoding("utf-8"); // 中文支持
 			//设置二进制格式，防止编码转换，造成换行符失效
 			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
 			// 3.判断登陆是否成功
@@ -152,11 +154,8 @@ public class FtpUtil {
 			// 记录是否找到对应文件
 			for (FTPFile ff : fs) {
 				// 解决中文乱码问题，两次解码
-				byte[] bytes = ff.getName().getBytes("iso-8859-1");
-				String fn = new String(bytes, "utf-8");
-				if (fn.equals(fileName)) {
+				if(fileName.equals(ff.getName()))
 					inputStream = ftp.retrieveFileStream(new String((ftpPath + fileName).getBytes("utf-8"),"iso-8859-1"));
-				}
 			}
 			ftp.logout();
 		} catch (IOException e) {

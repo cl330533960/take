@@ -73,7 +73,7 @@
 			            			
 		          <th width="10%" param="{name:'addr'}">地址</th>
 			            			
-		          <th width="10%" param="{name:'healthLevel'}">健康等级</th>
+		          <th width="10%" param="{name:'healthLevel',}">健康等级</th>
 			            			
 		          <th width="10%" param="{name:'applyTime'}">申请时间</th>
 			            			

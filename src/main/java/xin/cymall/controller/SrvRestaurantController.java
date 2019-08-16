@@ -116,6 +116,8 @@ public class SrvRestaurantController extends  AbstractController{
         if(parentids.length > 0)
             srvRestaurant.setArea(String.join(",", parentids));
 
+
+
         SysUser existUser = sysUserService.queryByUserName(srvRestaurant.getUsername());
         if(existUser!=null){
             return R.error("用户名已存在!");
