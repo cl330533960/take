@@ -390,7 +390,7 @@ public class WchartController {
         Double normalWeightUp = CalcBmiUtil.round(upRes, 1);
         Double downRes = CalcBmiUtil.calcRes(srvBaseSet.getNormalWeightDown(), new Double[]{assessOne.getHeight() / 100, assessOne.getHeight() / 100}, new String[]{"H", "H"});
         Double normalWeightDown = CalcBmiUtil.round(downRes, 1);
-        String overWeight = "";
+        String overWeight = "0";
         if(assessOne.getWeight() - normalWeightUp  > 0){
             overWeight = String.valueOf(assessOne.getWeight() - normalWeightUp);
         }

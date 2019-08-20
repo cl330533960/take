@@ -67,10 +67,10 @@
         体型(腹部)：${model.centerObesityRes!}
     </div>
     <div class="weui-cell textcolor">
-        您的理想体重为：${model.normalWeightDown!}KG ~ ${model.normalWeightDown!}KG
+        您的理想体重为：${model.downRes!}KG ~ ${model.upRes!}KG
     </div>
     <div class="weui-cell textcolor">
-        您目前超重：${model.overWeight!}
+        您目前超重：${model.overWeight!0}KG
     </div>
     <div class="weui-cell textcolor" >
         每日摄取热量建议为：${model.cal!}Kcal
@@ -83,9 +83,9 @@
         <div class="weui_media_bd">
             <h4 class="weui_media_title" style="color:#ff5740 ">CRD-1500方案</h4>
 
-            <p class="weui_media_desc" style="margin-top: 10px">早餐:450kcal </p>
-            <p class="weui_media_desc"style="margin-top: 10px">午餐:600kcal</p>
-            <p class="weui_media_desc"style="margin-top: 10px">晚餐:450kcal</p>
+            <p class="weui_media_desc" style="margin-top: 10px">早餐:${model.cal!*0.3}kcal </p>
+            <p class="weui_media_desc"style="margin-top: 10px">午餐:${model.cal!*0.4}kcal</p>
+            <p class="weui_media_desc"style="margin-top: 10px">晚餐:${model.cal!*0.3}kcal</p>
 
             <p class="weui_media_desc"style="margin-top: 10px">蛋白质、脂肪、碳水化合物比例建议:2:3:5</p>
         </div>
