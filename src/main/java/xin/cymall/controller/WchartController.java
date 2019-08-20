@@ -239,9 +239,9 @@ public class WchartController {
         List<SrvMerchanopinion> list = srvMerchanopinionService.getList(params);
         String imagePath = String.valueOf(foodMap.get("image_path"));
         String[] imgs = imagePath.split(",");
-        foodMap.put("commentList",list);
+        foodMap.put("commentList", list);
         foodMap.put("imageList", imgs);
-        model.addAttribute("model",foodMap);
+        model.addAttribute("model", foodMap);
         return "wchat/healthyfooddetil";
     }
 
@@ -610,6 +610,9 @@ public class WchartController {
     public String calcCenterObesity(String sex,Double waistline ){
         // 中心型肥胖： 中心型肥胖前期，85	<=	男性腰围 <90 ，80	<=	 女性腰围 <85 ，中心型肥胖，男性腰围>=90，女性腰围>=85
         String centerObesityRes = "因您未填写腰围数据，未能判定是否为中心型肥胖";
+        if(waistline == null){
+            return centerObesityRes;
+        }
         if("1".equals(sex) && waistline>0){
             if(waistline>=90){
                 centerObesityRes = "中心型肥胖";
@@ -618,7 +621,7 @@ public class WchartController {
             }else{
                 centerObesityRes = "正常";
             }
-        }else  if("1".equals(sex) && waistline > 0){
+        }else  if("2".equals(sex) && waistline > 0){
             if(waistline>=85){
                 centerObesityRes = "中心型肥胖";
             }else if (waistline >= 80 && waistline < 85){
