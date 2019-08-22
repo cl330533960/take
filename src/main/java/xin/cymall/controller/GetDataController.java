@@ -3,6 +3,7 @@ package xin.cymall.controller;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.ObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xin.cymall.common.enumresource.StateEnum;
@@ -30,7 +31,7 @@ import java.util.*;
  * Created by 陈熠
  * 2017/7/19.
  */
-@RestController
+@Controller
 @RequestMapping("/getData")
 public class GetDataController {
     @Autowired
@@ -270,7 +271,7 @@ public class GetDataController {
         }
         baos.flush();
         response.setCharacterEncoding("UTF-8");
-//        response.setContentType("image/jpeg;charset=UTF-8");
+        response.setContentType("image/jpeg;charset=UTF-8");
         response.setContentLength(baos.size());
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.write(baos.toByteArray());
