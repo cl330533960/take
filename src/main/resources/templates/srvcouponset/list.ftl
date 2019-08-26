@@ -67,9 +67,9 @@
 		                			
 		          <th width="10%" param="{name:'amount'}">金额</th>
 			            			
-		          <th width="10%" param="{name:'validDay'}">有效期</th>
+		          <#--<th width="10%" param="{name:'validDay'}">有效期</th>-->
 			            			
-		          <th width="10%" param="{name:'type',codeName:'ordertype'}">类型</th>
+		          <th width="10%" param="{name:'type',codeName:'redboxtype'}">类型</th>
 			            			
 			                        <!--isPrimary：渲染列-->
                  <th width="10%" param="{name:'openClose',codeName:'openclose'}">是否打开</th>

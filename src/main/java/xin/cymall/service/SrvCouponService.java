@@ -29,4 +29,6 @@ public interface SrvCouponService {
 	void deleteBatch(String[] ids);
 
     void updateState(String[] ids, String stateValue);
+
+	Long findByOrderNo(String orderNo);
 }

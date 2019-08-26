@@ -62,5 +62,10 @@ public class SrvCouponServiceImpl implements SrvCouponService {
             update(srvCoupon);
         }
     }
-	
+
+	@Override
+	public Long findByOrderNo(String orderNo) {
+		return srvCouponDao.findByOrderNo(orderNo);
+	}
+
 }
