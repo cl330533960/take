@@ -84,6 +84,12 @@ public class SysApiController {
         return R.ok();
     }
 
+    @RequestMapping("/getRestaurant")
+    public R getRestaurant(String  id){
+        SrvRestaurant srvRestaurant =  srvRestaurantService.get(id);
+        return R.ok().put("data", srvRestaurant);
+    }
+
     @RequestMapping("/queryFood")
     public R queryFood(@RequestParam String restaurantId){
         List<SrvFood> list = srvFoodService.queryFoodByRestaurantId(restaurantId);

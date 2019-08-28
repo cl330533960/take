@@ -877,7 +877,7 @@ public class WchartController {
     @RequestMapping(value = "getindex")
     public String getIndex(HttpServletRequest request){
         getClientIp(request);
-        return "wchat/assess1";
+        return "wchat/couponlist";
     }
 
 

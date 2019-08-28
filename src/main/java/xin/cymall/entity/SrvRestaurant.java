@@ -63,12 +63,14 @@ public class SrvRestaurant implements Serializable {
 	/**1自动0手动**/
 	private String autoReceipt;
 	/****/
-	private String packFee;
+	private Double packFee;
 	/****/
 	@DateTimeFormat(pattern="HH:mm")
+	@JsonFormat(timezone = "GMT+8", pattern = "HH:mm")
 	private Date busHourStart;
 	/****/
 	@DateTimeFormat(pattern="HH:mm")
+	@JsonFormat(timezone = "GMT+8", pattern = "HH:mm")
 	private Date busHourEnd;
 	/**1�?0�?**/
 	private String isAllDay;
@@ -345,13 +347,13 @@ public class SrvRestaurant implements Serializable {
 	/**
 	 * 设置�?
 	 */
-	public void setPackFee(String packFee) {
+	public void setPackFee(Double packFee) {
 		this.packFee = packFee;
 	}
 	/**
 	 * 获取�?
 	 */
-	public String getPackFee() {
+	public Double getPackFee() {
 		return packFee;
 	}
 	/**
