@@ -67,9 +67,9 @@
 		                			
 		          <th width="10%" param="{name:'amount'}">金额</th>
 			            			
-		          <th width="10%" param="{name:'startTime'}">开始时间</th>
-			            			
-		          <th width="10%" param="{name:'endTime'}">结束时间</th>
+		          <#--<th width="10%" param="{name:'startTime'}">开始时间</th>-->
+			            			<#---->
+		          <#--<th width="10%" param="{name:'endTime'}">结束时间</th>-->
 			            			
 		          <th width="10%" param="{name:'userId'}">用户ID</th>
 			            			

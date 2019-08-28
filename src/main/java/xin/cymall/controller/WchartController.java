@@ -62,7 +62,7 @@ public class WchartController {
     @Autowired
     private SrvOrderFoodService srvOrderFoodService;
     @Autowired
-    private SrvCouponService srvCouponService;
+    private SrvCouponSetService srvCouponSetService;
     @Autowired
     private SrvDiscounreserveService srvDiscounreserveService;
     @Autowired
@@ -73,6 +73,8 @@ public class WchartController {
     private AreaService areaService;
     @Autowired
     private SrvMerchanopinionService srvMerchanopinionService;
+    @Autowired
+    private SrvCouponService srvCouponService;
 
 
     @RequestMapping("/auth")
@@ -538,20 +540,20 @@ public class WchartController {
      */
     @RequestMapping("/queryCoupon")
     @ResponseBody
-    public R queryCoupon(@RequestParam String wxId,@RequestParam String orderId){
+    public R queryCoupon(@RequestParam String wxId,@RequestParam String isUse){
         Map<String,Object> params = new HashMap<>();
         SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxId);
-        String userId = srvWxUser != null ? srvWxUser.getId() : "userId";
-        params.put("userId", userId);
+        params.put("userId", srvWxUser.getId());
+        params.put("isUse", isUse);
         List<SrvCoupon> list = srvCouponService.getList(params);
         for(SrvCoupon srvCoupon : list){
-            Date now = new Date();
-            Integer res1 = DateUtil.compareDate(now, srvCoupon.getStartTime());
-            Integer res2 = DateUtil.compareDate(srvCoupon.getEndTime(), now);
-            if(res1 == res2 && res1 == 1)
-                srvCoupon.setIsValid("1");
-            else
-                srvCoupon.setIsValid("0");
+//            Date now = new Date();
+//            Integer res1 = DateUtil.compareDate(now, srvCoupon.getStartTime());
+//            Integer res2 = DateUtil.compareDate(srvCoupon.getEndTime(), now);
+//            if(res1 == res2 && res1 == 1)
+//                srvCoupon.setIsValid("1");
+//            else
+//                srvCoupon.setIsValid("0");
         }
         return R.ok().put("data", list);
     }
@@ -919,6 +921,27 @@ public class WchartController {
         logger.info("<<<<<<<<<<<<<<----->>>>>>>>>>>>"+ip);
         System.out.println("<<<<<<<<<<<<<<----->>>>>>>>>>>>"+ip);
         return ip;
+    }
+
+    @RequestMapping(value = "share")
+    public R share(@RequestParam String userId,@RequestParam String orderNo){
+        Map<String,Object> map = new HashMap();
+        map.put("type","2");
+        map.put("openClose","1");
+        List<SrvCouponSet> list = srvCouponSetService.getList(map);
+        if(list.size()>0 && srvCouponService.findByOrderNo(orderNo) <= 0) {
+            SrvCouponSet srvCouponSet = list.get(0);
+            SrvCoupon srvCoupon = new SrvCoupon();
+            srvCoupon.setId(UUID.generateId());
+            srvCoupon.setAmount(srvCouponSet.getAmount());
+            srvCoupon.setUserId(userId);
+            srvCoupon.setIsUse("0");
+            srvCoupon.setSource(orderNo);
+            srvCoupon.setType("2");
+            srvCoupon.setSendTime(new Date());
+            srvCouponService.save(srvCoupon);
+        }
+        return R.ok();
     }
 
 
