@@ -115,6 +115,45 @@
         <a href="#" onclick="checkOrder()" style="border-radius: 20px;width:100px;background-color: #ff5740" class="weui-btn weui-btn_primary">支付</a>
     </div>
 
+    <div id="locationList" class="weui-popup__container" style="display: none;">
+        <div class="weui-popup__overlay"></div>
+        <div class="weui-popup__modal">
+            <div class="toolbar">
+                <div class="toolbar-inner">
+                    <a href="javascript:;" class="picker-button close-popup" style="color: #ff5740">确定</a>
+                    <h1 class="title">选择优惠券</h1>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="weui-cells">
+                    <div class="weui-cells weui-cells_radio" id="couponListPup">
+                    <#list couponList! as cp>
+                        <div class="weui-form-preview">
+                            <div class="weui-form-preview__bd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">¥${cp.amount!}</label>
+                                    <#--<label class="weui-form-preview__value"><#if cp.isUse == "1">已使用<#else>未使用</#if></label>-->
+                                </div>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">类型：${cp.type!}</label>
+                                </div>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">红包来源${cp.source!}</label>
+                                </div>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">有效期：${cp.startTime?string('yyyy-MM-dd')}
+                                        至 ${cp.endTime?string('yyyy-MM-dd')}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </#list>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 </body>
 <script>

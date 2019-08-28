@@ -338,7 +338,14 @@ public class WchartController {
                 srvFood.setImagePath(srvFood.getImagePath().split(",")[0]);
             }
         }
+
+        Map<String,Object> params = new HashMap<>();
+        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(healthOrderRequest.getWxId());
+        params.put("userId", srvWxUser.getId());
+        params.put("isUse", "0");
+        List<SrvCoupon> couponList = srvCouponService.getList(params);
         model.addAttribute("foodList", list);
+        model.addAttribute("couponList", list);
         return "wchat/healthyfood";
     }
 
