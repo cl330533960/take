@@ -345,7 +345,7 @@ public class WchartController {
         params.put("isUse", "0");
         List<SrvCoupon> couponList = srvCouponService.getList(params);
         model.addAttribute("foodList", list);
-        model.addAttribute("couponList", list);
+        model.addAttribute("couponList", couponList);
         return "wchat/healthyfood";
     }
 
