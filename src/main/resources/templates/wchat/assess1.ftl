@@ -46,14 +46,14 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">性别<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input"  id="sex" placeholder="请选择性别">
+            <input class="weui-input"  id="sex"  readonly="readonly"  placeholder="请选择性别">
         </div>
         <img  src="/statics/img/ypyw/right.png" width="10px">
     </div>
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">运动强度<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input"  id="sport" placeholder="请选择运动强度">
+            <input class="weui-input"  id="sport"  readonly="readonly"  placeholder="请选择运动强度">
         </div>
         <img  src="/statics/img/ypyw/right.png" width="10px">
     </div>

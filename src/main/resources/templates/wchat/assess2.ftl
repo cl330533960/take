@@ -18,7 +18,7 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">去脂体重<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="weight" type="number" placeholder="请选择体重，单位kg">
+            <input class="weui-input" id="weight" readonly="readonly"  type="number" placeholder="请选择体重，单位kg">
         </div>
         <#--<div id="weightdom" class="weui-cell__hd" style="color: #276Dcc">选择</div>-->
         <img id="weightdom"  src="/statics/img/ypyw/right.png" width="10px">
