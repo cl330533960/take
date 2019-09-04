@@ -49,6 +49,15 @@
             <div cyType="radioTool" cyProps="enumName:'StateEnum'" name="status"
                  value="${(model.status)!""}" class="layui-input-inline"></div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码<span class="span_must">*</span></label>
+            <div class="layui-input-normal">
+                <input type="text" name="password" value="" lay-verify="password" placeholder="请输密码"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
 
 
         <div class="page-footer">

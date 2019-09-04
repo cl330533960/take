@@ -81,6 +81,9 @@ public class AuthRealm extends AuthorizingRealm {
         }
         
         //密码错误
+		System.out.println("-->1"+password);
+		System.out.println("-->2"+user.getPassword());
+		System.out.println("-->3"+!password.equals(user.getPassword()));
         if(!password.equals(user.getPassword())) {
             throw new IncorrectCredentialsException("账号或密码不正确");
         }
