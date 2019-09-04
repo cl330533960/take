@@ -7,6 +7,7 @@ layui.config({
     //登录按钮事件
     form.on("submit(login)", function (data) {
         var datas = "username=" + data.field.username + "&password=" + data.field.password + "&captcha=" + data.field.captcha;
+        // alert("username=" + data.field.username + "&password=" + data.field.password);
         $.ajax({
             type: "POST",
             url: "/sys/login",
