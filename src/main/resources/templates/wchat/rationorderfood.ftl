@@ -8,6 +8,9 @@
 <#include "../wx.ftl"/>
     <script type="text/javascript" src="/wchat/js/index.js"></script>
     <script type="text/javascript" src="/wchat/js/template.js"></script>
+    <script type="text/javascript" src="/wchat/js/iosSelect.js"></script>
+    <script type="text/javascript" src="/wchat/js/data.js"></script>
+    <link rel="stylesheet" href="/wchat/js/iosSelect.css">
     <style>
         label{
             line-height: 20px;
@@ -216,10 +219,12 @@
 
                 <div class="weui-cell">
 
-                    <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
+                    <div class="weui-cell__hd"><label class="weui-label">地址</label></div>
                     <div class="weui-cell__bd">
                         <input class="weui-input" name="receiveAddr" id="receiveAddr" placeholder="请输入详细地址">
                     </div>
+                    <div id ="select"style="margin-left: 5px" class="weui-cell__ft">选择地区</div>
+                    <img id="weightdom" src="/statics/img/ypyw/right.png" style="margin-left: 5px"  width="10px">
                 </div>
                 <a href="javascript:;" onclick="saveAddr()" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;margin-right: 15px;border-radius: 30px;margin-left: 15px;margin-bottom: 50px;background-color: #ff5740">保存</a>
             </div>
@@ -312,6 +317,28 @@
             }
         });
     }
+
+
+
+    var selectContactDom = $('#select');
+    var showContactDom = $('#receiveAddr');
+
+    selectContactDom.bind('click', function () {
+
+        var iosSelect = new IosSelect(3,
+                [iosProvinces, iosCitys, iosCountys],
+                {
+                    title: '地址选择',
+                    itemHeight: 35,
+                    relation: [1, 1],
+
+                    callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+
+                        showContactDom.val(selectOneObj.value + '' + selectTwoObj.value + '' + selectThreeObj.value);
+                    }
+                });
+    });
+
 </script>
 
 <script type="text/html" id="addLocationHtml">

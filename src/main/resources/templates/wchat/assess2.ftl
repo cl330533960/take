@@ -16,27 +16,29 @@
 
 <div class="weui-cells weui-cells_form">
     <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">体重<span style="color: red">*</span>:</label></div>
+        <div class="weui-cell__hd"><label class="weui-label">去脂体重<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="weight" type="number" placeholder="请输入体重，单位kg">
+            <input class="weui-input" id="weight" type="number" placeholder="请选择体重，单位kg">
         </div>
-        <div id="weightdom" class="weui-cell__hd" style="color: #276Dcc">选择</div>
+        <#--<div id="weightdom" class="weui-cell__hd" style="color: #276Dcc">选择</div>-->
+        <img id="weightdom"  src="/statics/img/ypyw/right.png" width="10px">
     </div>
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">腰围:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="waistline" readonly="readonly"  placeholder="请输入腰围，单位厘米">
+            <input class="weui-input" id="waistline" readonly="readonly"  placeholder="请选择腰围，单位厘米">
         </div>
-        <div id="waistlinedom" class="weui-cell__hd" style="color: #276Dcc">选择</div>
+        <#--<div id="waistlinedom" class="weui-cell__hd" style="color: #276Dcc">选择</div>-->
+        <img id="waistlinedom"  src="/statics/img/ypyw/right.png" width="10px">
     </div>
 
-    <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">性别<span style="color: red">*</span>:</label></div>
-        <div class="weui-cell__bd">
-            <input class="weui-input" id="sex"  readonly="readonly" placeholder="请选择性别">
-        </div>
-        <img  src="/statics/img/ypyw/right.png" width="10px">
-    </div>
+    <#--<div class="weui-cell">-->
+        <#--<div class="weui-cell__hd"><label class="weui-label">性别<span style="color: red">*</span>:</label></div>-->
+        <#--<div class="weui-cell__bd">-->
+            <#--<input class="weui-input" id="sex"  readonly="readonly" placeholder="请选择性别">-->
+        <#--</div>-->
+        <#--<img  src="/statics/img/ypyw/right.png" width="10px">-->
+    <#--</div>-->
     <br>
     <a href="javascript:;" onclick="assessPage()" style="margin-right: 15px;margin-left: 15px;border-radius: 30px;margin-bottom: 50px;background-color: #276fd4"class="weui-btn weui-btn_primary">开始评估</a>
 
@@ -44,17 +46,17 @@
 
 
         <script type="text/javascript">
-            $("#sex").select({
-                title: "选择性别",
-                items: [{title: "男性", value: "1"}, {title: "女性", value: "2"}]
-            });
+            // $("#sex").select({
+            //     title: "选择性别",
+            //     items: [{title: "男性", value: "1"}, {title: "女性", value: "2"}]
+            // });
 
             function assessPage() {
                 checkData();
             }
 
             function checkData(){
-                var sex = $("#sex").attr("data-values");
+                var sex = 1;
                 var weight = parseFloat($("#weight").val());
                 var waistline = parseFloat($("#waistline").val());
 
@@ -73,7 +75,7 @@
 
             }
 
-            var weightDom = document.querySelector('#weightdom');
+            var weightDom = document.querySelector('#weight');
             var weight = document.querySelector('#weight');
             weightDom.addEventListener('click', function () {
                 var bankId = weightDom.dataset['value'];
@@ -92,7 +94,7 @@
                         });
             });
 
-            var waistlineDom = document.querySelector('#waistlinedom');
+            var waistlineDom = document.querySelector('#waistline');
             var waistline = document.querySelector('#waistline');
             waistlineDom.addEventListener('click', function () {
                 var bankId = waistlineDom.dataset['value'];

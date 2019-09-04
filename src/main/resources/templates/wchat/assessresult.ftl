@@ -69,8 +69,21 @@
     <div class="weui-cell textcolor">
         您的理想体重为：${model.downRes!}KG ~ ${model.upRes!}KG
     </div>
+
     <div class="weui-cell textcolor">
-        您目前超重：${model.overWeight!0}KG
+         <#if model.bmiRes! == '偏瘦'>
+            您目前偏瘦：${model.overWeight!0}KG
+         </#if>
+            <#if model.bmiRes! == '正常'>
+            您目前超重：${model.overWeight!0}KG
+            </#if>
+            <#if model.bmiRes! == '超重'>
+            您目前超重：${model.overWeight!0}KG
+            </#if>
+            <#if model.bmiRes! == '肥胖'>
+            您目前超重：${model.overWeight!0}KG
+            </#if>
+
     </div>
     <div class="weui-cell textcolor" >
         每日摄取热量建议为：${model.cal!}Kcal

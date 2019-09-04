@@ -18,30 +18,30 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">身高<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="height" type="number"   readonly="readonly" placeholder="请输入身高,单位cm">
+            <input class="weui-input" id="height" type="number"   readonly="readonly" placeholder="请选择身高,单位cm">
         </div>
-        <div id="heightdom" class="weui-cell__hd" style="color: #276Dcc">选择</div>
+        <img id="heightdom" src="/statics/img/ypyw/right.png" width="10px">
     </div>
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">体重<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="weight" type="number"  readonly="readonly" placeholder="请输入体重,单位kg">
+            <input class="weui-input" id="weight" type="number"  readonly="readonly" placeholder="请选择体重,单位kg">
         </div>
-        <div id="weightdom" class="weui-cell__hd" style="color: #276Dcc">选择</div>
+        <img id="weightdom" src="/statics/img/ypyw/right.png" width="10px">
     </div>
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">腰围:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="waistline" readonly="readonly" placeholder="请输入腰围，单位厘米">
+            <input class="weui-input" id="waistline" readonly="readonly" placeholder="请选择腰围，单位厘米">
         </div>
-        <div id="waistlinedom" class="weui-cell__hd" style="color: #276Dcc">选择</div>
+        <img id="waistlinedom" src="/statics/img/ypyw/right.png" width="10px">
     </div>
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">年龄<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="age" type="number"  readonly="readonly" placeholder="请输入年龄">
+            <input class="weui-input" id="age" type="number"  readonly="readonly" placeholder="请选择年龄">
         </div>
-        <div id="agedom" class="weui-cell__hd" style="color: #276Dcc">选择</div>
+        <img  id="agedom" src="/statics/img/ypyw/right.png" width="10px">
     </div>
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">性别<span style="color: red">*</span>:</label></div>
@@ -64,15 +64,9 @@
 
 
         <script type="text/javascript">
-            $("#sex").select({
-                title: "选择性别",
-                items: [{title: "男性", value: "1"}, {title: "女性", value: "2"}]
-            });
-            $("#sport").select({
-                title: "运动强度",
-                items: [{title: "很少运动", value: 1.1}, {title: "每周走步2-3次,每次40分钟以上", value: 1.15},{title: "每周慢跑3次以上,每次40分钟以上", value: 1.2}]
-            });
 
+            var sexnumber = null;
+            var sportnumber = null;
             function assessPage(){
                 checkData();
             }
@@ -80,8 +74,8 @@
             function checkData(){
                 var height = parseFloat($("#height").val());
                 var weight = parseFloat($("#weight").val());
-                var sex = $("#sex").attr("data-values");
-                var sport = parseFloat($("#sport").attr("data-values"));
+                var sex = parseInt(sexnumber);
+                var sport = parseFloat(sportnumber);
                 var age =parseInt($("#age").val());
 
                 var waistline = parseFloat($("#waistline").val());
@@ -114,11 +108,14 @@
                 var waistlinedata =$("#waistline").val();
                 waistline=waistlinedata.split("cm")[0];
 
+
                 window.location.href = "/wx/assessOne?height="+height+"&weight="+weight+"&sex="+sex+"&waistline="+waistline+"&sportRatio="+sport+"&age="+age;
+                $("#sex").val("");
+                $("#sport").val("");
             }
 
 
-            var heightDom = document.querySelector('#heightdom');
+            var heightDom = document.querySelector('#height');
             var height = document.querySelector('#height');
             heightDom.addEventListener('click', function () {
                 // var bankId = weightDom.dataset['id'];
@@ -134,15 +131,12 @@
                             oneLevelId: bankId,
                             callback: function (selectOneObj) {
                                 height.value = selectOneObj.value;
-                                // showBankDom.innerHTML = selectOneObj.value;
-                                // showBankDom.dataset['id'] = selectOneObj.id;
-                                // showBankDom.dataset['value'] = selectOneObj.value;
                             }
                         });
             });
 
 
-            var weightDom = document.querySelector('#weightdom');
+            var weightDom = document.querySelector('#weight');
             var weight = document.querySelector('#weight');
             weightDom.addEventListener('click', function () {
                 var bankId = weightDom.dataset['value'];
@@ -162,7 +156,7 @@
             });
 
 
-            var waistlineDom = document.querySelector('#waistlinedom');
+            var waistlineDom = document.querySelector('#waistline');
             var waistline = document.querySelector('#waistline');
             waistlineDom.addEventListener('click', function () {
                 var bankId = waistlineDom.dataset['value'];
@@ -180,7 +174,7 @@
                         });
             });
 
-            var ageDom = document.querySelector('#agedom');
+            var ageDom = document.querySelector('#age');
             var age = document.querySelector('#age');
             ageDom.addEventListener('click', function () {
                 var bankId = waistlineDom.dataset['value'];
@@ -198,8 +192,44 @@
                         });
             });
 
-            
+            var sexDom = document.querySelector('#sex');
+            var sex = document.querySelector('#sex');
+            sexDom.addEventListener('click', function () {
+                var bankId = waistlineDom.dataset['value'];
+                var bankSelect = new IosSelect(1,
+                        [sexdata],
+                        {
+                            container: '.container',
+                            title: '选择性别',
+                            itemHeight: 50,
+                            itemShowCount: 3,
+                            oneLevelId: bankId,
+                            callback: function (selectOneObj) {
+                                sex.value = selectOneObj.value;
+                                sexnumber= selectOneObj.id;
+                            }
+                        });
+            });
 
+
+            var sportDom = document.querySelector('#sport');
+            var sport = document.querySelector('#sport');
+            sportDom.addEventListener('click', function () {
+                var bankId = waistlineDom.dataset['value'];
+                var bankSelect = new IosSelect(1,
+                        [sportdata],
+                        {
+                            container: '.container',
+                            title: '选择运动强度',
+                            itemHeight: 50,
+                            itemShowCount: 3,
+                            oneLevelId: bankId,
+                            callback: function (selectOneObj) {
+                                sport.value = selectOneObj.value;
+                                sportnumber= selectOneObj.id;
+                            }
+                        });
+            });
 
         </script>
 

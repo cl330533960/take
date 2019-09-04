@@ -138,7 +138,7 @@
                     </div>
                     <div class="weui-media-box__bd">
                         <h4 class="weui-media-box__title">2.瘦体重法</h4>
-                        <p class="weui-media-box__desc">适合知道自己(去脂)体重者</p>
+                        <p class="weui-media-box__desc">适合知道自己去脂体重者</p>
                     </div>
                 </a>
             </div>
