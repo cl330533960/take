@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>健康餐品</title>
     <style>
-        .myweui-count__decrease{
+        .myweui-count__decrease {
         }
     </style>
 <#include "../wx.ftl"/>
@@ -19,11 +19,14 @@
 
     <div class="weui-cell">
         <img src="/statics/img/ypyw/icon_address.png" width="30px" alt=""/>
+
         <div class="weui-cell__bd" style="margin-left: 15px">
             <input type="hidden" id="wxId" value="${wxId!}"/>
             <input type="hidden" id="addrId" value="${model.id!}"/>
 
-            <p id="nameAndPhone"><span >${(model.receiveName)!}&nbsp;&nbsp;</span><span style="font-size: 12px">${(model.receivePhone)!}</span></span></p>
+            <p id="nameAndPhone"><span>${(model.receiveName)!}&nbsp;&nbsp;</span><span
+                    style="font-size: 12px">${(model.receivePhone)!}</span></span></p>
+
             <p style="font-size: 12px" id="addr">${model.receiveAddr!}</p>
         </div>
     </div>
@@ -43,15 +46,17 @@
     </div>
     <div class="weui-cells">
     <#list foodList! as food>
-        <div   class="weui-cell weui-cell_swiped">
-            <div class="weui-cell__bd "  style="transform: translate3d(0px, 0px, 0px);">
-                <div class="weui-cell" >
-                    <div class="weui-cell__hd  outadded_menu"  foodId="${food.id!}" restaurantId="${food.rid!}">
-                        <img src="/getData/showImage?imagePath=${food.imagePath!}" alt="" style="width:50px;height:50px;margin-right:5px;display:block;border-radius: 15px;">
+        <div class="weui-cell weui-cell_swiped">
+            <div class="weui-cell__bd " style="transform: translate3d(0px, 0px, 0px);">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd  outadded_menu" foodId="${food.id!}" restaurantId="${food.rid!}">
+                        <img src="/getData/showImage?imagePath=${food.imagePath!}" alt=""
+                             style="width:50px;height:50px;margin-right:5px;display:block;border-radius: 15px;">
                     </div>
-                    <div class="weui-cell__bd" >
+                    <div class="weui-cell__bd">
                         <div style="display: flex;flex-direction: row">
                             <p>${food.rname!}店</p>
+
                             <p style="margin-left: 20px">${food.name!}</p>
                         </div>
                         <span class="price" style="font-size: 15px;color: #ff5740">￥${food.sysPrice!}</span>
@@ -83,9 +88,9 @@
     </#if>
     </div>
     <div class="weui-cells">
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a class="weui-cell weui-cell_access open-popup" data-target="#couponList" href="javascript:;">
             <div class="weui-cell__bd">
-                <p>优惠预定</p>
+                <p>优惠券</p>
             </div>
             <div class="weui-cell__ft">
             </div>
@@ -96,6 +101,8 @@
             <p>包装费 <span id="packFee" style="color: red"> 0</span>元</p>
 
             <p>配送费 <span id="wayFee" style="color: red"> 0</span>元</p>
+
+            <p>优惠金额 <span id="couponFee" style="color: red"> 0</span>元</p>
         </div>
     </div>
     <div class="weui-cells__title">添加备注</div>
@@ -112,8 +119,51 @@
         <div class="weui-cell__bd">
             <p>合计(不含运费)￥<span id="totalAmount" style="color: red">0</span></p>
         </div>
-        <a href="#" onclick="checkOrder()" style="border-radius: 20px;width:100px;background-color: #ff5740" class="weui-btn weui-btn_primary">支付</a>
+        <a href="#" onclick="checkOrder()" style="border-radius: 20px;width:100px;background-color: #ff5740"
+           class="weui-btn weui-btn_primary">支付</a>
     </div>
+
+    <div id="couponList" class="weui-popup__container" style="display: none;">
+        <div class="weui-popup__overlay"></div>
+        <div class="weui-popup__modal">
+            <div class="toolbar">
+                <div class="toolbar-inner">
+                    <a href="javascript:;" class="picker-button close-popup" style="color: #ff5740">确定</a>
+
+                    <h1 class="title">选择优惠券</h1>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="weui-cells weui-cells_radio" id="couponListPup">
+                <#list couponList! as coupon>
+                    <label class="weui-cell weui-check__label">
+                        <div class="weui-form-preview">
+                            <div class="weui-form-preview__bd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">¥${coupon.amount!}</label>
+                                </div>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">类型：${coupon.type!}</label>
+                                </div>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label">红包来源${coupon.source!}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" class="radio_type"
+                                   <#--<#if emp.id == model.id>checked="checked"</#if>-->
+                                   value="${coupon.id!}" name="coupons">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                </#list>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 </div>
 </body>
@@ -128,10 +178,10 @@
     var orderType = '';
     $(function () {
         orderType = $("#orderType").val();
-        <#list foodList! as food>
-            var food = '{"id":"${food.id!}","fudId":"${food.fudId!}","name":"${food.name!}","rid":"${food.rid!}","sysPrice":${food.sysPrice!},"packFee":${food.packFee!},"price":${food.price!}}';
-            foodList.push($.parseJSON(food));
-        </#list>
+    <#list foodList! as food>
+        var food = '{"id":"${food.id!}","fudId":"${food.fudId!}","name":"${food.name!}","rid":"${food.rid!}","sysPrice":${food.sysPrice!},"packFee":${food.packFee!},"price":${food.price!}}';
+        foodList.push($.parseJSON(food));
+    </#list>
     })
     var MAX = 99, MIN = 0;
     $('.weui-count__decrease').click(function (e) {
@@ -158,7 +208,6 @@
         $input.val(number)
 
     })
-
 
 
     function checkOnlyFood(id) {
@@ -210,7 +259,7 @@
         restaurantTotal = restaurantFoodPrice + packFee;
     }
 
-    function getRestaurantId(){
+    function getRestaurantId() {
         var restaurantId = "";
         $.each(sumbitFoodList, function (index, item) {
             restaurantId = item.rid;
@@ -218,10 +267,10 @@
         return restaurantId;
     }
 
-    function queryWayFee(){
+    function queryWayFee() {
         dadaOrder = guid();
         var restaurantId = getRestaurantId()
-        if(!restaurantId){
+        if (!restaurantId) {
             $.toptip('请至少选择一种餐品', 'error');
             return;
         }
@@ -237,7 +286,7 @@
                 dadaOrder: dadaOrder,
                 userAddrId: $("#addrId").val(),
                 totalAmount: parseInt($("#totalAmount").text()),
-                restaurantId:restaurantId
+                restaurantId: restaurantId
             },
             //请求成功
             success: function (result) {
@@ -247,7 +296,7 @@
                 $("#wayFee").text(result.data.payFee);
                 $.confirm({
                     title: '确认提交订单?',
-                    text: '订单运费为'+result.data.payFee+'，订单总金额为'+totalAmount+'，确认提交订单吗？',
+                    text: '订单运费为' + result.data.payFee + '，订单总金额为' + totalAmount + '，确认提交订单吗？',
                     onOK: function () {
                         submitOrder();
                     },
@@ -265,15 +314,15 @@
     }
 
     function checkOrder() {
-        if(orderType == 1){
+        if (orderType == 1) {
             queryWayFee();
-        }else{
+        } else {
             submitOrder();
         }
     }
 
-    function submitOrder(){
-        if(sumbitFoodList.length == 0) {
+    function submitOrder() {
+        if (sumbitFoodList.length == 0) {
             $.toptip('请至少选择一种餐品', 'error');
             return;
         }
@@ -297,7 +346,7 @@
                 restaurantTotal: restaurantTotal,
                 dadaOrder: dadaOrder,
                 remark: $("#remark").val(),
-                expressNum:expressNum
+                expressNum: expressNum
             },
             //请求成功
             success: function (result) {
@@ -359,9 +408,9 @@
                         $.toast('支付成功', 'success');
                         window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx688906a5f5df8b37&redirect_uri=http://www.tastyfit.vip/wx/orderList&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect";
                     } else if (res.err_msg == "get_brand_wcpay_request:cancel") {//取消
-                        $.toast('用户取消支付','cancel');
+                        $.toast('用户取消支付', 'cancel');
                     } else if (res.err_msg == "get_brand_wcpay_request:fail") {//失败
-                        $.toast('支付失败','error');
+                        $.toast('支付失败', 'error');
                     } else {
                         alert(res.err_msg);
                     }
@@ -369,11 +418,11 @@
 
     }
 
-    $('.outadded_menu').click(function(){
-        gotodetail($(this).attr('foodId'),$(this).attr('restaurantId'),);
+    $('.outadded_menu').click(function () {
+        gotodetail($(this).attr('foodId'), $(this).attr('restaurantId'),);
     })
-    function gotodetail(foodid,restaurantId) {
-        window.location.href = "/wx/foodInfo?foodId="+foodid+"&restaurantId="+restaurantId;
+    function gotodetail(foodid, restaurantId) {
+        window.location.href = "/wx/foodInfo?foodId=" + foodid + "&restaurantId=" + restaurantId;
     }
 </script>
 </html>
