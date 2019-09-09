@@ -31,6 +31,8 @@ public class WxOrder extends BaseWx {
     private String dadaOrder;
     /**达达返回运单号*/
     private String expressNum;
+    /**优惠券金额*/
+    private Integer couponAmount;
 
     public String getRestaurantId() {
         return restaurantId;
@@ -143,4 +145,14 @@ public class WxOrder extends BaseWx {
     public void setExpressNum(String expressNum) {
         this.expressNum = expressNum;
     }
+
+    public Integer getCouponAmount() {
+        return couponAmount;
+    }
+
+    public void setCouponAmount(Integer couponAmount) {
+        this.couponAmount = couponAmount;
+    }
+
+
 }

@@ -53,6 +53,9 @@ public class SrvOrder implements Serializable {
 	private Integer packFee;
 	/**优惠券ID**/
 	private String couponId;
+	/**优惠金额*/
+	private Integer couponAmount;
+
 	/**折扣**/
 	private Double discount;
 	/**下单时间**/
@@ -415,5 +418,13 @@ public class SrvOrder implements Serializable {
 
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
+	}
+
+	public Integer getCouponAmount() {
+		return couponAmount;
+	}
+
+	public void setCouponAmount(Integer couponAmount) {
+		this.couponAmount = couponAmount;
 	}
 }

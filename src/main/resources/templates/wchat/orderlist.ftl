@@ -30,12 +30,14 @@
 </div>
 <script type="text/javascript">
     $(function () {
+
+
         initOrderList("/wx/myOrderList?wxId=${wxId}");
         $('.weui-navbar__item').on('click', function () {
             var clickId = jQuery(this).attr("id");
             if (clickId == "waitItem") {
                 waitCommentOrderList("/wx/myOrderList?wxId=${wxId}" + "&status=6");
-            }else{
+            } else {
                 initOrderList("/wx/myOrderList?wxId=${wxId}");
             }
         });
@@ -81,6 +83,7 @@
         });
     }
 
+
     //
 </script>
 
@@ -96,7 +99,9 @@
                 </div>
                 <div class="weui-media-box__bd">
                     <h4 class="weui-media-box__title">门店:{{value.restaurantName}}</h4>
+
                     <p class="weui-media-box__desc">下单时间:{{value.orderTime}}</p>
+
                     <p class="weui-media-box__desc">总价:<span style="color: red">￥{{value.orderTotal}}</span></p>
                 </div>
                 <div class="weui-media-box__fd">

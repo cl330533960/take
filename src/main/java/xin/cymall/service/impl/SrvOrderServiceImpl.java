@@ -20,10 +20,7 @@ import xin.cymall.common.utils.AppPush;
 import xin.cymall.common.utils.OrderUtil;
 import xin.cymall.common.utils.StringUtil;
 import xin.cymall.common.utils.UUID;
-import xin.cymall.dao.SrvOrderDao;
-import xin.cymall.dao.SrvOrderFoodDao;
-import xin.cymall.dao.SrvRestaurantDao;
-import xin.cymall.dao.SrvWxUserDao;
+import xin.cymall.dao.*;
 import xin.cymall.entity.SrvOrder;
 import xin.cymall.entity.SrvOrderFood;
 import xin.cymall.entity.SrvRestaurant;
@@ -47,6 +44,8 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 	private SrvOrderFoodDao srvOrderFoodDao;
 	@Autowired
 	private SrvRestaurantDao srvRestaurantDao;
+	@Autowired
+	private SrvCouponDao srvCouponDao;
 
 	@Override
 	public SrvOrder get(String id){
@@ -74,6 +73,7 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 		order.setUserId(srvWxUser.getId());
 		order.setRestaurantId(wxOrder.getRestaurantId());
 		order.setUserAddrId(wxOrder.getUserAddrId());
+		order.setCouponId(wxOrder.getCouponId());
 		if(wxOrder.getPackFee()!=null && wxOrder.getPackFee()>0)
 			order.setPackFee(wxOrder.getPackFee());
 		else
@@ -84,6 +84,9 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 			order.setExpressNum(wxOrder.getExpressNum());
 			order.setExpressCompnay("达达快递");
 		}
+		if(wxOrder.getCouponAmount()!=null && wxOrder.getCouponAmount() > 0)
+			order.setCouponAmount(wxOrder.getCouponAmount());
+
 		else
 			order.setWayFee(0);
 		order.setUserPayFee(wxOrder.getUserPayAmount());
@@ -92,19 +95,24 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 		order.setRemark(wxOrder.getRemark());
 		ObjectMapper mapper = new ObjectMapper();
 		List<OrderFood> list = mapper.readValue(wxOrder.getFoodList(), new TypeReference<List<OrderFood>>() {});
-		list.stream().collect(Collectors.groupingBy(obj -> obj,Collectors.counting())).forEach((orderFood,num) -> {
+		list.stream().collect(Collectors.groupingBy(obj -> obj,Collectors.counting())).forEach((orderFood, num) -> {
 			SrvOrderFood srvOrderFood = new SrvOrderFood();
 			srvOrderFood.setId(UUID.generateId());
 			srvOrderFood.setFoodId(orderFood.getId());
 			srvOrderFood.setOrderId(order.getId());
 			srvOrderFood.setPrice(orderFood.getSysPrice());
-			srvOrderFood.setTotalPrice(num.intValue()*orderFood.getSysPrice());
+			srvOrderFood.setTotalPrice(num.intValue() * orderFood.getSysPrice());
 			srvOrderFood.setFoodName(orderFood.getName());
 			srvOrderFood.setNumber(num.intValue());
 			order.setRestaurantId(orderFood.getRid());
 			srvOrderFoodDao.save(srvOrderFood);
 		});
 		order.setStatus(OrderStatusEnum.ORDRT_STATUS1.getCode());
+		Map<String,Object> couponMap = new HashMap<>();
+		couponMap.put("id",order.getCouponId());
+		couponMap.put("userId",order.getUserId());
+		couponMap.put("isUse","1");
+		srvCouponDao.update(couponMap);
 		srvOrderDao.save(order);
 		return order.getOrderNo();
 	}

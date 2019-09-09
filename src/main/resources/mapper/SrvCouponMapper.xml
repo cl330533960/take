@@ -71,7 +71,8 @@
 			`user_id`, 
 			`is_use`,
 			send_time,
-			`type`
+			`type`,
+			source
 
 		)
 		values
@@ -83,7 +84,8 @@
 			#{userId}, 
 			#{isUse},
 			#{sendTime},
-			#{type}
+			#{type},
+			#{source}
 		)
 	</insert>
 	 

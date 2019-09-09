@@ -138,7 +138,7 @@
                 <#list couponList! as coupon>
                     <label class="weui-cell weui-check__label">
                         <div class="weui-form-preview">
-                            <div class="weui-form-preview__bd">
+                            <div class="weui-form-preview__bd" id="${coupon.id!}">
                                 <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label">¥${coupon.amount!}</label>
                                 </div>
@@ -153,7 +153,7 @@
                         <div class="weui-cell__ft">
                             <input type="radio" class="radio_type"
                                    <#--<#if emp.id == model.id>checked="checked"</#if>-->
-                                   value="${coupon.id!}" name="coupons">
+                                   value="${coupon.id!}" data="${coupon.amount!}" name="coupons">
                             <span class="weui-icon-checked"></span>
                         </div>
                     </label>
@@ -176,6 +176,10 @@
     var restaurantFoodPrice = 0;
     var restaurantTotal = 0;
     var orderType = '';
+
+    var couponAmount = 0;
+    var couponId = '';
+
     $(function () {
         orderType = $("#orderType").val();
     <#list foodList! as food>
@@ -255,8 +259,8 @@
             });
         }
         $("#packFee").text(packFee);
-        $("#totalAmount").text(totalFoodPrice + packFee);
-        restaurantTotal = restaurantFoodPrice + packFee;
+        $("#totalAmount").text((totalFoodPrice + packFee - couponAmount) > 0 ? (totalFoodPrice + packFee - couponAmount) : 0);
+        restaurantTotal = (totalFoodPrice + packFee - couponAmount) > 0 ? (totalFoodPrice + packFee - couponAmount) : 0;
     }
 
     function getRestaurantId() {
@@ -346,6 +350,8 @@
                 restaurantTotal: restaurantTotal,
                 dadaOrder: dadaOrder,
                 remark: $("#remark").val(),
+                couponId:couponId,
+                couponAmount:couponAmount,
                 expressNum: expressNum
             },
             //请求成功
@@ -424,5 +430,13 @@
     function gotodetail(foodid, restaurantId) {
         window.location.href = "/wx/foodInfo?foodId=" + foodid + "&restaurantId=" + restaurantId;
     }
+
+
+    $(document).on('click','input:radio[name="coupons"]',function(){
+        couponId = $('input:radio[name="coupons"]:checked').val();
+        couponAmount = $('input:radio[name="coupons"]:checked').attr("data");
+        $("#couponFee").text(couponAmount);
+    })
+
 </script>
 </html>

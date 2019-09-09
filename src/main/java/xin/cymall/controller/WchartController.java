@@ -7,10 +7,13 @@ import me.chanjar.weixin.mp.api.WxMpUserService;
 import me.chanjar.weixin.mp.api.impl.WxMpUserServiceImpl;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import me.chanjar.weixin.mp.enums.TicketType;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +39,11 @@ import javax.script.ScriptException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.io.IOException;
 import java.util.Date;
@@ -75,6 +81,8 @@ public class WchartController {
     private SrvMerchanopinionService srvMerchanopinionService;
     @Autowired
     private SrvCouponService srvCouponService;
+    @Autowired
+    private Environment env;
 
 
     @RequestMapping("/auth")
@@ -716,7 +724,7 @@ public class WchartController {
         requestMap.put("spbill_create_ip", getIpAddr(request));
         requestMap.put("notify_url", "http://www.tastyfit.vip/wx/paymentNotice");// 这个回调url
         requestMap.put("noncestr", noncestr);
-        requestMap.put("body","tt");
+        requestMap.put("body", "tt");
         requestMap.put("detail","te");
         Map<String,Object> requestInfo = WXPayUtil.createOrderInfo(requestMap);
         String orderInfo_toString = (String) requestInfo.get("orderInfo_toString");
@@ -881,7 +889,7 @@ public class WchartController {
      **/
     @RequestMapping(value = "gotodetail")
     public String gotodetail(Model model, String foodid){
-        System.out.println("----->"+foodid);
+        System.out.println("----->" + foodid);
         return "wchat/healthyfooddetil";
     }
 
@@ -931,16 +939,16 @@ public class WchartController {
                 ip = null;
             }
         }
-        logger.info("<<<<<<<<<<<<<<----->>>>>>>>>>>>"+ip);
-        System.out.println("<<<<<<<<<<<<<<----->>>>>>>>>>>>"+ip);
+        logger.info("<<<<<<<<<<<<<<----->>>>>>>>>>>>" + ip);
+        System.out.println("<<<<<<<<<<<<<<----->>>>>>>>>>>>" + ip);
         return ip;
     }
 
     @RequestMapping(value = "share")
     public R share(@RequestParam String userId,@RequestParam String orderNo){
         Map<String,Object> map = new HashMap();
-        map.put("type","2");
-        map.put("openClose","1");
+        map.put("type", "2");
+        map.put("openClose", "1");
         List<SrvCouponSet> list = srvCouponSetService.getList(map);
         if(list.size()>0 && srvCouponService.findByOrderNo(orderNo) <= 0) {
             SrvCouponSet srvCouponSet = list.get(0);
@@ -957,5 +965,20 @@ public class WchartController {
         return R.ok();
     }
 
+    @RequestMapping(value = "getShareInfo")
+    @ResponseBody
+    public Map<String,String>  getShareInfo(@RequestParam String shareUrl) throws Exception {
+        String  ticket = wxConfig.wxMpServiceHttpClientImpl().getTicket(TicketType.JSAPI);
+        Map params = WxJSUtil.sign(ticket, shareUrl);
+        params.put("appId", env.getProperty("wx.appId"));//你的appId
+        return params;
+    }
+
+    @RequestMapping(value = "sharePage")
+    public String sharePage(@RequestParam String orderId,@RequestParam String userId,Model model){
+        model.addAttribute("orderNo",orderId);
+        model.addAttribute("userId",userId);
+        return "wchat/share";
+    }
 
 }

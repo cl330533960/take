@@ -35,6 +35,8 @@
 		<result property="dadaOrder" column="dada_order"/>
 		<result property="expressTime" column="express_time"/>
 		<result property="finishTime" column="finish_time"/>
+		<result property="couponAmount" column="coupon_amount"/>
+
 	</resultMap>
 
 	<select id="get" resultType="xin.cymall.entity.SrvOrder">
@@ -139,7 +141,8 @@
 			`discount`,
 			order_time,
 			restaurant_total,
-			dada_order
+			dada_order,
+			coupon_amount
 		)
 		values
 		(
@@ -163,7 +166,8 @@
 			#{discount},
 			now(),
 			#{restaurantTotal},
-			#{dadaOrder}
+			#{dadaOrder},
+			#{couponAmount}
 		)
 	</insert>
 	 
