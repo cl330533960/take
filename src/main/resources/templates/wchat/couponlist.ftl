@@ -6,77 +6,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>我的优惠券</title>
 <#include "../wx.ftl"/>
-    <script type="text/javascript" src="/wchat/js/index.js"></script>
+    <script type="text/javascript" src="/wchat/js/template.js"></script>
 </head>
 <body>
 <#--<h1>开发中，敬请期待</h1>-->
 
 <!-- 容器 -->
 <div class="weui-tab">
-    <div class="weui-navbar">
-        <a class="weui-navbar__item weui-bar__item--on" href="/wx/couponList?wxId=1&isValid=0">
-            未过期
-        </a>
-        <a class="weui-navbar__item" href="/wx/couponList?wxId=2&isValid=1">
-            已过期
-        </a>
-    </div>
-    <div class="weui-tab__bd">
-        <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
-        <#list model! as cp>
-            <div class="weui-form-preview">
-                <div class="weui-form-preview__bd">
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">¥${cp.amount!}</label>
-                        <label class="weui-form-preview__value"><#if cp.isUse == "1">已使用<#else>未使用</#if></label>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">类型：${cp.type!}</label>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">红包来源${cp.source!}</label>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">有效期：${cp.startTime?string('yyyy-MM-dd')}
-                            至 ${cp.endTime?string('yyyy-MM-dd')}</label>
-                    </div>
-                </div>
-            </div>
-        </#list>
+    <div class="weui-tab">
+        <div class="weui-navbar">
+            <a class="weui-navbar__item weui-bar__item--on" href="#myOrder">
+                已使用
+            <#--/wx/myOrderList?wxId=oQ3Fp6Rd0oGRUbtBaGv-sOekF5_E&status=6-->
+            </a>
+            <a id="waitItem" class="weui-navbar__item" href="#waitCommentOrder">
+                未使用
+            </a>
         </div>
-        <div id="tab2" class="weui-tab__bd-item">
-        <#list model! as cp>
-            <div class="weui-form-preview">
-                <div class="weui-form-preview__bd">
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">¥${cp.amount!}</label>
-                        <label class="weui-form-preview__value"><#if cp.isUse == "1">已使用<#else>未使用</#if></label>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">类型：${cp.type!}</label>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">红包来源${cp.source!}</label>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">有效期：${cp.startTime?string('yyyy-MM-dd')}
-                            至 ${cp.endTime?string('yyyy-MM-dd')}</label>
-                    </div>
-                </div>
+        <div class="weui-tab__bd">
+            <div id="myOrder" class="weui-tab__bd-item weui-tab__bd-item--active">
             </div>
-        </#list>
+            <div id="waitCommentOrder" class="weui-tab__bd-item">
+            </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-   $(function () {
-       $('.weui-navbar__item').on('click', function () {
-           $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-           $(".weui-tab__panel .weui_tab_bd_item_active").removeClass('weui_tab_bd_item_active');
-           var data_toggle = jQuery(this).attr("href");
-           $(data_toggle).addClass("weui_tab_bd_item_active");
-       });
-   });
+
+    $(function () {
+        initOrderList("/wx/queryCoupon?wxId=${wxId}&isUse=1");
+        $('.weui-navbar__item').on('click', function () {
+            var clickId = jQuery(this).attr("id");
+            if (clickId == "waitItem") {
+                waitCommentOrderList("/wx/queryCoupon?wxId=${wxId}&isUse=0");
+            } else {
+                initOrderList("/wx/queryCoupon?wxId=${wxId}&isUse=1");
+            }
+        });
+    });
+
+    function initOrderList(url) {
+        $.ajax({
+            //请求方式
+            type: "POST",
+            //请求的媒体类型
+            //请求地址
+            url: url,
+            //数据，json字符串
+            //请求成功
+            success: function (result) {
+                var html = template("orderHtml", {data: result.data});
+                $("#myOrder").html(html);
+            },
+            //请求失败，包含具体的错误信息
+            error: function (e) {
+                $.toast("获取数据失败", "cancel");
+            }
+        });
+    }
+
+    function waitCommentOrderList(url) {
+        $.ajax({
+            //请求方式
+            type: "POST",
+            //请求的媒体类型
+            //请求地址
+            url: url,
+            //数据，json字符串
+            //请求成功
+            success: function (result) {
+                var html = template("orderHtml", {data: result.data});
+                $("#waitCommentOrder").html(html);
+            },
+            //请求失败，包含具体的错误信息
+            error: function (e) {
+                $.toast("操作失败", "cancel");
+            }
+        });
+    }
+    //
+</script>
+
+<script type="text/html" id="orderHtml">
+    <div class="weui-tab__bd">
+        <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+            {{each data as value index}}
+            <div class="weui-form-preview">
+                <div class="weui-form-preview__bd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">红包金额:￥{{value.amount}}</label>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">红包类型：{{value.type}}</label>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
 </script>
 
 

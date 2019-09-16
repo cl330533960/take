@@ -14,7 +14,6 @@
     <script type="text/javascript">
         var orderNo = '${orderNo}';
         var userId = '${userId}';
-
         $.ajax({
             url: "/wx/share",
             type: 'post',
@@ -26,6 +25,7 @@
 
             }
         });
+        window.location.href = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU0OTk2NjI0Ng==&scene=126&bizpsid=0&sharer_username=gh_9469ac874773&clicktime=1568608532#wechat_redirect";
 
 
 

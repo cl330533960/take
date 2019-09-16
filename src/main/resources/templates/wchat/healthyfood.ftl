@@ -140,14 +140,14 @@
                         <div class="weui-form-preview">
                             <div class="weui-form-preview__bd" id="${coupon.id!}">
                                 <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">¥${coupon.amount!}</label>
+                                    <label class="weui-form-preview__label">红包金额：¥${coupon.amount!}</label>
                                 </div>
                                 <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">类型：${coupon.type!}</label>
+                                    <label class="weui-form-preview__label">红包类型：<#if coupon.type == "1">下单分享优惠券<#else>新用户优惠券</#if></label>
                                 </div>
-                                <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">红包来源${coupon.source!}</label>
-                                </div>
+                                <#--<div class="weui-form-preview__item">-->
+                                    <#--<label class="weui-form-preview__label">红包来源${coupon.source!}</label>-->
+                                <#--</div>-->
                             </div>
                         </div>
                         <div class="weui-cell__ft">

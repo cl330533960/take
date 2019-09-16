@@ -12,7 +12,10 @@
     <script type="text/javascript">
 
         $(function () {
-            shareOrder();
+            var orderstatus = '${order.status}';
+            if(orderstatus != "1" && orderstatus != "10" ){
+                shareOrder();
+            }
         })
 
         function shareOrder() {
@@ -30,9 +33,9 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if (textStatus == "timeout") {
-                       // $.toptip('连接超时，请检查网络', 'error');
+                        // $.toptip('连接超时，请检查网络', 'error');
                     } else {
-                       // $.toptip('加载失败，请稍后再试', 'error');
+                        // $.toptip('加载失败，请稍后再试', 'error');
                     }
                 }
             });
@@ -49,18 +52,18 @@
 
         function loadWx() {
             wx.config({
-                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+//                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                 appId: appId, // 必填，公众号的唯一标识
                 timestamp: timestamp, // 必填，生成签名的时间戳
                 nonceStr: nonce, // 必填，生成签名的随机串
                 signature: signature,// 必填，签名
-                jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"] // 必填，需要使用的JS接口列表
+                jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表
             });
             wx.ready(function () {
                 //分享到朋友圈
                 wx.onMenuShareTimeline({
                     title: '分享得优惠券', // 分享标题
-                    link: 'gazi.free.idcfengye.com/wx/sharePage?orderId='+orderId+'&userId='+userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    link: 'http://www.tastyfit.vip/wx/sharePage?orderId='+orderId+'&userId='+userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 //                imgUrl:'https://cdn.llscdn.com/thumbnail.jpg', // 分享图标
                     desc: '分享得优惠券',
                     success: function () {
@@ -72,7 +75,7 @@
                     }
                 });
                 wx.onMenuShareAppMessage({
-                    link: 'gazi.free.idcfengye.com/wx/sharePage?orderId='+orderId+'&userId='+userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    link: 'http://www.tastyfit.vip/wx/sharePage?orderId='+orderId+'&userId='+userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     title: '分享得优惠券', // 分享标题,
                     desc: '分享得优惠券',
                     success: function () {

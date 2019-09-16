@@ -361,7 +361,9 @@ public class WchartController {
 
 
     @RequestMapping(value = "/couponList",method = { RequestMethod.GET, RequestMethod.POST })
-    public String couponList(Model model) {
+    public String couponList(Model model,String code) throws WxErrorException {
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+        model.addAttribute("wxId",wxMpOAuth2AccessToken.getOpenId());
         return "wchat/couponlist";
     }
 
@@ -568,6 +570,11 @@ public class WchartController {
         params.put("isUse", isUse);
         List<SrvCoupon> list = srvCouponService.getList(params);
         for(SrvCoupon srvCoupon : list){
+                if("1".equals(srvCoupon.getType())){
+                    srvCoupon.setType("下单分享优惠券");
+                }else{
+                    srvCoupon.setType("新用户优惠券");
+                }
 //            Date now = new Date();
 //            Integer res1 = DateUtil.compareDate(now, srvCoupon.getStartTime());
 //            Integer res2 = DateUtil.compareDate(srvCoupon.getEndTime(), now);
