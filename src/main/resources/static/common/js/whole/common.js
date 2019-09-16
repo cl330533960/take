@@ -370,7 +370,7 @@ function detailOne(url,id){
         shadeClose: false,
         shade: [0.3, '#000'],
         maxmin: true, //开启最大化最小化按钮
-        area: ['1000px', '700px'],
+        area: ['893px', '600px'],
         content: url+"/"+id
     });
 

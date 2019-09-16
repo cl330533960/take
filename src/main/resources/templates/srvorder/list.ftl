@@ -9,11 +9,9 @@
 <body>
 <form class="layui-form " action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">名称:</label>
 
-        <div class="layui-input-inline">
-            <input type="text" name="" placeholder="请输入名称" class="layui-input">
-        </div>
+        <label class="layui-form-label">订单状态:</label>
+            <div cyType="selectTool" cyProps="enumName:'OrderStatusEnum'" name="status"  class="layui-input-inline"></div>
 
         <div class="layui-input-normal">
             <button class="layui-btn layui-btn-green" lay-submit="" lay-filter="moreSearch">
@@ -74,7 +72,7 @@
 
             <th width="5%" param="{name:'orderTotal'}">总金额</th>
 
-            <th width="5%" param="{name:'status'}">订单状态</th>
+            <th width="5%" param="{name:'status',enumName:'OrderStatusEnum'}">订单状态</th>
 
             <th width="5%" param="{name:'orderTime'}">订单日期</th>
 

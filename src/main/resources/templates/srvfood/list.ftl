@@ -11,7 +11,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">名称:</label>
         <div class="layui-input-inline">
-            <input type="text" name=""  placeholder="请输入名称" class="layui-input">
+            <input type="text" name="name"  placeholder="请输入名称" class="layui-input">
         </div>
 
         <div class="layui-input-normal">
@@ -65,7 +65,7 @@
             <th width="10%" param="{name:'id',isPrimary:'true',hide:'true'}"></th>
             
 		                			
-		          <th width="10%" param="{name:'name'}">餐厅</th>
+		          <th width="10%" param="{name:'name'}">名称</th>
 			            			
 
 		          <th width="10%" param="{name:'cal'}">热量Kcal</th>

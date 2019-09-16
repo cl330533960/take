@@ -11,7 +11,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">名称:</label>
         <div class="layui-input-inline">
-            <input type="text" name=""  placeholder="请输入名称" class="layui-input">
+            <input type="text" name="name"  placeholder="请输入名称" class="layui-input">
         </div>
 
         <div class="layui-input-normal">
@@ -66,7 +66,7 @@
             <th width="5%" param="{name:'name'}">餐厅名</th>
             <th width="5%" param="{name:'chainCode',codeName:'chaincode'}">连锁店</th>
             <th width="10%" param="{name:'area',}">省市区</th>
-            <th width="5%" param="{name:'addr'}">详细地址</th>
+            <th width="10%" param="{name:'addr'}">详细地址</th>
             <th width="5%" param="{name:'healthLevel',codeName:'wsLevel'}">卫生等级</th>
             <th width="5%" param="{name:'contact'}">联系人</th>
             <th width="5%" param="{name:'phone'}">联系电话</th>

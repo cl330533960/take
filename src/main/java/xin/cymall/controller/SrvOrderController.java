@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
+import xin.cymall.common.wxpay.UnifiedOrderRespose;
 import xin.cymall.common.wxpay.WXPayUtil;
 import xin.cymall.entity.SrvOrder;
 import xin.cymall.service.SrvOrderFoodService;
@@ -155,6 +156,9 @@ public class SrvOrderController {
     @RequiresPermissions("srvorder:update")
     public R refund(@RequestParam String orderId) throws Exception {
         SrvOrder srvOrder = srvOrderService.get(orderId);
+        if(OrderStatusEnum.ORDRT_STATUS1.getCode().equals(srvOrder.getStatus()) || OrderStatusEnum.ORDRT_STATUS10.getCode().equals(srvOrder.getStatus())){
+            return R.error("该订单不能退款");
+        }
         Map<String, String> requestMap = new HashMap<>();
         requestMap.put("appId","wx688906a5f5df8b37");
         requestMap.put("mch_id", "1542729801");
@@ -166,11 +170,15 @@ public class SrvOrderController {
         Map<String,Object> requestInfo = WXPayUtil.createOrderRefund(requestMap);
         String refundData = (String) requestInfo.get("refund_toString");
         String returnData = WXPayUtil.doRefund(refundData);
-        JSONObject jsonObject = JSONObject.fromObject(returnData);
-        Map<String,Object> map = new HashMap<>();
-        map.put("",jsonObject.get("return_code"));
-        map.put("",jsonObject.get("return_msg"));
-        return R.ok().put("data",map);
+        UnifiedOrderRespose unifiedOrderRespose = (UnifiedOrderRespose) WXPayUtil.convertXmlStrToObject(UnifiedOrderRespose.class, returnData);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put("",jsonObject.get("return_code"));
+//        map.put("",jsonObject.get("return_msg"));
+        if("SUCCESS".equals(unifiedOrderRespose.getResult_code())) {
+            return R.ok("退款成功");
+        }else{
+            return R.error(unifiedOrderRespose.getErr_code_des());
+        }
     }
 	
 	/**

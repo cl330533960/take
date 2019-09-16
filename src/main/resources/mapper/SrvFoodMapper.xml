@@ -35,7 +35,7 @@
                 order by ${sidx} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by update_time desc
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">
@@ -160,7 +160,7 @@
 	<select id="queryFoodByRestaurantId" resultType="xin.cymall.entity.SrvFood" parameterType="string">
 		select * from srv_food f
 		left join srv_restaurant r
-		on f.restaurant_id = r.id or r.chain_code = f.chian_id
+		on f.restaurant_id = r.id
 		where r.id = #{value}
 	</select>
 	
