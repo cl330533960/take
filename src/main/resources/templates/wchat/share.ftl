@@ -19,16 +19,17 @@
             type: 'post',
             data: {orderNo: orderNo, userId: userId},
             success: function (result) {
-
+                goGz();
             },
             error: function (jqXHR, textStatus, errorThrown) {
-
+                goGz();
             }
         });
-        window.location.href = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU0OTk2NjI0Ng==&scene=126&bizpsid=0&sharer_username=gh_9469ac874773&clicktime=1568608532#wechat_redirect";
 
 
-
+        function goGz() {
+            window.location.href = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU0OTk2NjI0Ng==&scene=126&bizpsid=0&sharer_username=gh_9469ac874773&clicktime=1568608532#wechat_redirect";
+        }
 
     </script>
 
