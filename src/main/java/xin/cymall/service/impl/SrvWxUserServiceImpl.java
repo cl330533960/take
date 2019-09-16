@@ -61,7 +61,7 @@ public class SrvWxUserServiceImpl implements SrvWxUserService {
 			srvCoupon.setAmount(srvCouponSet.getAmount());
 			srvCoupon.setUserId(srvWxUser.getId());
 			srvCoupon.setIsUse("0");
-			srvCoupon.setType("1");
+			srvCoupon.setType("2");
 			srvCoupon.setSendTime(new Date());
 			srvCouponDao.save(srvCoupon);
 		}

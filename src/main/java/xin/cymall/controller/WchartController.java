@@ -954,7 +954,7 @@ public class WchartController {
     @RequestMapping(value = "share")
     public R share(@RequestParam String userId,@RequestParam String orderNo){
         Map<String,Object> map = new HashMap();
-        map.put("type", "2");
+        map.put("type", "1");
         map.put("openClose", "1");
         List<SrvCouponSet> list = srvCouponSetService.getList(map);
         if(list.size()>0 && srvCouponService.findByOrderNo(orderNo) <= 0) {
@@ -965,7 +965,7 @@ public class WchartController {
             srvCoupon.setUserId(userId);
             srvCoupon.setIsUse("0");
             srvCoupon.setSource(orderNo);
-            srvCoupon.setType("2");
+            srvCoupon.setType("1");
             srvCoupon.setSendTime(new Date());
             srvCouponService.save(srvCoupon);
         }
