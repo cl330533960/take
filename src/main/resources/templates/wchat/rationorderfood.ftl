@@ -221,10 +221,21 @@
 
                     <div class="weui-cell__hd"><label class="weui-label">地址</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" name="receiveAddr" id="receiveAddr" placeholder="请输入详细地址">
+                        <input class="weui-input" name="receiveAddr" id="receiveAddr" readonly placeholder="请选择地址">
                     </div>
-                    <div id ="select"style="margin-left: 5px" class="weui-cell__ft">选择地区</div>
+                    <#--<div id ="select"style="margin-left: 5px" class="weui-cell__ft">选择</div>-->
                     <img id="weightdom" src="/statics/img/ypyw/right.png" style="margin-left: 5px"  width="10px">
+                </div>
+
+
+                <div class="weui-cell">
+
+                    <div class="weui-cell__hd"><label class="weui-label">门牌号</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="detailreceiveAddr" id="detailreceiveAddr" placeholder="请输入详细地址">
+                    </div>
+                <#--<div id ="select"style="margin-left: 5px" class="weui-cell__ft">选择地区</div>-->
+                    <#--<img id="weightdom" src="/statics/img/ypyw/right.png" style="margin-left: 5px"  width="10px">-->
                 </div>
                 <a href="javascript:;" onclick="saveAddr()" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;margin-right: 15px;border-radius: 30px;margin-left: 15px;margin-bottom: 50px;background-color: #ff5740">保存</a>
             </div>
@@ -276,8 +287,10 @@
     }
 
     function saveAddr() {
+
         var receiveName = $("#receiveName").val()
         var receiveAddr = $("#receiveAddr").val()
+        var detailreceiveAddr = $("#detailreceiveAddr").val()
         var receivePhone = $("#receivePhone").val()
         if(!receiveName){
             $.toptip('联系人为必须项', 'error');
@@ -288,7 +301,11 @@
             return;
         }
         if(!receiveAddr){
-            $.toptip('详细地址必须项', 'error');
+            $.toptip('地址必须项', 'error');
+            return;
+        }
+        if(!detailreceiveAddr){
+            $.toptip('门牌号地址必须项', 'error');
             return;
         }
         $.showLoading("正在提交数据，请稍后");
@@ -300,7 +317,7 @@
             data: {
                 wxId: "${wxId!}",
                 receiveName: $("#receiveName").val(),
-                receiveAddr: $("#receiveAddr").val(),
+                receiveAddr: $("#receiveAddr").val()+$("#detailreceiveAddr").val(),
                 receivePhone: $("#receivePhone").val()
             },
             //请求成功
@@ -320,7 +337,7 @@
 
 
 
-    var selectContactDom = $('#select');
+    var selectContactDom = $('#receiveAddr');
     var showContactDom = $('#receiveAddr');
 
     selectContactDom.bind('click', function () {
@@ -337,6 +354,8 @@
                         showContactDom.val(selectOneObj.value + '' + selectTwoObj.value + '' + selectThreeObj.value);
                     }
                 });
+
+
     });
 
 </script>

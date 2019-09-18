@@ -907,7 +907,7 @@ public class WchartController {
     @RequestMapping(value = "getindex")
     public String getIndex(HttpServletRequest request){
         getClientIp(request);
-        return "wchat/rationorderfood";
+        return "wchat/calcassess";
     }
 
 
@@ -915,7 +915,7 @@ public class WchartController {
     @RequestMapping(value = "testgetindex")
     public String gettestIndex(HttpServletRequest request){
         getClientIp(request);
-        return "wchat/test";
+        return "wchat/rationorderfood";
     }
 
       /* 跳转到新增页面
