@@ -10,6 +10,13 @@
     <script type="text/javascript" src="/wchat/js/iosSelect.js"></script>
     <script type="text/javascript" src="/wchat/js/data.js"></script>
     <link rel="stylesheet" href="/wchat/js/iosSelect.css">
+    <script type="text/javascript">
+        var sportdata = [];
+        <#list sportList! as item>
+            var data = '{"id":${item.code},"value":"${item.value}"}';
+            sportdata.push($.parseJSON(data));
+        </#list>
+    </script>
 </head>
 <body>
 

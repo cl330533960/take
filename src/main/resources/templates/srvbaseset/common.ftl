@@ -73,12 +73,12 @@
             </div>
         </div>
 
-        <div class="layui-form-item">${(model.bucket)!""}
-            <label class="layui-form-label">运动系数设置<span class="span_must">*</span></label>
+        <#--<div class="layui-form-item">${(model.bucket)!""}-->
+            <#--<label class="layui-form-label">运动系数设置<span class="span_must">*</span></label>-->
 
-                <div name="sportRatio" cyType="selectTool" cyProps="enumName:'SportRatioEnum'"
-                     value="${(model.sportRatio)!""}"  class="layui-input-inline">
-                </div>
+                <#--<div name="sportRatio" cyType="selectTool" cyProps="enumName:'SportRatioEnum'"-->
+                     <#--value="${(model.sportRatio)!""}"  class="layui-input-inline">-->
+                <#--</div>-->
 
 
               <div class="layui-form-item">${(model.bucket)!""}

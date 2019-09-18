@@ -3,16 +3,16 @@
 <html>
 <head>
     <title>列表</title>
-    <#include "../resource.ftl"/>
+<#include "../resource.ftl"/>
     <script type="text/javascript" src="/srvcouponset/js/list.js"></script>
 </head>
 <body>
 <form class="layui-form " action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">名称:</label>
-        <div class="layui-input-inline">
-            <input type="text" name=""  placeholder="请输入名称" class="layui-input">
-        </div>
+    <#--<label class="layui-form-label">名称:</label>-->
+    <#--<div class="layui-input-inline">-->
+    <#--<input type="text" name=""  placeholder="请输入名称" class="layui-input">-->
+    <#--</div>-->
 
         <div class="layui-input-normal">
             <button class="layui-btn layui-btn-green" lay-submit="" lay-filter="moreSearch">
@@ -25,11 +25,11 @@
         </div>
     </div>
     <div class="layui-form-item more-search">
-       <#-- 更多条件-->
+    <#-- 更多条件-->
     </div>
 </form>
 <div class="layui-btn-group">
-        <#--<@shiro.hasPermission name="srvcouponset:save">-->
+<#--<@shiro.hasPermission name="srvcouponset:save">-->
         <#--&lt;#&ndash;<button class="layui-btn" onclick="addPage('/srvcouponset/add')">&ndash;&gt;-->
             <#--&lt;#&ndash;<i class="fa fa-plus">&nbsp;</i>增加&ndash;&gt;-->
         <#--&lt;#&ndash;</button>&ndash;&gt;-->
@@ -61,18 +61,18 @@
             <th width="1%" param="{type:'checkbox'}">
                 <input type="checkbox" lay-skin="primary" lay-filter="allChoose">
             </th>
-            			            <!--isPrimary：是否是主键-->
+            <!--isPrimary：是否是主键-->
             <th width="10%" param="{name:'id',isPrimary:'true',hide:'true'}"></th>
-            
-		                			
-		          <th width="10%" param="{name:'amount'}">金额</th>
-			            			
-		          <#--<th width="10%" param="{name:'validDay'}">有效期</th>-->
-			            			
-		          <th width="10%" param="{name:'type',codeName:'redboxtype'}">类型</th>
-			            			
-			                        <!--isPrimary：渲染列-->
-                 <th width="10%" param="{name:'openClose',codeName:'openclose'}">是否打开</th>
+
+
+            <th width="10%" param="{name:'amount'}">金额</th>
+
+        <#--<th width="10%" param="{name:'validDay'}">有效期</th>-->
+
+            <th width="10%" param="{name:'type',codeName:'redboxtype'}">类型</th>
+
+            <!--isPrimary：渲染列-->
+            <th width="10%" param="{name:'openClose',codeName:'openclose'}">是否启用</th>
             <th width="10%" param="{operate:'true',buttons:'Render.state,Render.edit'}">操作</th>
         </tr>
         </thead>

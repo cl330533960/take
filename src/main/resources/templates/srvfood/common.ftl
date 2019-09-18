@@ -103,7 +103,7 @@
             <div class="layui-form-item">${(model.bucket)!""}
                 <label class="layui-form-label">商品描述</label>
                 <div class="layui-input-normal">
-                    <textarea  maxlength="200" placeholder="请输入" class="layui-textarea"  >${(model.remark)!""}</textarea>
+                    <textarea  maxlength="200" name="remark" placeholder="请输入" class="layui-textarea"  >${(model.remark)!""}</textarea>
                 <#--<input type="text"  name="remark" maxlength="200"-->
                 <#--value="${(model.remark)!""}"  placeholder="请输入"  class="layui-input">-->
                 </div>

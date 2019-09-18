@@ -2,6 +2,8 @@ package xin.cymall.controller;
 
 import java.util.List;
 import java.util.Map;
+
+import com.alibaba.fastjson.JSON;
 import xin.cymall.common.enumresource.StateEnum;
 import xin.cymall.common.log.SysLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -79,8 +81,7 @@ public class SrvBaseSetController {
 	@RequiresPermissions("srvbaseset:update")
 	public R update(SrvBaseSet srvBaseSet){
 		srvBaseSetService.update(srvBaseSet);
-		
-		return R.ok();
+        return R.ok();
 	}
 
 	

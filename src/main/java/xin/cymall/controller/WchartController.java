@@ -83,6 +83,8 @@ public class WchartController {
     private SrvCouponService srvCouponService;
     @Autowired
     private Environment env;
+    @Autowired
+    private CommparaService commparaService;
 
 
     @RequestMapping("/auth")
@@ -208,8 +210,12 @@ public class WchartController {
      * 开始评估
      **/
     @RequestMapping(value = "calcPage")
-    public String calcPage(String type){
+    public String calcPage(String type,Model model){
         if (type.equals("1")) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("codeName","sportratio");
+            List<Commpara> sysCodeList =  sysCodeList = commparaService.getCodeValues(params);
+            model.addAttribute("sportList",sysCodeList);
             return "wchat/assess1";
         }else {
             return "wchat/assess2";
@@ -229,8 +235,12 @@ public class WchartController {
         }
     }
     @RequestMapping(value = "/gohome",method = { RequestMethod.GET, RequestMethod.POST })
-    public String gohome(){
-
+    public String gohome(Model model){
+//        commparaService..
+        Map<String, Object> params = new HashMap<>();
+        params.put("codeName","sportratio");
+        List<Commpara> sysCodeList =  sysCodeList = commparaService.getCodeValues(params);
+        model.addAttribute("sportList",sysCodeList);
         return "wchat/home";
     }
 
@@ -983,7 +993,7 @@ public class WchartController {
 
     @RequestMapping(value = "sharePage")
     public String sharePage(@RequestParam String orderId,@RequestParam String userId,Model model){
-        model.addAttribute("orderNo",orderId);
+        model.addAttribute("orderNo", orderId);
         model.addAttribute("userId",userId);
         return "wchat/share";
     }
