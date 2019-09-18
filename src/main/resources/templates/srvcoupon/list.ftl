@@ -9,9 +9,9 @@
 <body>
 <form class="layui-form " action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">名称:</label>
+        <label class="layui-form-label">用户:</label>
         <div class="layui-input-inline">
-            <input type="text" name=""  placeholder="请输入名称" class="layui-input">
+            <input type="text" name="wxName"  placeholder="请输入名称" class="layui-input">
         </div>
 
         <div class="layui-input-normal">
@@ -71,7 +71,7 @@
 			            			<#---->
 		          <#--<th width="10%" param="{name:'endTime'}">结束时间</th>-->
 			            			
-		          <th width="10%" param="{name:'userId'}">用户ID</th>
+		          <th width="10%" param="{name:'wxName'}">用户ID</th>
 			            			
 		          <th width="10%" param="{name:'isUse',codeName:'whether'}">是否使用</th>
 			                        <!--isPrimary：渲染列-->

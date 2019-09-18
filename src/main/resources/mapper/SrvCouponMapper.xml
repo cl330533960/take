@@ -11,6 +11,8 @@
         <result property="endTime" column="end_time"/>
         <result property="userId" column="user_id"/>
         <result property="isUse" column="is_use"/>
+		<result property="useTime" column="use_time"/>
+		<result property="wxName" column="wx_name"/>
     </resultMap>
 
 	<select id="get" resultType="xin.cymall.entity.SrvCoupon">
@@ -18,7 +20,9 @@
 	</select>
 
 	<select id="getList" resultType="xin.cymall.entity.SrvCoupon">
-		select * from srv_coupon t <include refid="where_clause" />
+		select t.*,u.wx_name from srv_coupon t
+		LEFT JOIN srv_wx_user u on t.user_id = u.id
+		<include refid="where_clause" />
 		<if test="isValid == '0'.toString()">
 			and  current_date  between  start_time and  end_time
 		</if>
@@ -58,7 +62,8 @@
     		<if test="userIdVague != null and userIdVague != ''"> and t.user_id like concat('%',#{userIdVague},'%') </if>
             <if test="isUse != null and isUse != ''"> and t.is_use = #{isUse} </if>
     		<if test="isUseVague != null and isUseVague != ''"> and t.is_use like concat('%',#{isUseVague},'%') </if>
-        </where>
+			<if test="wxName != null and wxName != ''"> and u.wx_name like concat('%',#{wxName},'%') </if>
+		</where>
     </sql>
 	 
 	<insert id="save" parameterType="xin.cymall.entity.SrvCoupon">

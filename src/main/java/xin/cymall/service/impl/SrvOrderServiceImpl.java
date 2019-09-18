@@ -112,6 +112,7 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 		couponMap.put("id",order.getCouponId());
 		couponMap.put("userId",order.getUserId());
 		couponMap.put("isUse","1");
+		couponMap.put("userTime",new Date());
 		srvCouponDao.update(couponMap);
 		srvOrderDao.save(order);
 		return order.getOrderNo();

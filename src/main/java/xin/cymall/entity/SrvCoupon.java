@@ -34,6 +34,8 @@ public class SrvCoupon implements Serializable {
 	private String type;
 	private String isValid;
 
+	private String wxName;
+
 	/**
 	 * 设置：主键ID
 	 */
@@ -145,5 +147,17 @@ public class SrvCoupon implements Serializable {
 
 	public void setSource(String source) {
 		this.source = source;
+	}
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public String getWxName() {
+		return wxName;
+	}
+
+	public void setWxName(String wxName) {
+		this.wxName = wxName;
 	}
 }
