@@ -80,7 +80,8 @@ public class SrvBaseSetController {
 	@RequestMapping("/update")
 	@RequiresPermissions("srvbaseset:update")
 	public R update(SrvBaseSet srvBaseSet){
-		srvBaseSetService.update(srvBaseSet);
+        System.out.println(JSON.toJSONString(srvBaseSet));
+//		srvBaseSetService.update(srvBaseSet);
         return R.ok();
 	}
 
