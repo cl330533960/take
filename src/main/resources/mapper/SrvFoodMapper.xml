@@ -167,10 +167,12 @@
 	<select id="findHealthFood" resultType="xin.cymall.entity.SrvFood" parameterType="java.lang.Object">
 		select f.*,r.id as r_id,r.name as r_name,fud.id as fud_id,ifnull(r.pack_fee,0) pack_fee from srv_food f
 		LEFT JOIN srv_food_up_down fud on f.id = fud.food_id
-		LEFT JOIN srv_restaurant r on fud.restaurant_id = r.id
-		where f.cal &lt;= #{value}
-		AND f.status = 1
-		ORDER BY r.name DESC
+	    INNER JOIN srv_restaurant r on fud.restaurant_id = r.id
+	    LEFT JOIN srv_user_addr a on a.id = #{param3}
+		where f.cal &lt;= #{param1} and  f.cal &gt;= #{param2}
+		AND f.status = 1 and r.status = 1
+		AND Spherical_Distance(r.lng,r.lat,a.lng,a.lat) &lt; 10000
+		ORDER BY Spherical_Distance(r.lng,r.lat,a.lng,a.lat) ASC,r.name DESC
 		LIMIT 5
 	</select>
 

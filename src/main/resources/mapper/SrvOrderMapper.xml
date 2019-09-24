@@ -58,6 +58,12 @@
 		left join srv_restaurant r on t.restaurant_id = r.id
 		left join srv_user_addr ua on t.user_addr_id = ua.id
 		<include refid="where_clause" />
+		<if test="startDate != null and startDate.trim() != ''">
+			and DATE_FORMAT(order_time,'%Y-%m-%d') &gt;= DATE_FORMAT(#{startDate},'%Y-%m-%d')
+		</if>
+		<if test="endDate != null and endDate.trim() != ''">
+			and DATE_FORMAT(order_time,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate},'%Y-%m-%d')
+		</if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -73,6 +79,12 @@
 	
  	<select id="getCount" resultType="int">
 		select count(*) from srv_order t  <include refid="where_clause" />
+		<if test="startDate != null and startDate.trim() != ''">
+			and DATE_FORMAT(order_time,'%Y-%m-%d') &gt;= DATE_FORMAT(#{startDate},'%Y-%m-%d')
+		</if>
+		<if test="endDate != null and endDate.trim() != ''">
+			and DATE_FORMAT(order_time,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate},'%Y-%m-%d')
+		</if>
 	</select>
 
     <!-- 搜索数据区域 -->

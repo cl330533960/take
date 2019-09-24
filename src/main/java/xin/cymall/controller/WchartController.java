@@ -350,7 +350,7 @@ public class WchartController {
         model.addAttribute("model", srvUserAddr);
         model.addAttribute("wxId", healthOrderRequest.getWxId());
         model.addAttribute("orderType", healthOrderRequest.getOrderType());
-        List<SrvFood> list = srvFoodService.findHealthFood( healthOrderRequest.getCal());
+        List<SrvFood> list = srvFoodService.findHealthFood( healthOrderRequest.getCal()+100,healthOrderRequest.getCal()-100,healthOrderRequest.getUserAddrId());
         for(SrvFood srvFood : list){
             if(!StringUtil.isEmpty(srvFood.getImagePath())) {
                 srvFood.setImagePath(srvFood.getImagePath().split(",")[0]);
@@ -486,7 +486,7 @@ public class WchartController {
     @RequestMapping(value = "/getRecommendFood")
     @ResponseBody
     public R getRecommendFood(HealthOrderRequest healthOrderRequest) {
-        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getCal());
+        List<SrvFood> list = srvFoodService.findHealthFood(healthOrderRequest.getCal()+100,healthOrderRequest.getCal()-100,healthOrderRequest.getUserAddrId());
         return R.ok().put("data", list);
     }
 

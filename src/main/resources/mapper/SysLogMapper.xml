@@ -27,8 +27,8 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from sys_log  where 1=1
 
-		<if test="createDate != null and createDate.trim() != ''">
-			and DATE_FORMAT(create_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{createDate},'%Y-%m-%d')
+		<if test="startDate != null and startDate.trim() != ''">
+			and DATE_FORMAT(create_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{startDate},'%Y-%m-%d')
 		</if>
 		<if test="endDate != null and endDate.trim() != ''">
 			and DATE_FORMAT(create_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate},'%Y-%m-%d')

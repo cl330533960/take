@@ -319,22 +319,22 @@ public class DaDaExpressUtil {
 
 //    3 订单预发布 预发布订单  这个result 实体类没啥鸡巴卵用就不封装了    ok了
         System.out.println(orderMap.get("expressNum")+"");
-        DadaApiResponse addafterquery = addAfterQuery(orderMap.get("expressNum")+"");
-        JSONObject addafterqueryjs = JSON.parseObject(JSONUtil.toJson(addafterquery));
-        System.out.println(JSONUtil.toJson(addafterquery));
-
-
-//    4 订单发布 1中的城市code 可以写在本地了应该不会改吧 不考虑报价这类的鬼东西了  OK了
-//        DadaApiResponse addorder = addOrder();
-//        JSONObject addorderjs = JSON.parseObject(JSONUtil.toJson(addorder));
-//        OrderRelease orderRelease = JSONUtil.fromJson
-//                (JSONUtil.toJson(livefeejs.getJSONObject("result")),OrderRelease.class);
-//        System.out.println(JSONUtil.toJson(addorder));
-////    5 查询订单
+//        DadaApiResponse addafterquery = addAfterQuery(orderMap.get("expressNum")+"");
+//        JSONObject addafterqueryjs = JSON.parseObject(JSONUtil.toJson(addafterquery));
+//        System.out.println(JSONUtil.toJson(addafterquery));
 //
-        DadaApiResponse orderquery = orderQuery();
-        JSONObject orderqueryjs = JSON.parseObject(JSONUtil.toJson(orderquery));
-        System.out.println(JSONUtil.toJson(orderquery));
+//
+////    4 订单发布 1中的城市code 可以写在本地了应该不会改吧 不考虑报价这类的鬼东西了  OK了
+////        DadaApiResponse addorder = addOrder();
+////        JSONObject addorderjs = JSON.parseObject(JSONUtil.toJson(addorder));
+////        OrderRelease orderRelease = JSONUtil.fromJson
+////                (JSONUtil.toJson(livefeejs.getJSONObject("result")),OrderRelease.class);
+////        System.out.println(JSONUtil.toJson(addorder));
+//////    5 查询订单
+////
+//        DadaApiResponse orderquery = orderQuery();
+//        JSONObject orderqueryjs = JSON.parseObject(JSONUtil.toJson(orderquery));
+//        System.out.println(JSONUtil.toJson(orderquery));
 
 
     }

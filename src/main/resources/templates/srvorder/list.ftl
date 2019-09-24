@@ -13,6 +13,13 @@
         <label class="layui-form-label">订单状态:</label>
             <div cyType="selectTool" cyProps="enumName:'OrderStatusEnum'" name="status"  class="layui-input-inline"></div>
 
+        <label class="layui-form-label">订单时间:</label>
+        <div class="layui-input-inline">
+            <input class="layui-input" placeholder="开始日" id="LAY_demorange_s" name="startDate">
+        </div>
+        <div class="layui-input-inline">
+            <input class="layui-input" placeholder="截止日" id="LAY_demorange_e" name="endDate">
+        </div>
         <div class="layui-input-normal">
             <button class="layui-btn layui-btn-green" lay-submit="" lay-filter="moreSearch">
                 <i class="fa fa-chevron-down">&nbsp;</i>更多
