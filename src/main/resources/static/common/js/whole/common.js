@@ -250,6 +250,36 @@ function refund(msg,url,id){
 
 }
 
+function adddada(msg,url,id){
+    //获取选中的id
+    confirm("确认"+msg+"？",function(){
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {id:id},
+            async: false,
+            success: function (result) {
+                if (result.code === 0) {
+                    // $(".search-btn").click();
+                    // console.log("--->"+result.data);
+                    // if(result.data.return_code = "SUCCESS"){ s
+                        parent.layer.msg('入驻成功 !', {icon: 1});
+                    // }
+                    // else{
+                    //     parent.layer.msg(result.data.return_msg, {icon: 1});
+                    // }
+                } else {
+
+                    parent.layer.msg(result.msg, {icon: 5});
+                }
+            },
+            error: function () {
+                parent.layer.msg("系统繁忙", {icon: 5});
+            }
+        });
+    });
+
+}
 
 /**
  * 批量启用或禁用

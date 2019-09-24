@@ -59,6 +59,12 @@ var Render = {
         var btn=' <button  onclick="refund(\''+"退款"+'\',\''+"/srvorder/refund"+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-mini layui-btn-delete">退款</button>';
         return btn;
     },
+
+    adddada:function(rowdata,renderData){
+        var btn=' <button  onclick="adddada(\''+"入驻达达"+'\',\''+"/srvrestaurant/adddada"+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-mini layui-btn-delete">入驻达达</button>';
+        return btn;
+    },
+
     /**
      * @param rowdata    行数据
      * @param renderData 渲染后的列

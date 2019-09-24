@@ -1,13 +1,12 @@
 package xin.cymall.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import xin.cymall.common.dadaexpress.DaDaExpressUtil;
+import xin.cymall.common.dadaexpress.client.DadaApiResponse;
 import xin.cymall.common.enumresource.DefaultEnum;
+import xin.cymall.common.enumresource.OrderStatusEnum;
 import xin.cymall.common.enumresource.StateEnum;
 import xin.cymall.common.log.SysLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -18,6 +17,9 @@ import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
 import xin.cymall.common.utils.*;
+import xin.cymall.common.wxpay.UnifiedOrderRespose;
+import xin.cymall.common.wxpay.WXPayUtil;
+import xin.cymall.entity.SrvOrder;
 import xin.cymall.entity.SrvRestaurant;
 import xin.cymall.entity.SysUser;
 import xin.cymall.service.AreaService;
@@ -139,6 +141,8 @@ public class SrvRestaurantController extends  AbstractController{
             if (areas.length == 3) {
 //            DaDaExpressUtil.addShop(srvRestaurant, areas[1], areas[2]);
             }
+
+
         }
         return R.ok();
     }
@@ -215,5 +219,35 @@ public class SrvRestaurantController extends  AbstractController{
         }
         return R.ok().put("data", list);
     }
+
+    /**
+     * 入驻达达
+     */
+    @ResponseBody
+    @SysLog("入驻达达")
+    @RequestMapping("/adddada")
+    @RequiresPermissions("srvrestaurant:update")
+    public R refund(@RequestParam String id) throws Exception {
+        SrvRestaurant srvRestaurant = srvRestaurantService.get(id);
+        srvRestaurant.getAddr();
+        DadaApiResponse dadaApiResponse = new DadaApiResponse();
+
+        if(!StringUtil.isEmpty(srvRestaurant.getArea())) {
+            String areaStr = areaService.getAreaNameStr(srvRestaurant.getArea());
+            String[] areas = areaStr.split(",");
+            if (areas.length == 3) {
+                dadaApiResponse =DaDaExpressUtil.addShop(srvRestaurant, areas[1], areas[2]);
+            }else if(areas.length==2){
+                dadaApiResponse =DaDaExpressUtil.addShop(srvRestaurant, areas[0], areas[1]);
+            }
+        }
+
+        if("成功".equals(dadaApiResponse.getMsg())||0==dadaApiResponse.getCode()) {
+            return R.ok("入驻达达成功");
+        }else{
+            return R.error(dadaApiResponse.getMsg()+",请检查位置信息;或者已经入驻请不要重复注册");
+        }
+    }
+
 
 }

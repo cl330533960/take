@@ -59,7 +59,7 @@ public class DaDaExpressUtil {
      **/
     private static DadaApiResponse addOrder() {
         // 1.初始化配置(isOnline表示是否测试环境)
-        AppConfig appConfig = new AppConfig(false);
+        AppConfig appConfig = new AppConfig(true);
 
         // 2.初始化model
         OrderAddModel orderAddModel = new OrderAddModel();
@@ -101,30 +101,30 @@ public class DaDaExpressUtil {
     public static DadaApiResponse addShop(SrvRestaurant srvRestaurant,String cityName,String areaName) {
 
         // 1.初始化配置(isOnline表示是否测试环境)
-        AppConfig appConfig = new AppConfig(false);
+        AppConfig appConfig = new AppConfig(true);
 
         // 2.初始化model
         ShopAddModel shopAddModel = new ShopAddModel();
-//        shopAddModel.setOriginShopId(srvRestaurant.getId());
-//        shopAddModel.setStationName(srvRestaurant.getName());
-//        shopAddModel.setBusiness(1);
-//        shopAddModel.setCityName(cityName);
-//        shopAddModel.setAreaName(areaName);
-//        shopAddModel.setStationAddress(srvRestaurant.getAddr());
-//        shopAddModel.setLng(new BigDecimal(srvRestaurant.getLng()));
-//        shopAddModel.setLat(new BigDecimal(srvRestaurant.getLat()));
-//        shopAddModel.setContactName(srvRestaurant.getContact());
-//        shopAddModel.setPhone(srvRestaurant.getPhone());
-        shopAddModel.setOriginShopId("shop001");
-        shopAddModel.setStationName("新门店1");
+        shopAddModel.setOriginShopId(srvRestaurant.getId());
+        shopAddModel.setStationName(srvRestaurant.getName());
         shopAddModel.setBusiness(1);
-        shopAddModel.setCityName("上海市");
-        shopAddModel.setAreaName("浦东新区");
-        shopAddModel.setStationAddress("地址1");
-        shopAddModel.setLng(BigDecimal.valueOf(121.515014));
-        shopAddModel.setLat(BigDecimal.valueOf(31.229081));
-        shopAddModel.setContactName("xxx");
-        shopAddModel.setPhone("13012345678");
+        shopAddModel.setCityName(cityName);
+        shopAddModel.setAreaName(areaName);
+        shopAddModel.setStationAddress(srvRestaurant.getAddr());
+        shopAddModel.setLng(new BigDecimal(srvRestaurant.getLng()));
+        shopAddModel.setLat(new BigDecimal(srvRestaurant.getLat()));
+        shopAddModel.setContactName(srvRestaurant.getContact());
+        shopAddModel.setPhone(srvRestaurant.getPhone());
+//        shopAddModel.setOriginShopId("shop001");
+//        shopAddModel.setStationName("新门店1");
+//        shopAddModel.setBusiness(1);
+//        shopAddModel.setCityName("上海市");
+//        shopAddModel.setAreaName("浦东新区");
+//        shopAddModel.setStationAddress("地址1");
+//        shopAddModel.setLng(BigDecimal.valueOf(121.515014));
+//        shopAddModel.setLat(BigDecimal.valueOf(31.229081));
+//        shopAddModel.setContactName("xxx");
+//        shopAddModel.setPhone("13012345678");
 
         // 3.初始化service (门店新增比较特殊,是一个批量新增接口)
         List<ShopAddModel> shopAddList = new ArrayList<ShopAddModel>();
@@ -147,7 +147,7 @@ public class DaDaExpressUtil {
     private static DadaApiResponse addMerchant() {
 
         // 1.初始化配置(isOnline表示是否测试环境)
-        AppConfig appConfig = new AppConfig(false);
+        AppConfig appConfig = new AppConfig(true);
 
         // 2.初始化model
         MerchantAddModel merchantAddModel = new MerchantAddModel();
@@ -175,7 +175,7 @@ public class DaDaExpressUtil {
 
         if(cityMap.size() == 0 && cityMap.get(cityName) == null) {
             // 1.初始化配置(isOnline表示是否测试环境)
-            AppConfig appConfig = new AppConfig(false);
+            AppConfig appConfig = new AppConfig(true);
 
             // 2.初始化service
             CityCodeService cityCodeService = new CityCodeService("");
@@ -199,7 +199,7 @@ public class DaDaExpressUtil {
 
     public static DadaApiResponse queryShopDetail(String shopId){
         // 1.初始化配置(isOnline表示是否测试环境)
-        AppConfig appConfig = new AppConfig(false);
+        AppConfig appConfig = new AppConfig(true);
         ShopAddModel shopAddModel = new ShopAddModel();
         shopAddModel.setOriginShopId(shopId);
 
@@ -220,28 +220,29 @@ public class DaDaExpressUtil {
     public static Map<String,Object> querydeliverfee(SrvRestaurant srvRestaurant,SrvUserAddr srvUserAddr,String cityName,Double orderAmount) {
 
         // 1.初始化配置(isOnline表示是否测试环境)
-        AppConfig appConfig = new AppConfig(false);
+        AppConfig appConfig = new AppConfig(true);
 
         // 2.初始化model
         QueryDeliverFeeModel queryDeliverFeeModel = new QueryDeliverFeeModel();
-        queryDeliverFeeModel.setShopNo("11047059");
-        queryDeliverFeeModel.setOriginId(UUID.generateId());
-        queryDeliverFeeModel.setCityCode("021");
-        queryDeliverFeeModel.setCargoPrice(BigDecimal.valueOf(orderAmount));
-        queryDeliverFeeModel.setIsPrepay(0);
-        queryDeliverFeeModel.setReceiverName("测试达达");
-        queryDeliverFeeModel.setReceiverAddress("隆宇大厦");
-        queryDeliverFeeModel.setReceiverPhone("13622219090");
-        queryDeliverFeeModel.setReceiverLat(BigDecimal.valueOf(31.228623));
-        queryDeliverFeeModel.setReceiverLng(BigDecimal.valueOf(121.587172));
-//        queryDeliverFeeModel.setReceiverName(srvUserAddr.getReceiveName()); 正式环境使用
-//        queryDeliverFeeModel.setReceiverAddress(srvUserAddr.getReceiveAddr());
-//        queryDeliverFeeModel.setReceiverPhone(srvUserAddr.getReceivePhone());
-//        queryDeliverFeeModel.setReceiverLat(new BigDecimal(srvUserAddr.getLat()));
-//        queryDeliverFeeModel.setReceiverLng(new BigDecimal(srvUserAddr.getLng()));
-//        queryDeliverFeeModel.setCityCode(queryCityCode(cityName));
-//        queryDeliverFeeModel.setShopNo(srvRestaurant.getId());
-        queryDeliverFeeModel.setCallback("http://gazi.free.idcfengye.com/wx/orderCallBack");
+//        queryDeliverFeeModel.setShopNo("11047059");
+//        queryDeliverFeeModel.setOriginId(UUID.generateId());
+//        queryDeliverFeeModel.setCityCode("021");
+//        queryDeliverFeeModel.setCargoPrice(BigDecimal.valueOf(orderAmount));
+//        queryDeliverFeeModel.setIsPrepay(0);
+//        queryDeliverFeeModel.setReceiverName("测试达达");
+//        queryDeliverFeeModel.setReceiverAddress("隆宇大厦");
+//        queryDeliverFeeModel.setReceiverPhone("13622219090");
+//        queryDeliverFeeModel.setReceiverLat(BigDecimal.valueOf(31.228623));
+//        queryDeliverFeeModel.setReceiverLng(BigDecimal.valueOf(121.587172));
+        queryDeliverFeeModel.setReceiverName(srvUserAddr.getReceiveName());// 正式环境使用
+        queryDeliverFeeModel.setReceiverAddress(srvUserAddr.getReceiveAddr());
+        queryDeliverFeeModel.setReceiverPhone(srvUserAddr.getReceivePhone());
+        queryDeliverFeeModel.setReceiverLat(new BigDecimal(srvUserAddr.getLat()));
+        queryDeliverFeeModel.setReceiverLng(new BigDecimal(srvUserAddr.getLng()));
+        queryDeliverFeeModel.setCityCode(queryCityCode(cityName));
+        queryDeliverFeeModel.setShopNo(srvRestaurant.getId());
+//        queryDeliverFeeModel.setCallback("http://gazi.free.idcfengye.com/wx/orderCallBack");
+        queryDeliverFeeModel.setCallback("http://www.tastyfit.vip/wx/orderCallBack");
 
         // 3.初始化service
         QueryDeliverFeeService queryDeliverFeeService = new QueryDeliverFeeService(queryDeliverFeeModel.toJson());
@@ -265,7 +266,7 @@ public class DaDaExpressUtil {
     public static DadaApiResponse addAfterQuery(String deliveryNo) {
 
         // 1.初始化配置(isOnline表示是否测试环境)
-        AppConfig appConfig = new AppConfig(false);
+        AppConfig appConfig = new AppConfig(true);
 
         // 2.初始化model
         AddAfterQueryModel addAfterQueryModel = new AddAfterQueryModel();
@@ -286,7 +287,7 @@ public class DaDaExpressUtil {
      **/
     private static DadaApiResponse orderQuery() {
         // 1.初始化配置(isOnline表示是否测试环境)
-        AppConfig appConfig = new AppConfig(false);
+        AppConfig appConfig = new AppConfig(true);
 
         // 2.初始化model 订单号我们自己的 要记好
         OrderQueryModel orderQueryModel = new OrderQueryModel();
