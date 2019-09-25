@@ -183,12 +183,21 @@ public class SysApiController {
      */
     @RequestMapping("/updateOrder")
     public R updateOrder(SrvOrder srvOrder){
+//        if(OrderStatusEnum.ORDRT_STATUS4.getCode().equals(srvOrder.getStatus())){
+//            srvOrder.setReceiptTime(new Date());
+//            //提交达达订单
+//            DaDaExpressUtil.addAfterQuery(srvOrder.getExpressNum());
+//        }
+//        srvOrderService.update(srvOrder);
+//        return R.ok();
+
+        SrvOrder order = srvOrderService.get(srvOrder.getId());
         if(OrderStatusEnum.ORDRT_STATUS4.getCode().equals(srvOrder.getStatus())){
             srvOrder.setReceiptTime(new Date());
             //提交达达订单
-            DaDaExpressUtil.addAfterQuery(srvOrder.getExpressNum());
+            DaDaExpressUtil.addAfterQuery(order.getExpressNum());
         }
         srvOrderService.update(srvOrder);
         return R.ok();
-    }
+            }
 }

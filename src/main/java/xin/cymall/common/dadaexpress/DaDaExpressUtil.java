@@ -5,6 +5,7 @@ package xin.cymall.common.dadaexpress;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.oss.common.utils.LogUtils;
 import org.apache.commons.collections.OrderedMap;
 import xin.cymall.common.dadaexpress.client.*;
 import xin.cymall.common.dadaexpress.config.AppConfig;
@@ -134,6 +135,11 @@ public class DaDaExpressUtil {
 
         // 4.初始化客户端
         DadaRequestClient dadaClient = new DadaRequestClient(shopAddService, appConfig);
+
+
+        LogUtils.getLog().info("addShop参数json:"+JSONUtil.toJson(shopAddList)+
+                               "        addShop返回值json:"+JSONUtil.toJson(dadaClient.callRpc()));
+
         return dadaClient.callRpc();
     }
 
@@ -217,13 +223,14 @@ public class DaDaExpressUtil {
     /**
      * 查询订单运费接口
      **/
-    public static Map<String,Object> querydeliverfee(SrvRestaurant srvRestaurant,SrvUserAddr srvUserAddr,String cityName,Double orderAmount) {
+    public static Map<String,Object> querydeliverfee(SrvRestaurant srvRestaurant,SrvUserAddr srvUserAddr,String cityName,Double orderAmount,String dadaOrder) {
 
         // 1.初始化配置(isOnline表示是否测试环境)
         AppConfig appConfig = new AppConfig(true);
 
         // 2.初始化model
         QueryDeliverFeeModel queryDeliverFeeModel = new QueryDeliverFeeModel();
+          queryDeliverFeeModel.setOriginId(dadaOrder);
 //        queryDeliverFeeModel.setShopNo("11047059");
 //        queryDeliverFeeModel.setOriginId(UUID.generateId());
 //        queryDeliverFeeModel.setCityCode("021");
@@ -251,6 +258,12 @@ public class DaDaExpressUtil {
         // 4.初始化客户端
         DadaRequestClient dadaClient = new DadaRequestClient(queryDeliverFeeService, appConfig);
         JSONObject livefeejs = JSON.parseObject(JSONUtil.toJson(dadaClient.callRpc()));
+        System.out.println("--------->"+JSONUtil.toJson(dadaClient.callRpc()));
+
+
+        LogUtils.getLog().info("querydeliverfee参数json:"+queryDeliverFeeModel.toJson()+
+                "        querydeliverfee返回值json:"+JSONUtil.toJson(dadaClient.callRpc()));
+
         OrderPreRelease orderPreRelease = JSONUtil.fromJson
                 (JSONUtil.toJson(livefeejs.getJSONObject("result")), OrderPreRelease.class);
         Map<String,Object> orderMap = new HashMap<>();
@@ -278,6 +291,12 @@ public class DaDaExpressUtil {
 
         // 4.初始化客户端
         DadaRequestClient dadaClient = new DadaRequestClient(addAfterQueryService, appConfig);
+
+
+        System.out.println("--------->addAfterQuery:"+JSONUtil.toJson(dadaClient.callRpc()));
+        LogUtils.getLog().info("addAfterQuery参数json:"+addAfterQueryModel.toJson()+
+                "        addAfterQuery返回值json:"+JSONUtil.toJson(dadaClient.callRpc()));
+
         return dadaClient.callRpc();
     }
 
@@ -315,7 +334,7 @@ public class DaDaExpressUtil {
 
 
 //     2 订单预发布 查询价格和deliveryNo下面预发单要用  OrderPreReleases是result返回的实体类    ok了
-        Map<String,Object> orderMap = querydeliverfee(null,null,"",60d);
+        Map<String,Object> orderMap = querydeliverfee(null,null,"",60d,"");
 
 
 //    3 订单预发布 预发布订单  这个result 实体类没啥鸡巴卵用就不封装了    ok了

@@ -843,7 +843,7 @@ public class WchartController {
         String[] areas = areaStr.split(",");
         Map<String,Object> orderedMap = new HashMap<>();
         if (areas.length == 3) {
-            orderedMap =  DaDaExpressUtil.querydeliverfee(srvRestaurant,srvUserAddr,areas[1],totalAmount);
+            orderedMap =  DaDaExpressUtil.querydeliverfee(srvRestaurant,srvUserAddr,areas[1],totalAmount,dadaOrder);
         }
         return R.ok().put("data",orderedMap);
 
