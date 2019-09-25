@@ -16,7 +16,7 @@ public interface SrvFoodDao extends BaseDao<SrvFood> {
 
     List<SrvFood> queryFoodByRestaurantId(String restaurantId);
 
-    List<SrvFood> findHealthFood(Integer cal);
+    List<SrvFood> findHealthFood(Integer maxCal,Integer minCal,String userAddrId);
 
     Map<String,Object> queryfoodInfo(String fooId,String restaurantId);
 }

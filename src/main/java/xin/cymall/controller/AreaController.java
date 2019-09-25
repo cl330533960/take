@@ -67,7 +67,11 @@ public class AreaController {
         paraMap.put("parentAreaId", parentAreaId);
         List<Area> areaList = areaService.getAreaListByIsShow(paraMap);
         if (areaList != null && areaList.size() > 0) {
+
             for (int i = 0; i < areaList.size(); i++) {
+//                if(areaList.get(i).getAreaLevel()==4){
+//                    break;
+//                }
                 EnumBean bean = new EnumBean();
                 bean.setCode(areaList.get(i).getAreaId());
                 bean.setValue(areaList.get(i).getAreaName());

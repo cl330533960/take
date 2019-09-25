@@ -33,7 +33,7 @@
 		select t.*
 		from t_area t
 		where 1=1
-		and t.area_level  &lt;= 3
+		and t.area_level  &lt;= 3 and LENGTH(level_area) - LENGTH( REPLACE(level_area,',','') ) &lt;= 3
 		<if test="parentAreaId != null and parentAreaId.trim() != ''">
 			and t.parent_area_id like concat('%',#{parentAreaId},'%')
 		</if>

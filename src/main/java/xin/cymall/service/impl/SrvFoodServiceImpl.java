@@ -71,8 +71,8 @@ public class SrvFoodServiceImpl implements SrvFoodService {
 	}
 
 	@Override
-	public List<SrvFood> findHealthFood(Integer cal) {
-		return srvFoodDao.findHealthFood(cal);
+	public List<SrvFood> findHealthFood(Integer maxCal,Integer minCal,String userAddrId) {
+		return srvFoodDao.findHealthFood(maxCal,minCal,userAddrId);
 	}
 
 	@Override
