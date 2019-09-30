@@ -398,7 +398,11 @@ public class WchartController {
     @RequestMapping(value = "modifyLocation")
     @ResponseBody
     public R modifyLocation(SrvUserAddr srvUserAddr) throws IOException {
-        String[] location = BaiduMapUtil.getPoint(srvUserAddr.getReceiveAddr());
+
+        String address =srvUserAddr.getReceiveAddr();
+        address = address.replace(" ","");
+        address = address.replace("-","");
+        String[] location = BaiduMapUtil.getPoint(address);
         if(location.length == 0){
             return R.error("请输入正确的收获地址!");
         }
@@ -996,6 +1000,19 @@ public class WchartController {
         model.addAttribute("orderNo", orderId);
         model.addAttribute("userId",userId);
         return "wchat/share";
+    }
+
+    public static void main(String[] args) {
+        String address ="http://api.map.baidu.com/geocoding/v3?address=四川省 成都市 新都区桂河路80号&ak=MBGPZFWMZivzdW1ZVKPkUGsPIvvTRxgj&output=json";
+        address = address.replace(" ","");
+        address = address.replace("-","");
+        try {
+            String[] location = BaiduMapUtil.getPoint(address);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }

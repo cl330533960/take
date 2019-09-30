@@ -103,10 +103,10 @@
             </label>
             <label class="weui-cell weui-check__label" for="x13">
                 <div class="weui-cell__bd">
-                <div style="display: flex ;flex-direction: row;align-items:center">
-                    <img src="/statics/img/ypyw/icon_takeaway.png" width="20px"/>
-                    <p style="margin-left: 15px">打包带走</p>
-                </div>
+                    <div style="display: flex ;flex-direction: row;align-items:center">
+                        <img src="/statics/img/ypyw/icon_takeaway.png" width="20px"/>
+                        <p style="margin-left: 15px">打包带走</p>
+                    </div>
                 </div>
                 <div class="weui-cell__ft">
                     <input type="radio" name="orderType" value="3" class="radio_type" id="x13">
@@ -133,11 +133,11 @@
     </div>
     <div class="weui-cell">
 
-        <#--<div style="margin-left: 15px" class="weui-cell__hd"><label class="weui-label">选择位置<span style="color: red">*</span>:</label></div>-->
+    <#--<div style="margin-left: 15px" class="weui-cell__hd"><label class="weui-label">选择位置<span style="color: red">*</span>:</label></div>-->
         <div class="weui-cell__bd">
-        <a class="weui-cell weui-cell_access" id="locationActions" href="javascript:;">
+            <a class="weui-cell weui-cell_access" id="locationActions" href="javascript:;">
 
-        <#--<a class="weui-cell weui-cell_access open-popup" data-target="#locationList" href="javascript:;">-->
+            <#--<a class="weui-cell weui-cell_access open-popup" data-target="#locationList" href="javascript:;">-->
                 <div class="weui-cell__bd" id="showHtml">
                     <input type="hidden" id="addrId" value="${(model.id)!""}"/>
 
@@ -182,7 +182,9 @@
                                    value="${emp.id!}" name="addrs">
                             <span class="weui-icon-checked"></span>
                         </div>
+                        <a href="javascript:;"  id="changeaddress"  οnclick="showchange('${emp.id!}','${emp.receiveName!}','${emp.receivePhone!}','${emp.receiveAddr!}')"style="color: #ff5740">修改</a>
                     </label>
+
                 </#list>
                 </div>
             </div>
@@ -223,7 +225,7 @@
                     <div class="weui-cell__bd">
                         <input class="weui-input" name="receiveAddr" id="receiveAddr" readonly placeholder="请选择地址">
                     </div>
-                    <#--<div id ="select"style="margin-left: 5px" class="weui-cell__ft">选择</div>-->
+                <#--<div id ="select"style="margin-left: 5px" class="weui-cell__ft">选择</div>-->
                     <img id="weightdom" src="/statics/img/ypyw/right.png" style="margin-left: 5px"  width="10px">
                 </div>
 
@@ -232,20 +234,100 @@
 
                     <div class="weui-cell__hd"><label class="weui-label">门牌号</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" name="detailreceiveAddr" id="detailreceiveAddr" placeholder="请输入详细地址">
+                        <textarea class="weui-textarea" style=" border:solid 1px #c8c8c8; border-radius:2px; " name="detailreceiveAddr" id="detailreceiveAddr" placeholder="请输入详细地址"></textarea>
                     </div>
                 <#--<div id ="select"style="margin-left: 5px" class="weui-cell__ft">选择地区</div>-->
-                    <#--<img id="weightdom" src="/statics/img/ypyw/right.png" style="margin-left: 5px"  width="10px">-->
+                <#--<img id="weightdom" src="/statics/img/ypyw/right.png" style="margin-left: 5px"  width="10px">-->
                 </div>
                 <a href="javascript:;" onclick="saveAddr()" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;margin-right: 15px;border-radius: 30px;margin-left: 15px;margin-bottom: 50px;background-color: #ff5740">保存</a>
             </div>
         </div>
     </div>
 </div>
+
+<div id="changeLocation" class="weui-popup__container" style="display: none;">
+    <div class="weui-popup__overlay"></div>
+    <div class="weui-popup__modal">
+        <div class="toolbar">
+            <div class="toolbar-inner">
+                <a href="javascript:;" class="picker-button close-popup" style="color: #ff5740">关闭</a>
+
+                <h1 class="title">修改收货地址</h1>
+            </div>
+        </div>
+        <div class="modal-content">
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">联系人</label></div>
+                    <div class="weui-cell__bd">
+                        <input type="hidden" id="chaddrId" style="display: none" />
+                        <input class="weui-input" name="chreceiveName" id="chreceiveName" placeholder="请输入联系人">
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">联系电话</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="chreceivePhone" id="chreceivePhone" type="tel"
+                               placeholder="请输入联系电话">
+                    </div>
+                </div>
+
+                <div class="weui-cell">
+
+                    <div class="weui-cell__hd"><label class="weui-label">地址</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="chreceiveAddr" id="chreceiveAddr" readonly placeholder="请选择地址">
+                    </div>
+                <#--<div id ="select"style="margin-left: 5px" class="weui-cell__ft">选择</div>-->
+                    <img id="weightdom" src="/statics/img/ypyw/right.png" style="margin-left: 5px"  width="10px">
+                </div>
+
+
+                <div class="weui-cell">
+
+                    <div class="weui-cell__hd"><label class="weui-label">门牌号</label></div>
+                    <div class="weui-cell__bd">
+                        <textarea class="weui-textarea" style=" border:solid 1px #c8c8c8; border-radius:2px; " name="chdetailreceiveAddr" id="chdetailreceiveAddr" placeholder="请输入详细地址"></textarea>
+                    </div>
+                <#--<div id ="select"style="margin-left: 5px" class="weui-cell__ft">选择地区</div>-->
+                <#--<img id="weightdom" src="/statics/img/ypyw/right.png" style="margin-left: 5px"  width="10px">-->
+                </div>
+                <a href="javascript:;" onclick="changesaveAddr()" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;margin-right: 15px;border-radius: 30px;margin-left: 15px;margin-bottom: 50px;background-color: #ff5740">保存</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 
+    function showchange  (id,name,phone,add){
+        $("#addLocation").popup();
+        $('#chaddrId').val('id');
+        $('#chreceiveName').val('name');
+        $('#chreceivePhone').val('phone');
+
+        var address=[];
+        address= add.split("-");
+
+        $('#chreceiveAddr').val(address[0]);
+        $('#chdetailreceiveAddr').val(address[1]);
+
+
+    }
 
     $(function () {
+
+        $("#receiveAddr").cityPicker({
+            title: "选择地址",
+            onChange: function (picker, values, displayValues) {
+                console.log(values, displayValues);
+            }
+        });
+
+
+
+
+
         $('#locationActions').click(function () {
             $.actions({
                 actions: [{
@@ -317,7 +399,7 @@
             data: {
                 wxId: "${wxId!}",
                 receiveName: $("#receiveName").val(),
-                receiveAddr: $("#receiveAddr").val()+$("#detailreceiveAddr").val(),
+                receiveAddr: $("#receiveAddr").val()+"-"+$("#detailreceiveAddr").val(),
                 receivePhone: $("#receivePhone").val()
             },
             //请求成功
@@ -336,27 +418,77 @@
     }
 
 
+    function changesaveAddr() {
+        var id = $("#chaddrId").val()
+        var receiveName = $("#chreceiveName").val()
+        var receiveAddr = $("#chreceiveAddr").val()
+        var detailreceiveAddr = $("#chdetailreceiveAddr").val()
+        var receivePhone = $("#chreceivePhone").val()
+        if(!receiveName){
+            $.toptip('联系人为必须项', 'error');
+            return;
+        }
+        if(!receivePhone){
+            $.toptip('联系电话必须项', 'error');
+            return;
+        }
+        if(!receiveAddr){
+            $.toptip('地址必须项', 'error');
+            return;
+        }
+        if(!detailreceiveAddr){
+            $.toptip('门牌号地址必须项', 'error');
+            return;
+        }
+        $.showLoading("正在提交数据，请稍后");
+        $.ajax({
+            //请求方式
+            type: "POST",
+            url: "/wx/modifyLocation",
+            //数据，json字符串
+            data: {
+                wxId: "${wxId!}",
+                receiveName: $("#chreceiveName").val(),
+                receiveAddr: $("#chreceiveAddr").val()+"-"+$("#chdetailreceiveAddr").val(),
+                receivePhone: $("#chreceivePhone").val(),
+                id:id,
+            },
+            //请求成功
+            success: function (result) {
+                $.hideLoading();
+                $.toast("修改地址成功");
 
-    var selectContactDom = $('#receiveAddr');
-    var showContactDom = $('#receiveAddr');
-
-    selectContactDom.bind('click', function () {
-
-        var iosSelect = new IosSelect(3,
-                [iosProvinces, iosCitys, iosCountys],
-                {
-                    title: '地址选择',
-                    itemHeight: 35,
-                    relation: [1, 1],
-
-                    callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
-
-                        showContactDom.val(selectOneObj.value + '' + selectTwoObj.value + '' + selectThreeObj.value);
-                    }
-                });
+            },
+            //请求失败，包含具体的错误信息
+            error: function (e) {
+                $.hideLoading();
+                $.toast("操作失败", "cancel");
+            }
+        });
+    }
 
 
-    });
+
+    // var selectContactDom = $('#receiveAddr');
+    // var showContactDom = $('#receiveAddr');
+    //
+    // selectContactDom.bind('click', function () {
+    //
+    //     var iosSelect = new IosSelect(3,
+    //             [iosProvinces, iosCitys, iosCountys],
+    //             {
+    //                 title: '地址选择',
+    //                 itemHeight: 35,
+    //                 relation: [1, 1],
+    //
+    //                 callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+    //
+    //                     showContactDom.val(selectOneObj.value + '' + selectTwoObj.value + '' + selectThreeObj.value);
+    //                 }
+    //             });
+    //
+    //
+    // });
 
 </script>
 
