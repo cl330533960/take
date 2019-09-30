@@ -310,7 +310,7 @@ public class DaDaExpressUtil {
 
         // 2.初始化model 订单号我们自己的 要记好
         OrderQueryModel orderQueryModel = new OrderQueryModel();
-        orderQueryModel.setOrderID("1564211421898");
+        orderQueryModel.setOrderID("d41ba0bc-4955-9f1e-de72-cc5c359870a9");
 
         // 2.初始化service
         OrderQueryService orderQueryService = new OrderQueryService(orderQueryModel.toJson());
@@ -323,6 +323,8 @@ public class DaDaExpressUtil {
 
     public static void main(String[] args) {
 //        TODO  铁酱 除了城市查询接口的参数不需要传递以为其他都要自己传过去 方法里面是写死了的
+        System.out.println(JSON.toJSONString(orderQuery()));
+
 
 //        DadaApiResponse dadaApiResponse = addShop(null, "成都市", "武侯区");
 //        System.out.println(dadaApiResponse);
@@ -334,11 +336,19 @@ public class DaDaExpressUtil {
 
 
 //     2 订单预发布 查询价格和deliveryNo下面预发单要用  OrderPreReleases是result返回的实体类    ok了
+
         Map<String,Object> orderMap = querydeliverfee(null,null,"",60d,"");
 
 
 //    3 订单预发布 预发布订单  这个result 实体类没啥鸡巴卵用就不封装了    ok了
         System.out.println(orderMap.get("expressNum")+"");
+
+//        Map<String,Object> orderMap = querydeliverfee(null,null,"",60d);
+//
+//
+////    3 订单预发布 预发布订单  这个result 实体类没啥鸡巴卵用就不封装了    ok了
+//        System.out.println(orderMap.get("expressNum")+"");
+
 //        DadaApiResponse addafterquery = addAfterQuery(orderMap.get("expressNum")+"");
 //        JSONObject addafterqueryjs = JSON.parseObject(JSONUtil.toJson(addafterquery));
 //        System.out.println(JSONUtil.toJson(addafterquery));

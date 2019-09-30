@@ -1,11 +1,7 @@
 package xin.cymall.controller;
 
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -183,13 +179,6 @@ public class SysApiController {
      */
     @RequestMapping("/updateOrder")
     public R updateOrder(SrvOrder srvOrder){
-//        if(OrderStatusEnum.ORDRT_STATUS4.getCode().equals(srvOrder.getStatus())){
-//            srvOrder.setReceiptTime(new Date());
-//            //提交达达订单
-//            DaDaExpressUtil.addAfterQuery(srvOrder.getExpressNum());
-//        }
-//        srvOrderService.update(srvOrder);
-//        return R.ok();
 
         SrvOrder order = srvOrderService.get(srvOrder.getId());
         if(OrderStatusEnum.ORDRT_STATUS4.getCode().equals(srvOrder.getStatus())){
@@ -199,5 +188,5 @@ public class SysApiController {
         }
         srvOrderService.update(srvOrder);
         return R.ok();
-            }
+    }
 }
