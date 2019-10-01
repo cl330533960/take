@@ -107,6 +107,30 @@ public class SysApiController {
         return R.ok().put("data", list);
     }
 
+    @RequestMapping("/queryFoodbyname")
+    public R queryFoodbyname(@RequestParam String restaurantId,String name){
+        List<SrvFood> list = srvFoodService.queryFoodByFoodnameAndRestaurantId(restaurantId,name);
+        for(SrvFood srvFood : list){
+            Map<String,Object> map = new HashMap<>();
+            if(!StringUtil.isEmpty(srvFood.getImagePath())) {
+                map.put("foodId", srvFood.getId());
+                map.put("status", "1");
+                map.put("restaurantId",restaurantId);
+                List<SrvFoodUpDown> foodUpDowns = srvFoodUpDownService.getList(map);
+                if(foodUpDowns.size()>0){
+                    srvFood.setIsUpDown("1");
+                }else{
+                    srvFood.setIsUpDown("0");
+                }
+                srvFood.setImagePath(srvFood.getImagePath().split(",")[0]);
+            }
+        }
+        return R.ok().put("data", list);
+    }
+
+
+
+
     @RequestMapping("/foodUpOrDown")
     public R foodUpOrDown(@RequestParam String restaurantId,@RequestParam String[] foodIds,@RequestParam Integer status){
         List<SrvFoodUpDown> list = new ArrayList<>();

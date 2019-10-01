@@ -927,9 +927,21 @@ public class WchartController {
 
 
     @RequestMapping(value = "testgetindex")
-    public String gettestIndex(HttpServletRequest request){
+    public String gettestIndex(Model model,String code,HttpServletRequest request){
         getClientIp(request);
+
+        Map<String,Object> map = new HashMap<>();
+        SrvWxUser srvWxUser = srvWxUserService.getByOpenId("opi-Y0wSRxNVNwdv1WTGTkRnSR2w");
+        map.put("userId", srvWxUser.getId());
+        List<SrvUserAddr> list = srvUserAddrService.getList(map);
+        if(list.size()>0){
+            SrvUserAddr srvUserAddr = list.get(0);
+            model.addAttribute("model",srvUserAddr);
+            model.addAttribute("locs",list);
+        }
+        model.addAttribute("wxId", "opi-Y0wSRxNVNwdv1WTGTkRnSR2w");
         return "wchat/rationorderfood";
+
     }
 
       /* 跳转到新增页面

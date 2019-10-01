@@ -183,4 +183,14 @@
 		LEFT JOIN srv_order o on o.id = of.order_id and o.status = '7' and DATE_FORMAT(o.order_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
 		where f.id = #{param1} and o.restaurant_id =  #{param2}
 	</select>
+
+
+	<select id="queryFoodByFoodnameAndRestaurantId" resultType="xin.cymall.entity.SrvFood" parameterType="string">
+		select * from srv_food f
+		left join srv_restaurant r
+		on f.restaurant_id = r.id
+		where r.id = #{param1}
+		and  f.name=#{param2}
+	</select>
+
 </mapper>

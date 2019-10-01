@@ -162,28 +162,37 @@
             <div class="toolbar-inner">
                 <a href="javascript:;" class="picker-button close-popup" style="color: #ff5740">确定</a>
 
-                <h1 class="title">选择地址</h1>
+                <h1 class="title">选择或修改地址</h1>
             </div>
         </div>
         <div class="modal-content">
             <div class="weui-cells">
                 <div class="weui-cells weui-cells_radio" id="locationListPup">
                 <#list locs! as emp>
-                    <label class="weui-cell weui-check__label">
-                        <div class="weui-cell__bd" id="${emp.id!}">
-                            <input type="hidden" id="addrId" value="${emp.id!}"/>
 
-                            <p id="nameAndPhone">${emp.receiveName!}&nbsp;&nbsp;${emp.receivePhone!}</p>
 
-                            <p id="addr">${emp.receiveAddr!}</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <input type="radio" class="radio_type" <#if emp.id == model.id>checked="checked"</#if>
-                                   value="${emp.id!}" name="addrs">
-                            <span class="weui-icon-checked"></span>
-                        </div>
-                        <a href="javascript:;"  id="changeaddress"  οnclick="showchange('${emp.id!}','${emp.receiveName!}','${emp.receivePhone!}','${emp.receiveAddr!}')"style="color: #ff5740">修改</a>
-                    </label>
+
+                        <div class="weui-cell weui-check__label">
+                            <div class="weui-cell__bd" id="${emp.id!}">
+                                <input type="hidden" id="addrId" value="${emp.id!}"/>
+
+                                <p id="nameAndPhone">${emp.receiveName!}&nbsp;&nbsp;${emp.receivePhone!}</p>
+
+                                <p id="addr">${emp.receiveAddr!}</p>
+                            </div>
+                            <div class="weui-cell__ft">
+                                <input type="radio" class="radio_type" <#if emp.id == model.id>checked="checked"</#if>
+                                       value="${emp.id!}" name="addrs">
+                                <span class="weui-icon-checked"></span>
+                            </div>
+
+                            <div>  <a  class="weui-btn weui-btn_plain-default" href="javascript:;"
+                                       id="changeaddress"
+                                       onclick="showchange('${emp.id!}','${emp.receiveName!}','${emp.receivePhone!}','${emp.receiveAddr!}')"
+                                       style=" font-size: 10px color: #ff5740">编辑</a></div>
+
+                            </div>
+
 
                 </#list>
                 </div>
@@ -292,7 +301,7 @@
                 <#--<div id ="select"style="margin-left: 5px" class="weui-cell__ft">选择地区</div>-->
                 <#--<img id="weightdom" src="/statics/img/ypyw/right.png" style="margin-left: 5px"  width="10px">-->
                 </div>
-                <a href="javascript:;" onclick="changesaveAddr()" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;margin-right: 15px;border-radius: 30px;margin-left: 15px;margin-bottom: 50px;background-color: #ff5740">保存</a>
+                <a href="javascript:;" onclick="changesaveAddr()" id="locSubmit" class="weui-btn weui-btn_primary" style="margin-top: 10px;margin-right: 15px;border-radius: 30px;margin-left: 15px;margin-bottom: 50px;background-color: #ff5740">保存修改</a>
             </div>
         </div>
     </div>
@@ -301,10 +310,11 @@
 <script type="text/javascript">
 
     function showchange  (id,name,phone,add){
-        $("#addLocation").popup();
-        $('#chaddrId').val('id');
-        $('#chreceiveName').val('name');
-        $('#chreceivePhone').val('phone');
+        $("#changeLocation").popup();
+
+        $('#chaddrId').val(id);
+        $('#chreceiveName').val(name);
+        $('#chreceivePhone').val(phone);
 
         var address=[];
         address= add.split("-");
@@ -324,6 +334,12 @@
             }
         });
 
+        $("#chreceiveAddr").cityPicker({
+            title: "选择地址",
+            onChange: function (picker, values, displayValues) {
+                console.log(values, displayValues);
+            }
+        });
 
 
 
@@ -331,7 +347,7 @@
         $('#locationActions').click(function () {
             $.actions({
                 actions: [{
-                    text: "选择地址",
+                    text: "选择或修改地址",
                     onClick: function () {
                         $("#locationList").popup();
                     }
@@ -457,12 +473,12 @@
             success: function (result) {
                 $.hideLoading();
                 $.toast("修改地址成功");
-
+                location.reload()
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
                 $.hideLoading();
-                $.toast("操作失败", "cancel");
+                $.toast("修改地址失败", "cancel");
             }
         });
     }
@@ -493,7 +509,10 @@
 </script>
 
 <script type="text/html" id="addLocationHtml">
-    <label class="weui-cell weui-check__label">
+
+
+
+    <div class="weui-cell weui-check__label">
         <div class="weui-cell__bd" id="{{data.id}}">
             <input type="hidden" id="addrId" value="{{data.id}}"/>
 
@@ -502,10 +521,18 @@
             <p id="addr">{{data.receiveAddr}}</p>
         </div>
         <div class="weui-cell__ft">
-            <input type="radio" class="weui-check" value="{{data.id}}" name="addrs">
+            <input type="radio" class="radio_type" value="{{data.id}}" name="addrs">
             <span class="weui-icon-checked"></span>
         </div>
-    </label>
+
+        <div>  <a  class="weui-btn weui-btn_plain-default" href="javascript:;"
+                   id="changeaddress"
+                   onclick="showchange('{{data.id}}','{{data.receiveName}}','{{data.receivePhone}}','{{data.receiveAddr}}')"
+                   style=" font-size: 10px color: #ff5740">编辑</a></div>
+
+        </div>
+
+    </div>
 </script>
 
 </body>

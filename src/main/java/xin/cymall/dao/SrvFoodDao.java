@@ -15,6 +15,7 @@ import java.util.Map;
 public interface SrvFoodDao extends BaseDao<SrvFood> {
 
     List<SrvFood> queryFoodByRestaurantId(String restaurantId);
+    List<SrvFood> queryFoodByFoodnameAndRestaurantId(String restaurantId,String name);
 
     List<SrvFood> findHealthFood(Integer maxCal,Integer minCal,String userAddrId);
 
