@@ -169,10 +169,7 @@
             <div class="weui-cells">
                 <div class="weui-cells weui-cells_radio" id="locationListPup">
                 <#list locs! as emp>
-
-
-
-                        <div class="weui-cell weui-check__label">
+                        <div id="${emp.id!}all" class="weui-cell weui-check__label">
                             <div class="weui-cell__bd" id="${emp.id!}">
                                 <input type="hidden" id="addrId" value="${emp.id!}"/>
 
@@ -192,8 +189,6 @@
                                        style=" font-size: 10px color: #ff5740">编辑</a></div>
 
                             </div>
-
-
                 </#list>
                 </div>
             </div>
@@ -473,7 +468,12 @@
             success: function (result) {
                 $.hideLoading();
                 $.toast("修改地址成功");
-                location.reload()
+
+                $("div#"+result.data.id+"all").remove();
+
+                var html = template("addLocationHtml", {data: result.data});
+                $("#locationListPup").append(html);
+                $("#locationList").popup();
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
@@ -512,7 +512,7 @@
 
 
 
-    <div class="weui-cell weui-check__label">
+    <div id="{{data.id}}all" class="weui-cell weui-check__label">
         <div class="weui-cell__bd" id="{{data.id}}">
             <input type="hidden" id="addrId" value="{{data.id}}"/>
 
