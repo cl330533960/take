@@ -86,11 +86,10 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 		}
 		if(wxOrder.getCouponAmount()!=null && wxOrder.getCouponAmount() > 0)
 			order.setCouponAmount(wxOrder.getCouponAmount());
-
 		else
-			order.setWayFee(0);
-		order.setUserPayFee(wxOrder.getUserPayAmount());
-		order.setOrderTotal(wxOrder.getTotalAmount());
+			order.setCouponAmount(0);
+		order.setUserPayFee(wxOrder.getUserPayAmount()+ order.getPackFee());
+		order.setOrderTotal(wxOrder.getTotalAmount() + order.getPackFee());
 		order.setRestaurantTotal(wxOrder.getRestaurantTotal());
 		order.setRemark(wxOrder.getRemark());
 		ObjectMapper mapper = new ObjectMapper();
@@ -151,7 +150,7 @@ public class SrvOrderServiceImpl implements SrvOrderService {
 		if(!StringUtil.isEmpty(expressPhone))
 			srvOrder.setExpressPhone(expressPhone);
 		if(orderStatus.equals(OrderStatusEnum.ORDRT_STATUS7.getCode())){
-			srvRestaurantDao.updateBalance(srvOrder.getUserPayFee(),srvOrder.getRestaurantId());
+			srvRestaurantDao.addBalance(srvOrder.getRestaurantTotal(), srvOrder.getRestaurantId());
 		}
 		srvOrderDao.update(srvOrder);
 	}

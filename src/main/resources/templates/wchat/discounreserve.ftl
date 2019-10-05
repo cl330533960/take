@@ -83,13 +83,13 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">手机<span style="color: red">*</span>:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="weight" maxlength="11"   type="number" placeholder="请输入手机号">
+            <input class="weui-input" id="phone" maxlength="11"   type="phone" placeholder="请输入手机号">
         </div>
     </div>
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">备注:</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="waistline" type="number" placeholder="请输入备注">
+            <input class="weui-input" id="remark"  placeholder="请输入备注">
         </div>
     </div>
 
@@ -114,9 +114,9 @@
 <script type="text/javascript">
 
     var ctypeDom = document.querySelector('#ctypedom');
-    var ctypedom = document.querySelector('#ctype');
+//    var ctypedom = document.querySelector('#ctype');
     ctypeDom.addEventListener('click', function () {
-        var bankId = ctypeDom.dataset['value'];
+        var bankId = ctypeDom.dataset['id'];
         var bankSelect = new IosSelect(1,
                 [typedata],
                 {
@@ -126,7 +126,8 @@
                     itemShowCount: 3,
                     oneLevelId: bankId,
                     callback: function (selectOneObj) {
-                        ctypedom.value = selectOneObj.value;
+                        $("#ctype").val(selectOneObj.value);
+                        $("#ctype").attr("data",selectOneObj.id);
                     }
                 });
     });
@@ -134,13 +135,13 @@
 
     function savediscounreserve() {
 
-        var discounType =  $('#numbers option:selected') .val();//选中的值
+        var discounType =  $('#ctype').attr("data");//选中的值
         var remark =  $("#remark").val();
         var phone= $("#phone").val();
 
         $.showLoading("正在提交数据，请稍后");
 
-        var url="/wx/discountReserve?wxId=${wxId}&discounType="+discounType+"&remark="+remark;
+        var url="/wx/discountReserve?wxId=${wxId}&discounType="+discounType+"&remark="+remark+"&phone="+phone;
         $.ajax({
             //请求方式
             type: "POST",

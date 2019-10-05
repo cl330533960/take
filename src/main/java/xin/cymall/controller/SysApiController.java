@@ -70,6 +70,7 @@ public class SysApiController {
     @RequestMapping("/apply")
     public R apply(SrvRestauranapply srvRestauranapply){
         srvRestauranapply.setId(UUID.generateId());
+        srvRestauranapply.setStatus("2");
         srvRestauranapplyService.save(srvRestauranapply);
         return R.ok();
     }
@@ -181,7 +182,7 @@ public class SysApiController {
         params.put("page",page);
         params.put("limit",limit);
         params.put("sidx","orderTime");
-        params.put("order","asc");
+        params.put("order","desc");
         Query query = new Query(params);
         List<SrvOrder> orderList = srvOrderService.getList(query);
         Map<String,Object> map = new HashMap<>();

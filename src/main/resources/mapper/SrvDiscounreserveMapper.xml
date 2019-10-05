@@ -11,20 +11,26 @@
         <result property="status" column="status"/>
         <result property="userId" column="user_id"/>
         <result property="discount" column="discount"/>
-    </resultMap>
+		<result property="remark" column="remark"/>
+		<result property="wxName" column="wx_name"/>
+
+
+	</resultMap>
 
 	<select id="get" resultType="xin.cymall.entity.SrvDiscounreserve">
 		select * from srv_discount_reserve where id = #{value}
 	</select>
 
 	<select id="getList" resultType="xin.cymall.entity.SrvDiscounreserve">
-		select * from srv_discount_reserve t <include refid="where_clause" />
+		select t.*,u.wx_name from srv_discount_reserve t
+		left join srv_wx_user u on t.user_id = u.id
+		<include refid="where_clause" />
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by discount_start desc
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">
@@ -33,7 +39,8 @@
 	</select>
 	
  	<select id="getCount" resultType="int">
-		select count(*) from srv_discount_reserve t  <include refid="where_clause" />
+		select count(*) from srv_discount_reserve t 		left join srv_wx_user u on t.user_id = u.id
+		<include refid="where_clause" />
 	</select>
 
     <!-- 搜索数据区域 -->
@@ -52,6 +59,7 @@
     		<if test="userIdVague != null and userIdVague != ''"> and t.user_id like concat('%',#{userIdVague},'%') </if>
             <if test="discount != null and discount != ''"> and t.discount = #{discount} </if>
     		<if test="discountVague != null and discountVague != ''"> and t.discount like concat('%',#{discountVague},'%') </if>
+       		<if test="wxName !=null and wxName !=''"> and u.wx_name like concat('%',#{wxName},'%')</if>
         </where>
     </sql>
 	 
@@ -63,7 +71,8 @@
 			`discount_end`, 
 			`status`, 
 			`user_id`, 
-			`discount`
+			`discount`,
+			`remark`
 		)
 		values
 		(
@@ -72,7 +81,8 @@
 			#{discountEnd}, 
 			#{status}, 
 			#{userId}, 
-			#{discount}
+			#{discount},
+			#{remark}
 		)
 	</insert>
 	 

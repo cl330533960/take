@@ -192,9 +192,14 @@ public class WchartController {
      * 跳转到新增页面
      **/
     @RequestMapping(value = "calcAssess")
-    public String calcAssess(Model model,String code) throws WxErrorException {
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
-        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
+    public String calcAssess(Model model,String code,HttpServletRequest request) throws WxErrorException {
+        String  openId = (String)request.getSession().getAttribute("openId");
+        if(StringUtil.isEmpty(openId)) {
+            WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+            openId = wxMpOAuth2AccessToken.getOpenId();
+            request.getSession().setAttribute("openId",openId);
+        }
+        model.addAttribute("wxId", openId);
         return "wchat/calcassess";
     }
 
@@ -284,10 +289,15 @@ public class WchartController {
 
 
     @RequestMapping(value = "/rationorderFood",method = { RequestMethod.GET, RequestMethod.POST })
-    public String rationorderFood(Model model,String code) throws WxErrorException {
+    public String rationorderFood(Model model,String code,HttpServletRequest request) throws WxErrorException {
         Map<String,Object> map = new HashMap<>();
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
-        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxMpOAuth2AccessToken.getOpenId());
+        String  openId = (String)request.getSession().getAttribute("openId");
+        if(StringUtil.isEmpty(openId)) {
+            WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+            openId = wxMpOAuth2AccessToken.getOpenId();
+            request.getSession().setAttribute("openId", openId);
+        }
+        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(openId);
         map.put("userId", srvWxUser.getId());
         List<SrvUserAddr> list = srvUserAddrService.getList(map);
         if(list.size()>0){
@@ -295,7 +305,7 @@ public class WchartController {
             model.addAttribute("model",srvUserAddr);
             model.addAttribute("locs",list);
         }
-        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
+        model.addAttribute("wxId", openId);
         return "wchat/rationorderfood";
     }
 
@@ -371,16 +381,26 @@ public class WchartController {
 
 
     @RequestMapping(value = "/couponList",method = { RequestMethod.GET, RequestMethod.POST })
-    public String couponList(Model model,String code) throws WxErrorException {
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
-        model.addAttribute("wxId",wxMpOAuth2AccessToken.getOpenId());
+    public String couponList(Model model,String code,HttpServletRequest request) throws WxErrorException {
+        String  openId = (String)request.getSession().getAttribute("openId");
+        if(StringUtil.isEmpty(openId)) {
+            WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+            openId = wxMpOAuth2AccessToken.getOpenId();
+            request.getSession().setAttribute("openId",openId);
+        }
+        model.addAttribute("wxId",openId);
         return "wchat/couponlist";
     }
 
     @RequestMapping(value = "/orderList")
-    public String orderList(Model model,String code) throws WxErrorException {
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
-        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
+    public String orderList(Model model,String code,HttpServletRequest request) throws WxErrorException {
+        String  openId = (String)request.getSession().getAttribute("openId");
+        if(StringUtil.isEmpty(openId)) {
+            WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+            openId = wxMpOAuth2AccessToken.getOpenId();
+            request.getSession().setAttribute("openId",openId);
+        }
+        model.addAttribute("wxId", openId);
         return "wchat/orderlist";
     }
 
@@ -388,9 +408,14 @@ public class WchartController {
      *优惠预订
      **/
     @RequestMapping(value = "/discounreserve")
-    public String discounreserve(Model model,String code) throws WxErrorException {
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
-        model.addAttribute("wxId", wxMpOAuth2AccessToken.getOpenId());
+    public String discounreserve(Model model,String code,HttpServletRequest request) throws WxErrorException {
+        String  openId = (String)request.getSession().getAttribute("openId");
+        if(StringUtil.isEmpty(openId)) {
+            WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+            openId = wxMpOAuth2AccessToken.getOpenId();
+            request.getSession().setAttribute("openId",openId);
+        }
+        model.addAttribute("wxId", openId);
         return "wchat/discounreserve";
     }
 
@@ -517,7 +542,7 @@ public class WchartController {
         params.put("page",page);
         params.put("limit",limit);
         params.put("sidx","orderTime");
-        params.put("order","asc");
+        params.put("order","desc");
         Query query = new Query(params);
         List<SrvOrder> orderList = srvOrderService.getList(query);
         Map<String,Object> map = new HashMap<>();
@@ -613,11 +638,11 @@ public class WchartController {
         srvDiscounreserve.setId(UUID.generateId());
         srvDiscounreserve.setUserId(srvWxUser.getId());
         srvDiscounreserve.setDiscountStart(new Date());
-        if(wxDiscounreserve.equals("1")){
+        if("1".equals(wxDiscounreserve.getDiscounType())){
             srvDiscounreserve.setDiscountEnd(DateUtil.getLaterWeek());
             srvDiscounreserve.setDiscount(0.9);
 
-        }else if(wxDiscounreserve.equals("2")){
+        }else if("2".equals(wxDiscounreserve.getDiscounType())){
             srvDiscounreserve.setDiscountEnd(DateUtil.getLaterMonth());
             srvDiscounreserve.setDiscount(0.8);
         }

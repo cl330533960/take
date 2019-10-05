@@ -47,7 +47,7 @@
 
             <th width="10%" param="{name:'wxName'}">用户</th>
 
-            <th width="10%" param="{name:'phone'}">手机号</th>
+            <th width="10%" param="{name:'receivePhone'}">手机号</th>
 
             <th width="10%" param="{name:'orderNo'}">订单号</th>
             <th width="10%" param="{name:'restaurantTotal'}">订单金额</th>

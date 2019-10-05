@@ -46,10 +46,18 @@
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>info</level>
+            <!--<level>info</level>-->
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
+
+
+        <!--<logger name="xin.cymall.dao" level="debug" additivity="false">-->
+            <!--<appender-ref ref="info" />-->
+        <!--</logger>-->
+
+
+
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
@@ -84,6 +92,10 @@
             <MaxFileSize>10MB</MaxFileSize>
         </triggeringPolicy>
     </appender>
+
+
+    <logger name="xin.cymall.dao" level="debug"  />
+
 
 
     <!-- 日志输出级别 -->

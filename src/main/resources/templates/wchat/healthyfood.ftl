@@ -30,20 +30,20 @@
             <p style="font-size: 12px" id="addr">${model.receiveAddr!}</p>
         </div>
     </div>
-    <div class="weui-search-bar" id="searchBar">
-        <form class="weui-search-bar__form">
-            <div class="weui-search-bar__box">
-                <i class="weui-icon-search"></i>
-                <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="请输入菜品名称" required="">
-                <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-            </div>
-            <label class="weui-search-bar__label" id="searchText">
-                <i class="weui-icon-search"></i>
-                <span>搜索</span>
-            </label>
-        </form>
-        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-    </div>
+    <#--<div class="weui-search-bar" id="searchBar">-->
+        <#--<form class="weui-search-bar__form">-->
+            <#--<div class="weui-search-bar__box">-->
+                <#--<i class="weui-icon-search"></i>-->
+                <#--<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="请输入菜品名称" required="">-->
+                <#--<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>-->
+            <#--</div>-->
+            <#--<label class="weui-search-bar__label" id="searchText">-->
+                <#--<i class="weui-icon-search"></i>-->
+                <#--<span>搜索</span>-->
+            <#--</label>-->
+        <#--</form>-->
+        <#--<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>-->
+    <#--</div>-->
     <div class="weui-cells">
     <#list foodList! as food>
         <div class="weui-cell weui-cell_swiped">
@@ -260,7 +260,7 @@
         }
         $("#packFee").text(packFee);
         $("#totalAmount").text((totalFoodPrice + packFee - couponAmount) > 0 ? (totalFoodPrice + packFee - couponAmount) : 0);
-        restaurantTotal = (totalFoodPrice + packFee - couponAmount) > 0 ? (totalFoodPrice + packFee - couponAmount) : 0;
+        restaurantTotal = (restaurantFoodPrice + packFee - couponAmount) > 0 ? (restaurantFoodPrice + packFee - couponAmount) : 0;
     }
 
     function getRestaurantId() {

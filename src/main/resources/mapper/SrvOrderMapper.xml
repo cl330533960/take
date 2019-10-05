@@ -53,7 +53,7 @@
 	</select>
 
 	<select id="getList" resultType="xin.cymall.entity.SrvOrder">
-		select t.*,u.wx_name,u.phone,r.name as restaurantName,ua.receive_name,ua.receive_phone,ua.receive_addr,r.logo_path from srv_order t
+		select t.*,u.wx_name,ua.receive_phone,r.name as restaurantName,ua.receive_name,ua.receive_phone,ua.receive_addr,r.logo_path from srv_order t
 		left join srv_wx_user u on t.user_id = u.id
 		left join srv_restaurant r on t.restaurant_id = r.id
 		left join srv_user_addr ua on t.user_addr_id = ua.id
@@ -188,23 +188,23 @@
 		<set>
 			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
 			<if test="userId != null">`user_id` = #{userId}, </if>
-			<if test="restaurantId != null">`restaurant_id` = #{restaurantId}, </if>
+			<!--<if test="restaurantId != null">`restaurant_id` = #{restaurantId}, </if>-->
 			<if test="userAddrId != null">`user_addr_id` = #{userAddrId}, </if>
 			<if test="expressCompnay != null">`express_compnay` = #{expressCompnay}, </if>
 			<if test="expressNum != null">`express_num` = #{expressNum}, </if>
 			<if test="expressName != null">`express_name` = #{expressName}, </if>
 			<if test="expressPhone != null">`express_phone` = #{expressPhone}, </if>
 			<if test="status != null">`status` = #{status}, </if>
-			<if test="orderTotal != null">`order_total` = #{orderTotal}, </if>
+			<!--<if test="orderTotal != null">`order_total` = #{orderTotal}, </if>-->
 			<if test="remark != null">`remark` = #{remark}, </if>
-			<if test="orderType != null">`order_type` = #{orderType}, </if>
-			<if test="userPayFee != null">`user_pay_fee` = #{userPayFee}, </if>
-			<if test="wayFee != null">`way_fee` = #{wayFee}, </if>
-			<if test="packFee != null">`pack_fee` = #{packFee}, </if>
+			<!--<if test="orderType != null">`order_type` = #{orderType}, </if>-->
+			<!--<if test="userPayFee != null">`user_pay_fee` = #{userPayFee}, </if>-->
+			<!--<if test="wayFee != null">`way_fee` = #{wayFee}, </if>-->
+			<!--<if test="packFee != null">`pack_fee` = #{packFee}, </if>-->
 			<if test="couponId != null">`coupon_id` = #{couponId}, </if>
 			<if test="discount != null">`discount` = #{discount},</if>
 			<if test="receiptTime!= null">`receipt_time` = #{receiptTime},</if>
-			<if test="restaurantTotal!= null">`restaurant_total` = #{restaurantTotal},</if>
+			<!--<if test="restaurantTotal!= null">`restaurant_total` = #{restaurantTotal},</if>-->
 			<if test="expressTime!= null">`express_time` = #{expressTime},</if>
 			<if test="finishTime!= null">`finish_time` = #{finishTime},</if>
 
@@ -231,7 +231,7 @@
 	</select>
 
 	<select id="queryOrderByDada" resultType="xin.cymall.entity.SrvOrder">
-		select t.id from srv_order t
+		select t.id,t.restaurant_total,restaurant_id from srv_order t
 		where t.dada_order = #{value}
 	</select>
 

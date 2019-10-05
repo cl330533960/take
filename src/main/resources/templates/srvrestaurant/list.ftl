@@ -75,7 +75,7 @@
             <th width="5%" param="{name:'status',codeName:'busstatus'}">是否营业</th>
             <th width="5%" param="{name:'remark'}">备注</th>
             <#--<th width="5%" param="{name:'state',enumName:'StateEnum',render:'Render.customState'}">状态</th>-->
-            <th width="10%" param="{operate:'true',buttons:'Render.state,Render.edit,Render.delete,Render.adddada'}">操作</th>
+            <th width="15%" param="{operate:'true',buttons:'Render.state,Render.edit,Render.delete,Render.adddada'}">操作</th>
         </tr>
         </thead>
     </table>

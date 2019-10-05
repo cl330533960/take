@@ -34,6 +34,8 @@ public class SrvDiscounreserve implements Serializable {
 
 	private String remark;
 
+	private String wxName;
+
 	/**
 	 * 设置：
 	 */
@@ -113,5 +115,13 @@ public class SrvDiscounreserve implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getWxName() {
+		return wxName;
+	}
+
+	public void setWxName(String wxName) {
+		this.wxName = wxName;
 	}
 }

@@ -263,6 +263,10 @@
 		update srv_restaurant set balance = balance - #{param1} where id = #{param2}
 	</update>
 
+	<update id="addBalance" parameterType="java.lang.Object">
+		update srv_restaurant set balance = balance - #{param1} where id = #{param2}
+	</update>
+
 	<select id="getByUserId" resultType="xin.cymall.entity.SrvRestaurant" >
 		select * from srv_restaurant where user_id = #{value}
 	</select>

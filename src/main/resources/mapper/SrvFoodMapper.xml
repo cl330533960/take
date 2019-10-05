@@ -171,7 +171,7 @@
 	    LEFT JOIN srv_user_addr a on a.id = #{param3}
 		where f.cal &lt;= #{param1} and  f.cal &gt;= #{param2}
 		AND f.status = 1 and r.status = 1
-		AND Spherical_Distance(r.lng,r.lat,a.lng,a.lat) &lt; 10000
+-- 		AND Spherical_Distance(r.lng,r.lat,a.lng,a.lat) &lt; 10000
 		ORDER BY Spherical_Distance(r.lng,r.lat,a.lng,a.lat) ASC,r.name DESC
 		LIMIT 5
 	</select>
