@@ -165,6 +165,11 @@ public class SysApiController {
         Map<String,Object> map = new HashMap<>();
         map.put("orderId", returnOrder.getId());
         List<SrvOrderFood> list = srvOrderFoodService.getList(map);
+        for(SrvOrderFood srvOrderFood : list){
+            if(!StringUtil.isEmpty(srvOrderFood.getImagePath())) {
+                srvOrderFood.setImagePath(srvOrderFood.getImagePath().split(",")[0]);
+            }
+        }
         returnOrder.setFoodList(list);
         return R.ok().put("data", returnOrder);
     }
