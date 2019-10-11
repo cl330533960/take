@@ -278,6 +278,7 @@ public class WchartController {
         SrvMerchanopinion srvMerchanopinion = new SrvMerchanopinion();
         srvMerchanopinion.setName(srvWxUser.getWxName());
         srvMerchanopinion.setCommentTime(new Date());
+        srvMerchanopinion.setRestaurantId(restaurantId);
         srvMerchanopinion.setContent(content);
         srvMerchanopinion.setStatus("0");
         srvMerchanopinionService.save(srvMerchanopinion);
@@ -353,6 +354,29 @@ public class WchartController {
         }
         return "wchat/orderinfo";
     }
+
+    @RequestMapping(value = "/orderInfocommon",method = { RequestMethod.GET, RequestMethod.POST })
+    public String orderInfocommon(Model model,@RequestParam String orderId){
+        SrvOrder srvOrder = srvOrderService.get(orderId);
+        if(srvOrder != null) {
+            srvOrder.setStatusText(OrderStatusEnum.getValue(srvOrder.getStatus()));
+            Map<String, Object> params = new HashMap<>();
+            params.put("orderId", srvOrder.getId());
+            List<SrvOrderFood> list = srvOrderFoodService.getList(params);
+            for(SrvOrderFood srvOrderFood : list){
+                if(!StringUtil.isEmpty(srvOrderFood.getImagePath())) {
+                    srvOrderFood.setImagePath(srvOrderFood.getImagePath().split(",")[0]);
+                }
+            }
+            srvOrder.setFoodList(list);
+            SrvUserAddr userAddr = srvUserAddrService.get(srvOrder.getUserAddrId());
+            model.addAttribute("order", srvOrder);
+            model.addAttribute("location", userAddr);
+        }
+        return "wchat/orderInfocommon";
+    }
+
+
 
     @RequestMapping(value = "/healthyFood",method = { RequestMethod.GET, RequestMethod.POST })
     public String healthyFood(Model model,HealthOrderRequest healthOrderRequest){
@@ -968,6 +992,19 @@ public class WchartController {
         return "wchat/rationorderfood";
 
     }
+
+    @RequestMapping(value = "/testorderList")
+    public String testorderList(Model model,String code,HttpServletRequest request) throws WxErrorException {
+        String  openId = ("opi-Y0wSRxNVNwdv1WTGTkRnSR2w");
+        if(StringUtil.isEmpty(openId)) {
+            WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
+            openId = wxMpOAuth2AccessToken.getOpenId();
+            request.getSession().setAttribute("openId",openId);
+        }
+        model.addAttribute("wxId", openId);
+        return "wchat/orderlist";
+    }
+
 
       /* 跳转到新增页面
      **/

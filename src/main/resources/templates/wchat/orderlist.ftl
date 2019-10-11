@@ -36,7 +36,7 @@
         $('.weui-navbar__item').on('click', function () {
             var clickId = jQuery(this).attr("id");
             if (clickId == "waitItem") {
-                waitCommentOrderList("/wx/myOrderList?wxId=${wxId}" + "&status=6");
+                waitCommentOrderList("/wx/myOrderList?wxId=${wxId}" + "&status=7");
             } else {
                 initOrderList("/wx/myOrderList?wxId=${wxId}");
             }
@@ -73,7 +73,7 @@
             //数据，json字符串
             //请求成功
             success: function (result) {
-                var html = template("orderHtml", {data: result.data});
+                var html = template("orderHtmlcommon", {data: result.data});
                 $("#waitCommentOrder").html(html);
             },
             //请求失败，包含具体的错误信息
@@ -112,5 +112,33 @@
         </div>
     </div>
 </script>
+
+
+<script type="text/html" id="orderHtmlcommon">
+    <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__bd">
+            {{each data as value index}}
+            <a href="/wx/orderInfocommon?orderId={{value.id}}" class="weui-media-box weui-media-box_appmsg">
+                <div class="weui-media-box__hd">
+                    <img class="weui-media-box__thumb"
+                         style="border-radius: 15px" width="50px" height="50px"
+                         src="/getData/showImage?imagePath={{value.logoPath}}">
+                </div>
+                <div class="weui-media-box__bd">
+                    <h4 class="weui-media-box__title">门店:{{value.restaurantName}}</h4>
+
+                    <p class="weui-media-box__desc">下单时间:{{value.orderTime}}</p>
+
+                    <p class="weui-media-box__desc">总价:<span style="color: red">￥{{value.orderTotal}}</span></p>
+                </div>
+                <div class="weui-media-box__fd">
+                    <h4 class="weui-media-box__title">{{value.statusText}}</h4>
+                </div>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
 </body>
 </html>

@@ -358,7 +358,7 @@
             success: function (result) {
 //                $.toast("操作成功");
                 $.hideLoading();
-                payInit(result.orderNo);
+                payInit(result.orderNo,(parseInt($("#wayFee").text()) + parseInt($("#totalAmount").text()))*100);
             },
             //请求失败，包含具体的错误信息
             error: function (e) {
@@ -368,7 +368,7 @@
         });
     }
 
-    function payInit(orderNo) {
+    function payInit(orderNo,payTotalAmount) {
         $.showLoading("正在申请支付，请稍后");
         $.ajax({
             //请求方式
@@ -377,7 +377,7 @@
             //请求地址
             url: "/wx/toPayInit",
             //数据，json字符串
-            data: {wxId: $("#wxId").val(), payMoney: 1, orderNo: orderNo},
+            data: {wxId: $("#wxId").val(), payMoney: payTotalAmount, orderNo: orderNo},
             //请求成功
             success: function (result) {
                 var appId = result.appId;
