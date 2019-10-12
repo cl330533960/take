@@ -14,7 +14,7 @@
         $(function () {
             var orderstatus = '${order.status}';
             if(orderstatus != "1" && orderstatus != "10" ){
-                // shareOrder();
+                shareOrder();
             }
         })
 
