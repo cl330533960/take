@@ -193,11 +193,11 @@ public class WchartController {
      **/
     @RequestMapping(value = "calcAssess")
     public String calcAssess(Model model,String code,HttpServletRequest request) throws WxErrorException {
-        String  openId = (String)request.getSession().getAttribute("openId");
+        String  openId = (String)request.getSession().getAttribute(code);
         if(StringUtil.isEmpty(openId)) {
             WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
             openId = wxMpOAuth2AccessToken.getOpenId();
-            request.getSession().setAttribute("openId",openId);
+            request.getSession().setAttribute(code,openId);
         }
         model.addAttribute("wxId", openId);
         return "wchat/calcassess";
@@ -272,17 +272,27 @@ public class WchartController {
         return "wchat/healthyfooddetil";
     }
 
-    @RequestMapping(value = "/saveComment",method = { RequestMethod.GET, RequestMethod.POST })
-    public R saveComment(@RequestParam String wxId,@RequestParam String restaurantId,@RequestParam String content) {
-        SrvWxUser srvWxUser = srvWxUserService.getByOpenId(wxId);
-        SrvMerchanopinion srvMerchanopinion = new SrvMerchanopinion();
-        srvMerchanopinion.setName(srvWxUser.getWxName());
-        srvMerchanopinion.setCommentTime(new Date());
-        srvMerchanopinion.setRestaurantId(restaurantId);
-        srvMerchanopinion.setContent(content);
-        srvMerchanopinion.setStatus("0");
-        srvMerchanopinionService.save(srvMerchanopinion);
-        return R.ok();
+    @RequestMapping(value = "/saveComment",method = { RequestMethod.POST })
+    @ResponseBody
+    public R saveComment(@RequestParam String wxId,@RequestParam String restaurantId,@RequestParam String content,@RequestParam String orderNo) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("orderNo", orderNo);
+        if(srvMerchanopinionService.getList(params).size() == 0) {
+            SrvWxUser srvWxUser = srvWxUserService.get(wxId);
+            SrvMerchanopinion srvMerchanopinion = new SrvMerchanopinion();
+            srvMerchanopinion.setId(UUID.generateId());
+            srvMerchanopinion.setName(srvWxUser.getWxName());
+            srvMerchanopinion.setCommentTime(new Date());
+            srvMerchanopinion.setRestaurantId(restaurantId);
+            srvMerchanopinion.setContent(content);
+            srvMerchanopinion.setStatus("0");
+            srvMerchanopinion.setOrderNo(orderNo);
+            srvMerchanopinion.setWxId(wxId);
+            srvMerchanopinionService.save(srvMerchanopinion);
+            return R.ok();
+        }else{
+            return R.error("该订单已经评价，不能再次评价");
+        }
     }
 
 
@@ -292,11 +302,11 @@ public class WchartController {
     @RequestMapping(value = "/rationorderFood",method = { RequestMethod.GET, RequestMethod.POST })
     public String rationorderFood(Model model,String code,HttpServletRequest request) throws WxErrorException {
         Map<String,Object> map = new HashMap<>();
-        String  openId = (String)request.getSession().getAttribute("openId");
+        String  openId = (String)request.getSession().getAttribute(code);
         if(StringUtil.isEmpty(openId)) {
             WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
             openId = wxMpOAuth2AccessToken.getOpenId();
-            request.getSession().setAttribute("openId", openId);
+            request.getSession().setAttribute(code, openId);
         }
         SrvWxUser srvWxUser = srvWxUserService.getByOpenId(openId);
         map.put("userId", srvWxUser.getId());
@@ -372,6 +382,12 @@ public class WchartController {
             SrvUserAddr userAddr = srvUserAddrService.get(srvOrder.getUserAddrId());
             model.addAttribute("order", srvOrder);
             model.addAttribute("location", userAddr);
+
+            Map<String, Object> commentParams = new HashMap<>();
+            commentParams.put("orderNo", srvOrder.getOrderNo());
+            List  commentList = srvMerchanopinionService.getList(commentParams);
+            model.addAttribute("commentList", commentList);
+
         }
         return "wchat/orderInfocommon";
     }
@@ -406,11 +422,11 @@ public class WchartController {
 
     @RequestMapping(value = "/couponList",method = { RequestMethod.GET, RequestMethod.POST })
     public String couponList(Model model,String code,HttpServletRequest request) throws WxErrorException {
-        String  openId = (String)request.getSession().getAttribute("openId");
+        String  openId = (String)request.getSession().getAttribute(code);
         if(StringUtil.isEmpty(openId)) {
             WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
             openId = wxMpOAuth2AccessToken.getOpenId();
-            request.getSession().setAttribute("openId",openId);
+            request.getSession().setAttribute(code,openId);
         }
         model.addAttribute("wxId",openId);
         return "wchat/couponlist";
@@ -418,11 +434,11 @@ public class WchartController {
 
     @RequestMapping(value = "/orderList")
     public String orderList(Model model,String code,HttpServletRequest request) throws WxErrorException {
-        String  openId = (String)request.getSession().getAttribute("openId");
+        String openId = (String)request.getSession().getAttribute(code);
         if(StringUtil.isEmpty(openId)) {
             WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
             openId = wxMpOAuth2AccessToken.getOpenId();
-            request.getSession().setAttribute("openId",openId);
+            request.getSession().setAttribute(code,openId);
         }
         model.addAttribute("wxId", openId);
         return "wchat/orderlist";
@@ -433,11 +449,11 @@ public class WchartController {
      **/
     @RequestMapping(value = "/discounreserve")
     public String discounreserve(Model model,String code,HttpServletRequest request) throws WxErrorException {
-        String  openId = (String)request.getSession().getAttribute("openId");
+        String  openId = (String)request.getSession().getAttribute(code);
         if(StringUtil.isEmpty(openId)) {
             WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxConfig.wxMpServiceHttpClientImpl().oauth2getAccessToken(code);
             openId = wxMpOAuth2AccessToken.getOpenId();
-            request.getSession().setAttribute("openId",openId);
+            request.getSession().setAttribute(code,openId);
         }
         model.addAttribute("wxId", openId);
         return "wchat/discounreserve";
@@ -665,10 +681,12 @@ public class WchartController {
         if("1".equals(wxDiscounreserve.getDiscounType())){
             srvDiscounreserve.setDiscountEnd(DateUtil.getLaterWeek());
             srvDiscounreserve.setDiscount(0.9);
+            srvDiscounreserve.setType("1");
 
         }else if("2".equals(wxDiscounreserve.getDiscounType())){
             srvDiscounreserve.setDiscountEnd(DateUtil.getLaterMonth());
             srvDiscounreserve.setDiscount(0.8);
+            srvDiscounreserve.setType("2");
         }
         srvDiscounreserve.setStatus("2");
         srvDiscounreserve.setRemark(wxDiscounreserve.getRemark());

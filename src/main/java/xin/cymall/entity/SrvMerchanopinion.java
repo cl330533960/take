@@ -33,6 +33,11 @@ public class SrvMerchanopinion implements Serializable {
 	/****/
 	private String phone;
 
+	private String orderNo;
+
+	private String wxId;
+
+
 	/**
 	 * 设置：
 	 */
@@ -116,5 +121,21 @@ public class SrvMerchanopinion implements Serializable {
 	 */
 	public String getPhone() {
 		return phone;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public String getWxId() {
+		return wxId;
+	}
+
+	public void setWxId(String wxId) {
+		this.wxId = wxId;
 	}
 }

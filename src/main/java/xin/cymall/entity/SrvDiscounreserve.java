@@ -36,6 +36,8 @@ public class SrvDiscounreserve implements Serializable {
 
 	private String wxName;
 
+	private String type; //套餐類型 1周套餐 2月套餐
+
 	/**
 	 * 设置：
 	 */
@@ -123,5 +125,13 @@ public class SrvDiscounreserve implements Serializable {
 
 	public void setWxName(String wxName) {
 		this.wxName = wxName;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

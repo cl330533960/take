@@ -55,7 +55,8 @@
     		<if test="statusVague != null and statusVague != ''"> and t.status like concat('%',#{statusVague},'%') </if>
             <if test="phone != null and phone != ''"> and t.phone = #{phone} </if>
     		<if test="phoneVague != null and phoneVague != ''"> and t.phone like concat('%',#{phoneVague},'%') </if>
-        </where>
+			<if test="orderNo != null and orderNo != ''"> and t.order_no = #{orderNo} </if>
+		</where>
     </sql>
 	 
 	<insert id="save" parameterType="xin.cymall.entity.SrvMerchanopinion">
@@ -67,7 +68,9 @@
 			`comment_time`, 
 			`name`, 
 			`status`, 
-			`phone`
+			`phone`,
+			order_no,
+			wxId
 		)
 		values
 		(
@@ -77,7 +80,9 @@
 			now(),
 			#{name}, 
 			#{status}, 
-			#{phone}
+			#{phone},
+			#{orderNo},
+			#{wxId}
 		)
 	</insert>
 	 

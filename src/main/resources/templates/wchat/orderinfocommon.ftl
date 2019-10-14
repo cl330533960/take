@@ -13,7 +13,7 @@
 
         $(function () {
             var orderstatus = '${order.status}';
-            if(orderstatus != "1" && orderstatus != "10" ){
+            if (orderstatus != "1" && orderstatus != "10") {
                 shareOrder();
             }
         })
@@ -57,13 +57,13 @@
                 timestamp: timestamp, // 必填，生成签名的时间戳
                 nonceStr: nonce, // 必填，生成签名的随机串
                 signature: signature,// 必填，签名
-                jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表
+                jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"] // 必填，需要使用的JS接口列表
             });
             wx.ready(function () {
                 //分享到朋友圈
                 wx.onMenuShareTimeline({
                     title: '分享得优惠券', // 分享标题
-                    link: 'http://www.tastyfit.vip/wx/sharePage?orderId='+orderId+'&userId='+userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    link: 'http://www.tastyfit.vip/wx/sharePage?orderId=' + orderId + '&userId=' + userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 //                imgUrl:'https://cdn.llscdn.com/thumbnail.jpg', // 分享图标
                     desc: '分享得优惠券',
                     success: function () {
@@ -75,7 +75,7 @@
                     }
                 });
                 wx.onMenuShareAppMessage({
-                    link: 'http://www.tastyfit.vip/wx/sharePage?orderId='+orderId+'&userId='+userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    link: 'http://www.tastyfit.vip/wx/sharePage?orderId=' + orderId + '&userId=' + userId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     title: '分享得优惠券', // 分享标题,
                     desc: '分享得优惠券',
                     success: function () {
@@ -92,6 +92,44 @@
                 });
             });
         }
+
+        function saveComment() {
+
+            var comment = $("#comment").val();
+            if (!comment) {
+                $.toptip('评价内容不等为空', 'error');
+            }
+
+            $.showLoading("正在提交数据，请稍后");
+            $.ajax({
+                //请求方式
+                type: "POST",
+                url: "/wx/saveComment",
+                data: {
+                    wxId: userId,
+                    restaurantId: '${order.restaurantId!}',
+                    content: comment,
+                    orderNo: '${order.orderNo!}'
+                },
+                //请求成功
+                success: function (result) {
+                    $.hideLoading();
+                    if (result.code == 500) {
+                        $.toast(result.msg, "cancel");
+                    } else {
+                        $.toast("评论成功");
+                    }
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    $.hideLoading();
+                    $.toast("操作失败", "cancel");
+                }
+            });
+
+
+        }
+
     </script>
 </head>
 <body>
@@ -213,14 +251,28 @@
 
 </div>
 
+
+
+<#if (commentList?size == 0)>
 <div class="weui-cells weui-cells_form">
     <div class="weui-cell">
         <div class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="请输评价信息" rows="3"></textarea>
+            <textarea class="weui-textarea" id="comment" placeholder="请输入评价信息" rows="3"></textarea>
         </div>
     </div>
 </div>
-<a href="javascript:;" style="margin: 30px" class="weui-btn weui-btn_warn">确认</a>
+<a href="javascript:;" onclick="saveComment()" style="margin: 30px" class="weui-btn weui-btn_warn">提交评价</a>
+</#if>
+
+<#list commentList! as comment>
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <p>我的评价：${comment.content!}</p>
+        </div>
+    </div>
+</div>
+</#list>
 </body>
 
 

@@ -13,7 +13,7 @@
         <result property="discount" column="discount"/>
 		<result property="remark" column="remark"/>
 		<result property="wxName" column="wx_name"/>
-
+		<result property="type" column="type"/>
 
 	</resultMap>
 
@@ -72,7 +72,8 @@
 			`status`, 
 			`user_id`, 
 			`discount`,
-			`remark`
+			`remark`,
+			type
 		)
 		values
 		(
@@ -82,7 +83,8 @@
 			#{status}, 
 			#{userId}, 
 			#{discount},
-			#{remark}
+			#{remark},
+			#{type}
 		)
 	</insert>
 	 
