@@ -681,46 +681,48 @@ public class FnMethod {
             throw new HttpClientRuntimeException("添加门店信息出现异常", e);
         }
     }
-      /**
-       *查询门店信息
-       * @param  list 门店编号集合
-       **/
-    public void  QueryOrder(List<String> list,String token )   {
+
+    /**
+     * 查询门店信息
+     *
+     * @param list 门店编号集合
+     **/
+    public void QueryOrder(List<String> list, String token) {
         try {
 
-        String appId = ElemeOpenConfig.APP_ID;
-        String url = ElemeOpenConfig.API_URL;
-        List<String> chain_store_code =list;
+            String appId = ElemeOpenConfig.APP_ID;
+            String url = ElemeOpenConfig.API_URL;
+            List<String> chain_store_code = list;
 //        List<String> chain_store_code = Arrays.asList("10000", "10001");// 门店编号集合
 //        String token = "020c8d6d-9ed1-49bd-940d-e579798e27ca";
 
-        ElemeQueryChainStoreRequest request = new ElemeQueryChainStoreRequest();
-        ElemeQueryChainStoreRequest.ElemeQueryRequestData data = new ElemeQueryChainStoreRequest.ElemeQueryRequestData();
-        data.setChain_store_code(chain_store_code);
-        request.setData(data);
+            ElemeQueryChainStoreRequest request = new ElemeQueryChainStoreRequest();
+            ElemeQueryChainStoreRequest.ElemeQueryRequestData data = new ElemeQueryChainStoreRequest.ElemeQueryRequestData();
+            data.setChain_store_code(chain_store_code);
+            request.setData(data);
 
-        int salt = RandomUtils.getInstance().generateValue(1000, 10000);
-        request.setApp_id(ElemeOpenConfig.APP_ID);
-        request.setSalt(salt);
+            int salt = RandomUtils.getInstance().generateValue(1000, 10000);
+            request.setApp_id(ElemeOpenConfig.APP_ID);
+            request.setSalt(salt);
 
-        /**
-         * 生成签名
-         */
-        Map<String, Object> sigStr = new LinkedHashMap<>(); // 注意添加的顺序,
-        // 应该如下面一样各个key值顺序一致
-        sigStr.put("app_id", appId);
-        sigStr.put("access_token", token); // 需要使用前面请求生成的token
-        sigStr.put("data", request.getData());
-        sigStr.put("salt", salt);
-        // 生成签名
-        String sig = OpenSignHelper.generateBusinessSign(sigStr);
-        request.setSignature(sig);
+            /**
+             * 生成签名
+             */
+            Map<String, Object> sigStr = new LinkedHashMap<>(); // 注意添加的顺序,
+            // 应该如下面一样各个key值顺序一致
+            sigStr.put("app_id", appId);
+            sigStr.put("access_token", token); // 需要使用前面请求生成的token
+            sigStr.put("data", request.getData());
+            sigStr.put("salt", salt);
+            // 生成签名
+            String sig = OpenSignHelper.generateBusinessSign(sigStr);
+            request.setSignature(sig);
 
-        String requestJson = JsonUtils.getInstance().objectToJson(request);
+            String requestJson = JsonUtils.getInstance().objectToJson(request);
 
-        url = url + RequestConstant.QUERY_CHAIN_STORE;
-          String response =   HttpClient.postBody(url, requestJson);
-          logger.info("QUERY_CHAIN_STORE:"+response);
+            url = url + RequestConstant.QUERY_CHAIN_STORE;
+            String response = HttpClient.postBody(url, requestJson);
+            logger.info("QUERY_CHAIN_STORE:" + response);
         } catch (Exception e) {
             throw new HttpClientRuntimeException("查询门店出现异常", e);
         }

@@ -36,7 +36,7 @@ public class AuthRealm extends AuthorizingRealm {
 		Long userId = user.getUserId();
 		
 		List<String> permsList = null;
-		
+
 		//系统管理员，拥有最高权限
 		if(userId == 1){
 			List<SysMenu> menuList = sysMenuDao.queryList(new HashMap<String, Object>());
